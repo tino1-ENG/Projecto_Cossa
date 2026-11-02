@@ -1,0 +1,512 @@
+# MOZBID — PREMIUM AUCTION MARKETPLACE
+## MASTER UI/UX DESIGN PROMPT
+
+### 1. ROLE
+
+Act as a world-class Lead Product Designer, Senior UI/UX Designer and Senior Frontend Engineer specialized in luxury automotive marketplaces, premium auction platforms and international ecommerce experiences.
+
+Your mission is to design and implement a premium online auction marketplace called **MozBid**, targeting the Mozambican market.
+
+Use the uploaded reference image as the primary visual reference.
+
+The objective is to recreate its visual identity, composition, atmosphere and design language, transforming it into a sophisticated online auction experience.
+
+This is NOT a generic ecommerce website.
+
+It must look like an exclusive international auction marketplace.
+
+---
+
+### 2. CORE DESIGN DIRECTION
+
+The design must preserve the visual characteristics of the reference:
+
+- Deep black background.
+- Luxury dark interface.
+- Orange and golden lighting.
+- Large cinematic automotive photography.
+- Elegant white typography.
+- Refined transparent surfaces.
+- Dark translucent search panels.
+- Subtle gradients.
+- Premium product presentation.
+- Minimalist navigation.
+- Carefully controlled visual effects.
+
+The result should communicate:
+
+- Exclusivity.
+- Trust.
+- Competition.
+- Luxury.
+- Security.
+- Professionalism.
+- Real-time activity.
+
+Do not replace this identity with a generic dashboard design.
+
+### 3. COLOR SYSTEM
+
+Use this palette as the foundation:
+
+```css
+:root {
+  --background: #080808;
+  --background-secondary: #101010;
+  --surface: #151515;
+  --surface-elevated: #202020;
+
+  --primary: #F5A000;
+  --primary-hover: #FFB52E;
+  --primary-dark: #B87500;
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #B8B8B8;
+  --text-muted: #777777;
+
+  --success: #22C55E;
+  --danger: #EF4444;
+  --warning: #F59E0B;
+
+  --border: rgba(255,255,255,0.09);
+}
+```
+
+Orange must be the main interactive accent.
+
+Use gold sparingly for premium highlights.
+
+Black must dominate the interface.
+
+Avoid excessive colours, especially purple, bright blue and unnecessary gradients.
+
+### 4. HOMEPAGE — HERO SECTION
+
+Recreate the composition of the uploaded reference image.
+
+#### Navigation
+
+Create a slim transparent navigation bar positioned at the top.
+
+Left:
+- MozBid logo.
+- Minimal orange auction-inspired symbol.
+
+Center:
+- Home.
+- Explore Auctions.
+- Categories.
+- How It Works.
+- Membership.
+- About Us.
+
+Right:
+- Search icon.
+- Notifications.
+- Watchlist.
+- User profile.
+- Login/Register or account menu.
+
+The navigation should be elegant, compact and discreet.
+
+#### Main hero
+
+Use a large cinematic automotive photograph positioned on the right side.
+
+The image should feature a premium sports car, preferably with orange or golden lighting.
+
+The left side must contain the main marketing message.
+
+Headline:
+
+"Discover Exclusive Auctions"
+
+Second line:
+
+"Bid With Confidence."
+
+Supporting text:
+
+"Explore exceptional products, compete in real-time auctions and win exclusive deals through one powerful marketplace."
+
+Primary button:
+
+"Explore Auctions →"
+
+Secondary button:
+
+"Start Selling"
+
+Use large refined typography with strong visual hierarchy.
+
+The headline should be approximately 48–64px on desktop.
+
+Use a subtle black-to-transparent overlay to maintain text readability.
+
+The hero should feel cinematic, luxurious and spacious.
+
+### 5. FLOATING AUCTION SEARCH PANEL
+
+Recreate the wide floating search panel visible at the bottom of the reference hero.
+
+Use a dark translucent surface with subtle border, backdrop blur and rounded corners.
+
+Panel title:
+
+"Find Your Next Auction"
+
+Search and filtering controls:
+
+- Search products.
+- Category.
+- Location.
+- Minimum price.
+- Maximum price.
+- Auction status.
+
+Primary action:
+
+"Search Auctions"
+
+Below the filters, include three trust indicators:
+
+- Verified Sellers.
+- Secure Bidding.
+- Best Auction Deals.
+
+The panel must overlap the hero slightly, preserving the visual composition of the reference.
+
+### 6. FEATURED AUCTIONS
+
+Below the hero, introduce a premium section.
+
+Heading:
+
+"Featured Auctions"
+
+Supporting text:
+
+"Discover products selected from our most exciting auctions."
+
+Create a refined product grid with four cards per desktop row.
+
+Each auction card must contain:
+
+1. Large high-quality product image.
+2. Category label.
+3. Product title.
+4. Seller verification indicator.
+5. Current highest bid.
+6. Number of bids.
+7. Countdown timer.
+8. Auction status.
+9. Favourite button.
+10. View Auction button.
+
+Example products:
+
+- BMW M4 Competition.
+- Toyota Land Cruiser V8.
+- MacBook Pro.
+- Rolex-style collectible watches, subject to authenticity verification.
+- Industrial generators.
+- Professional camera equipment.
+
+Display realistic prices in MZN.
+
+Card design:
+- Dark surface.
+- Thin subtle border.
+- Refined image container.
+- Orange price highlights.
+- Compact metadata.
+- Smooth hover transitions.
+- Minimal visual clutter.
+
+### 7. LIVE AUCTION EXPERIENCE
+
+Create a section called:
+
+"Ending Soon"
+
+This section should emphasize urgency and competition.
+
+Each card should display:
+
+- Current bid.
+- Time remaining.
+- Number of participants.
+- Highest bidder status, where appropriate.
+- Bid Now action.
+
+Use orange accents for countdown urgency.
+
+When less than one minute remains, visually emphasize the timer without making the interface excessively aggressive.
+
+The countdown must use server-provided auction timestamps.
+
+### 8. AUCTION DETAIL PAGE
+
+This is one of the most important screens in the entire platform.
+
+Create a luxury product auction page.
+
+Desktop composition:
+
+Left column:
+- Large product image.
+- Thumbnail gallery.
+- Product description.
+- Technical specifications.
+- Seller profile.
+- Location.
+- Delivery information.
+
+Right column:
+Create a visually prominent auction bidding panel.
+
+The panel must display:
+
+- Auction status.
+- Current highest bid.
+- Countdown timer.
+- Minimum next bid.
+- Total bids.
+- Reserve price status.
+- Bid amount input.
+- Place Bid button.
+- Automatic bidding configuration.
+- Watchlist button.
+
+Example:
+
+CURRENT BID
+
+850,000 MZN
+
+NEXT MINIMUM BID
+
+875,000 MZN
+
+TIME REMAINING
+
+02h 34m 18s
+
+Primary CTA:
+
+"Place Your Bid"
+
+Secondary CTA:
+
+"Set Maximum Bid"
+
+The bidding panel should use a slightly elevated dark surface with orange highlights.
+
+Below the main product area include:
+
+- Bid history.
+- Product specifications.
+- Seller information.
+- Similar auctions.
+- Questions and answers.
+
+### 9. AUCTION STATUS DESIGN
+
+Create consistent visual states:
+
+- Upcoming.
+- Active.
+- Ending Soon.
+- Outbid.
+- Highest Bidder.
+- Reserve Met.
+- Reserve Not Met.
+- Ended.
+- Won.
+- Awaiting Payment.
+- Sold.
+- Unsold.
+
+Use appropriate semantic colours, maintaining the overall black and orange identity.
+
+### 10. CATEGORY EXPLORATION
+
+Create premium category cards for:
+
+- Automobiles.
+- Motorcycles.
+- Electronics.
+- Computers.
+- Watches and Collectibles.
+- Furniture.
+- Industrial Equipment.
+- Business Assets.
+
+Use high-quality photographs.
+
+Each category should have a clear label and subtle hover animation.
+
+### 11. SELLER EXPERIENCE
+
+Create a premium seller dashboard.
+
+The interface must include:
+
+- Overview.
+- My Products.
+- Create Auction.
+- Active Auctions.
+- Completed Auctions.
+- Bids Received.
+- Sales.
+- Payments.
+- Analytics.
+- Reviews.
+- Profile Settings.
+
+Maintain the same visual identity.
+
+The dashboard must be functional and readable, not overloaded with decorative cards.
+
+### 12. BUYER EXPERIENCE
+
+Create a buyer dashboard containing:
+
+- Overview.
+- My Bids.
+- Auctions I'm Winning.
+- Outbid Auctions.
+- Watchlist.
+- Won Auctions.
+- Pending Payments.
+- Purchase History.
+- Notifications.
+- Account Settings.
+
+Use clean dark surfaces, orange accents and clear data hierarchy.
+
+### 13. ADMINISTRATION EXPERIENCE
+
+Create an administrative dashboard with:
+
+- Overview.
+- Users.
+- Seller Verification.
+- Product Moderation.
+- Auctions.
+- Bid Monitoring.
+- Orders.
+- Payments.
+- Commissions.
+- Disputes.
+- Categories.
+- Reports.
+- Audit Logs.
+- Platform Settings.
+
+Use professional data tables, filters, status indicators and contextual actions.
+
+Do not make the admin interface look like an unrelated application.
+
+### 14. MICRO-INTERACTIONS
+
+Implement subtle, professional interactions:
+
+- Smooth button hover.
+- Card elevation on hover.
+- Image zoom on hover.
+- Animated countdown updates.
+- Favourite button feedback.
+- Dropdown transitions.
+- Search focus effects.
+- Notification indicators.
+- Bid submission feedback.
+- Skeleton loading states.
+
+Animations must be subtle and performant.
+
+Avoid excessive motion and unnecessary visual effects.
+
+### 15. TYPOGRAPHY
+
+Use Inter or Manrope.
+
+Typography must establish a clear hierarchy:
+
+- Large cinematic hero headings.
+- Medium section headings.
+- Clear product titles.
+- Strong numerical prices.
+- Small, readable metadata.
+
+The current bid must be one of the most visually prominent elements on auction cards and auction detail pages.
+
+### 16. RESPONSIVE DESIGN
+
+Desktop:
+Preserve the full cinematic composition.
+
+Tablet:
+Reduce hero typography and adapt the floating search panel.
+
+Mobile:
+- Compact navigation.
+- Large hero headline.
+- Optimized product image.
+- Stacked search filters.
+- Two-column or single-column product grid depending on screen width.
+- Sticky bidding action on auction detail pages.
+- Touch-friendly controls.
+
+Never allow horizontal overflow.
+
+### 17. TECHNOLOGY
+
+Implement using:
+
+- Quasar Framework.
+- Vue 3.
+- TypeScript.
+- Composition API.
+- Pinia.
+- Vue Router.
+- SCSS.
+- Vite.
+
+Use reusable components and a centralized design system.
+
+The first development version must use mock data clearly separated from API services.
+
+The initial application backend will use Node.js and Express, with SQLite as the first database.
+
+Keep the frontend independent of the database technology.
+
+Future migration from SQLite to MongoDB must not require redesigning the interface.
+
+### 18. QUALITY REQUIREMENTS
+
+- Pixel-conscious implementation of the visual reference.
+- Professional spacing and alignment.
+- Consistent typography.
+- High-quality imagery.
+- Accessible contrast.
+- Functional navigation.
+- Functional filters.
+- Functional auction cards.
+- Responsive layouts.
+- Reusable Vue components.
+- No dead buttons.
+- No generic AI-generated dashboard appearance.
+- No inconsistent design between pages.
+
+### 19. FINAL OBJECTIVE
+
+Deliver a complete and visually sophisticated auction marketplace.
+
+The homepage must immediately communicate the quality of an international luxury auction platform.
+
+The auction detail page must make bidding the central interaction.
+
+The buyer, seller and administrator experiences must share the same premium identity.
+
+**The final design must preserve the uploaded reference image's visual language while transforming the experience into a complete, modern and professional online auction marketplace for Mozambique.**

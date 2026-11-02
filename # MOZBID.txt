@@ -1,0 +1,1646 @@
+# MOZBID
+## Documento Mestre de Requisitos, Arquitectura e Implementação
+
+**Versão:** 1.0  
+**Tipo:** Plataforma Web de Leilões Online  
+**Mercado inicial:** Moçambique  
+**Moeda:** MZN — Metical  
+**Modelo:** Marketplace público com leilões temporizados e compra directa  
+**Estado:** Especificação para desenvolvimento
+
+---
+
+# PARTE I — VISÃO GERAL DO PROJECTO
+
+## 1. Descrição
+
+O MozBid é uma plataforma digital de compra e venda através de leilões online, permitindo que particulares e empresas publiquem produtos e participem em disputas de preços em tempo real.
+
+A plataforma pretende criar um ambiente seguro, transparente e moderno para comercialização de:
+
+- Automóveis e motociclos.
+- Computadores e equipamentos electrónicos.
+- Mobiliário e electrodomésticos.
+- Máquinas e equipamentos industriais.
+- Produtos empresariais.
+- Stock e equipamentos comerciais.
+- Outras categorias aprovadas pela administração.
+
+O sistema deverá permitir que qualquer utilizador elegível crie uma conta, seja verificado e publique leilões, sujeito à aprovação e às políticas da plataforma.
+
+## 2. Objectivos gerais
+
+1. Desenvolver um marketplace profissional de leilões.
+2. Permitir publicação de produtos por particulares e empresas.
+3. Implementar licitações automáticas e manuais.
+4. Garantir actualização de ofertas em tempo real.
+5. Determinar vencedores automaticamente.
+6. Permitir pagamentos e acompanhamento de vendas.
+7. Implementar reputação de compradores e vendedores.
+8. Disponibilizar ferramentas de administração e monitorização.
+9. Garantir segurança, transparência e integridade das transacções.
+10. Criar uma arquitectura preparada para crescimento nacional e internacional.
+
+## 3. Perfis de utilizadores
+
+### 3.1. Visitante
+
+Pode:
+- Consultar a página inicial.
+- Pesquisar produtos.
+- Visualizar leilões.
+- Consultar categorias.
+- Consultar vendedores.
+- Visualizar resultados encerrados.
+- Registar-se e iniciar sessão.
+
+Não pode:
+- Apresentar licitações.
+- Publicar produtos.
+- Aceder aos dashboards privados.
+
+### 3.2. Comprador
+
+Pode:
+- Participar em leilões.
+- Apresentar ofertas.
+- Definir limites de licitação automática.
+- Guardar favoritos.
+- Acompanhar leilões.
+- Consultar histórico.
+- Receber notificações.
+- Ganhar leilões.
+- Efectuar pagamentos.
+- Avaliar vendedores.
+- Apresentar reclamações.
+
+### 3.3. Vendedor particular
+
+Pode:
+- Criar anúncios.
+- Publicar fotografias.
+- Criar leilões.
+- Definir preços e duração.
+- Definir incrementos mínimos.
+- Definir preço de reserva.
+- Acompanhar licitações.
+- Consultar estatísticas.
+- Gerir entregas.
+- Consultar vendas.
+
+### 3.4. Vendedor empresarial
+
+Possui as funcionalidades do vendedor particular, acrescidas de:
+
+- Perfil empresarial.
+- Nome comercial.
+- NUIT, quando aplicável.
+- Documentação empresarial.
+- Dados de contacto comercial.
+- Gestão de representantes autorizados.
+- Publicação de múltiplos produtos.
+- Relatórios empresariais.
+- Gestão de inventário e lotes.
+
+### 3.5. Administrador
+
+Pode:
+- Gerir utilizadores.
+- Aprovar vendedores.
+- Verificar documentos.
+- Aprovar anúncios.
+- Gerir categorias.
+- Monitorizar leilões.
+- Suspender actividades suspeitas.
+- Consultar licitações.
+- Gerir reclamações.
+- Consultar pagamentos.
+- Configurar comissões.
+- Consultar relatórios.
+- Consultar auditorias.
+
+---
+
+# PARTE II — REQUISITOS FUNCIONAIS
+
+## 4. Autenticação e gestão de utilizadores
+
+**RF001 — Registo**
+
+O sistema deve permitir o registo através de nome completo, email, número de telefone e palavra-passe.
+
+**RF002 — Verificação**
+
+O sistema deve permitir confirmar email e telefone através de mecanismos de verificação.
+
+**RF003 — Autenticação**
+
+O utilizador deve conseguir iniciar e terminar sessão.
+
+**RF004 — Recuperação de palavra-passe**
+
+O sistema deve disponibilizar recuperação segura da palavra-passe.
+
+**RF005 — Perfis**
+
+Cada utilizador deve possuir um perfil pessoal.
+
+**RF006 — Gestão de permissões**
+
+O sistema deve aplicar controlo de acesso baseado em funções e permissões.
+
+**RF007 — Verificação de vendedor**
+
+O utilizador deverá submeter informações e documentos necessários para obter autorização de publicação.
+
+**RF008 — Perfil empresarial**
+
+O sistema deve permitir registo e verificação de vendedores empresariais.
+
+## 5. Marketplace público
+
+**RF009 — Página inicial**
+
+Apresentar leilões em destaque, categorias, produtos populares e leilões próximos do encerramento.
+
+**RF010 — Catálogo**
+
+Apresentar todos os produtos publicados e aprovados.
+
+**RF011 — Pesquisa**
+
+Pesquisar por nome, categoria, marca, modelo e descrição.
+
+**RF012 — Filtros**
+
+Filtrar por:
+- Categoria.
+- Subcategoria.
+- Localização.
+- Preço.
+- Estado.
+- Data de publicação.
+- Data de encerramento.
+- Tipo de produto.
+
+**RF013 — Ordenação**
+
+Permitir ordenar por:
+- Mais recentes.
+- Mais populares.
+- Maior oferta.
+- Menor oferta.
+- A terminar primeiro.
+- Maior número de licitadores.
+
+**RF014 — Detalhes**
+
+Cada produto deverá possuir uma página individual com fotografias, descrição, vendedor, condições e informações do leilão.
+
+**RF015 — Favoritos**
+
+Permitir guardar produtos para consulta posterior.
+
+## 6. Gestão de produtos
+
+**RF016 — Publicação**
+
+O vendedor pode criar produtos.
+
+**RF017 — Fotografias**
+
+Permitir carregar múltiplas fotografias.
+
+**RF018 — Características**
+
+Guardar marca, modelo, estado, ano e características específicas da categoria.
+
+**RF019 — Localização**
+
+Registar província, distrito e localização do produto.
+
+**RF020 — Moderação**
+
+Todos os anúncios devem passar pelo processo de aprovação configurado pela plataforma.
+
+**RF021 — Edição**
+
+Permitir editar anúncios enquanto estiverem em rascunho ou antes do início do leilão.
+
+**RF022 — Arquivo**
+
+Permitir consultar anúncios antigos sem eliminar o histórico das transacções.
+
+## 7. Gestão de leilões
+
+**RF023 — Criação**
+
+O vendedor pode criar um leilão associado a um produto aprovado.
+
+**RF024 — Preço inicial**
+
+Definir o valor mínimo inicial.
+
+**RF025 — Incremento mínimo**
+
+Definir o valor mínimo de aumento entre licitações.
+
+**RF026 — Reserva**
+
+Permitir definir um preço de reserva confidencial.
+
+**RF027 — Agendamento**
+
+Permitir configurar data e hora de início e encerramento.
+
+**RF028 — Activação**
+
+O sistema deve activar automaticamente os leilões agendados.
+
+**RF029 — Cronómetro**
+
+Apresentar contagem regressiva sincronizada com o servidor.
+
+**RF030 — Encerramento**
+
+O sistema deve encerrar automaticamente os leilões.
+
+**RF031 — Extensão automática**
+
+Permitir extensão automática quando houver licitações próximas do encerramento.
+
+**RF032 — Suspensão**
+
+O administrador pode suspender um leilão mediante justificação e registo de auditoria.
+
+**RF033 — Resultados**
+
+O sistema deve determinar automaticamente o vencedor ou declarar o leilão não vendido.
+
+## 8. Motor de licitações
+
+**RF034 — Licitação manual**
+
+Permitir apresentar ofertas superiores ou iguais ao valor mínimo permitido.
+
+**RF035 — Validação**
+
+Todas as ofertas devem ser validadas pelo backend.
+
+**RF036 — Maior oferta**
+
+Actualizar a oferta actual após uma licitação aceite.
+
+**RF037 — Histórico**
+
+Guardar todas as licitações aceites.
+
+**RF038 — Concorrência**
+
+Garantir processamento consistente de ofertas simultâneas.
+
+**RF039 — Licitação automática**
+
+Permitir que o comprador defina um limite máximo.
+
+**RF040 — Notificação**
+
+Notificar os compradores quando forem ultrapassados.
+
+**RF041 — Restrições**
+
+Impedir que vendedores licitem nos próprios produtos.
+
+**RF042 — Idempotência**
+
+Impedir processamento duplicado da mesma operação.
+
+## 9. Compra directa
+
+**RF043 — Preço de compra imediata**
+
+O vendedor poderá configurar um preço de compra imediata.
+
+**RF044 — Disponibilidade**
+
+A compra directa deverá estar disponível apenas enquanto o leilão permitir essa modalidade.
+
+**RF045 — Encerramento**
+
+Uma compra directa validada deverá encerrar o leilão de forma atómica, impedindo novas licitações.
+
+**RF046 — Pagamento**
+
+Criar a obrigação de pagamento correspondente à compra directa.
+
+## 10. Pagamentos e vendas
+
+**RF047 — Pagamento pendente**
+
+Após o encerramento de um leilão com vencedor, criar uma obrigação de pagamento.
+
+**RF048 — Prazo**
+
+O sistema deve aplicar um prazo configurável para pagamento.
+
+**RF049 — Confirmação**
+
+O pagamento deve ser confirmado através de integração segura com o prestador de serviços.
+
+**RF050 — Comissões**
+
+Calcular comissões de acordo com as regras da plataforma.
+
+**RF051 — Reembolsos**
+
+Permitir registar e acompanhar pedidos de reembolso.
+
+**RF052 — Incumprimento**
+
+Registar compradores vencedores que não cumpram a obrigação de pagamento.
+
+**RF053 — Histórico financeiro**
+
+Disponibilizar histórico de pagamentos e vendas.
+
+## 11. Entregas e avaliações
+
+**RF054 — Entrega**
+
+Permitir registar o estado da entrega.
+
+**RF055 — Confirmação**
+
+Permitir confirmação de recepção pelo comprador.
+
+**RF056 — Avaliação**
+
+Permitir avaliar vendedores após uma transacção elegível.
+
+**RF057 — Reputação**
+
+Calcular a reputação com base em avaliações verificadas.
+
+## 12. Notificações
+
+**RF058 — Notificações internas**
+
+O sistema deve disponibilizar notificações na aplicação.
+
+**RF059 — Email**
+
+Enviar comunicações por email.
+
+**RF060 — SMS**
+
+Permitir integração com fornecedores de SMS.
+
+**RF061 — Eventos**
+
+Notificar sobre:
+- Aprovação de anúncios.
+- Início de leilões.
+- Novas licitações.
+- Ofertas ultrapassadas.
+- Proximidade do encerramento.
+- Vitória.
+- Pagamento pendente.
+- Pagamento confirmado.
+- Entrega.
+- Reclamações.
+
+## 13. Administração
+
+**RF062 — Dashboard administrativo**
+
+Apresentar indicadores gerais.
+
+**RF063 — Utilizadores**
+
+Consultar, editar, suspender e gerir utilizadores.
+
+**RF064 — Vendedores**
+
+Aprovar ou rejeitar vendedores.
+
+**RF065 — Produtos**
+
+Aprovar, rejeitar ou suspender anúncios.
+
+**RF066 — Leilões**
+
+Monitorizar e administrar leilões.
+
+**RF067 — Licitações**
+
+Consultar histórico e investigar actividades suspeitas.
+
+**RF068 — Financeiro**
+
+Consultar pagamentos, comissões e vendas.
+
+**RF069 — Reclamações**
+
+Gerir disputas.
+
+**RF070 — Auditoria**
+
+Consultar operações administrativas e eventos importantes.
+
+---
+
+# PARTE III — REGRAS DE NEGÓCIO
+
+## 14. Regras gerais
+
+**RN001:** Apenas utilizadores autenticados podem participar em leilões.
+
+**RN002:** Apenas vendedores aprovados podem publicar anúncios.
+
+**RN003:** Um produto só pode possuir um leilão activo associado, salvo uma modalidade de lotes explicitamente implementada.
+
+**RN004:** O vendedor não pode licitar no próprio produto.
+
+**RN005:** O vendedor não pode alterar o preço inicial ou o incremento depois do início do leilão.
+
+**RN006:** Todos os valores monetários devem ser tratados com precisão decimal, nunca com cálculos monetários em ponto flutuante.
+
+**RN007:** Todas as datas devem ser armazenadas em UTC e apresentadas no fuso horário local.
+
+**RN008:** O sistema deve guardar o histórico de operações importantes.
+
+## 15. Regras de licitação
+
+**RN009 — Oferta mínima**
+
+A oferta mínima será:
+
+Oferta actual + incremento mínimo.
+
+Se não existir nenhuma oferta, será:
+
+Preço inicial.
+
+**RN010 — Validação**
+
+Uma oferta deve:
+- Pertencer a um utilizador autorizado.
+- Ser superior ou igual ao mínimo.
+- Ser submetida enquanto o leilão estiver activo.
+- Não pertencer ao vendedor.
+- Respeitar as regras financeiras configuradas.
+
+**RN011 — Imutabilidade**
+
+As licitações aceites não podem ser apagadas ou alteradas pelo utilizador.
+
+Uma correcção administrativa deve gerar um evento de auditoria e preservar o registo original.
+
+**RN012 — Concorrência**
+
+O backend deve serializar as licitações de cada leilão através de transacções e bloqueios de registos, garantindo que apenas ofertas válidas são aceites.
+
+**RN013 — Empate**
+
+Duas ofertas iguais não podem assumir simultaneamente a liderança. A primeira oferta válida processada pelo servidor terá prioridade.
+
+## 16. Regras de extensão automática
+
+**RN014:** A extensão será configurável por leilão ou pela política global.
+
+Configuração inicial proposta:
+- Janela de activação: 60 segundos.
+- Extensão: 60 segundos.
+- Extensão repetida: permitida enquanto existirem ofertas dentro da janela.
+
+**RN015:** A extensão deverá actualizar a data de encerramento no servidor.
+
+**RN016:** O sistema deverá comunicar a extensão aos participantes.
+
+## 17. Regras de preço de reserva
+
+**RN017:** O preço de reserva é confidencial.
+
+**RN018:** O comprador poderá visualizar se a reserva foi atingida.
+
+**RN019:** Se a maior oferta final for inferior à reserva, o resultado será não vendido.
+
+**RN020:** Se a reserva for atingida, o maior licitador elegível será o vencedor.
+
+## 18. Regras de licitação automática
+
+**RN021:** O utilizador define um limite máximo.
+
+**RN022:** O sistema apresenta ofertas progressivas em nome do utilizador, respeitando o incremento.
+
+**RN023:** O limite máximo não pode ser divulgado a outros participantes.
+
+**RN024:** Os limites automáticos devem ser processados de forma determinística e transaccional.
+
+**RN025:** Se dois limites forem iguais, aplica-se a prioridade temporal da respectiva configuração.
+
+## 19. Regras de encerramento
+
+**RN026:** O encerramento é controlado exclusivamente pelo servidor.
+
+**RN027:** Após o encerramento efectivo, nenhuma nova licitação poderá ser aceite.
+
+**RN028:** O sistema identifica o maior licitador válido.
+
+**RN029:** Se não existirem licitações, o resultado será não vendido.
+
+**RN030:** Se a reserva não for atingida, o resultado será não vendido.
+
+**RN031:** Se existir vencedor, será criada uma obrigação de pagamento.
+
+**RN032:** O resultado não poderá ser alterado sem um processo administrativo auditado.
+
+## 20. Regras de pagamento
+
+**RN033:** Prazo inicial de pagamento: 48 horas, configurável.
+
+**RN034:** Uma vitória não significa pagamento confirmado.
+
+**RN035:** O pagamento só é considerado confirmado após confirmação do prestador autorizado.
+
+**RN036:** O sistema não deverá confiar em imagens de comprovativos como confirmação definitiva.
+
+**RN037:** A transferência ou retenção de fundos deve respeitar os mecanismos autorizados e os acordos com os prestadores.
+
+**RN038:** O incumprimento deverá seguir uma política explícita de penalização e eventual reabertura do leilão.
+
+---
+
+# PARTE IV — REQUISITOS NÃO FUNCIONAIS
+
+## 21. Segurança
+
+**RNF001:** Utilizar autenticação segura.
+
+**RNF002:** Armazenar palavras-passe com Argon2id ou bcrypt, com parâmetros adequados.
+
+**RNF003:** Implementar autorização baseada em permissões.
+
+**RNF004:** Validar todos os dados no servidor.
+
+**RNF005:** Proteger contra SQL Injection, XSS, CSRF e abuso de endpoints.
+
+**RNF006:** Aplicar rate limiting.
+
+**RNF007:** Utilizar HTTPS em produção.
+
+**RNF008:** Proteger sessões e tokens.
+
+**RNF009:** Implementar controlo de acesso aos documentos e fotografias privadas.
+
+**RNF010:** Registar eventos de segurança.
+
+## 22. Desempenho
+
+**RNF011:** A página inicial deverá carregar rapidamente, com objectivo de LCP inferior a 2,5 segundos em condições de referência.
+
+**RNF012:** Utilizar paginação nas listas.
+
+**RNF013:** Optimizar imagens.
+
+**RNF014:** Utilizar cache para dados não transaccionais.
+
+**RNF015:** Actualizar licitações através de WebSockets.
+
+**RNF016:** Evitar consultas desnecessárias à base de dados.
+
+## 23. Disponibilidade e fiabilidade
+
+**RNF017:** Garantir que o motor de leilões continua a funcionar independentemente do navegador do utilizador.
+
+**RNF018:** Utilizar tarefas agendadas persistentes e recuperáveis.
+
+**RNF019:** Implementar backups regulares.
+
+**RNF020:** Permitir recuperação após falhas.
+
+**RNF021:** Garantir idempotência nas operações críticas.
+
+## 24. Usabilidade e acessibilidade
+
+**RNF022:** Interface responsiva para desktop, tablet e smartphone.
+
+**RNF023:** Contraste adequado.
+
+**RNF024:** Navegação intuitiva.
+
+**RNF025:** Mensagens de erro compreensíveis.
+
+**RNF026:** Estados de carregamento e feedback visual.
+
+**RNF027:** Compatibilidade com os navegadores modernos.
+
+## 25. Escalabilidade
+
+**RNF028:** Arquitectura modular.
+
+**RNF029:** Separação entre frontend, backend e serviços externos.
+
+**RNF030:** Suporte a múltiplos leilões simultâneos.
+
+**RNF031:** Preparação para crescimento do número de utilizadores e licitações.
+
+**RNF032:** Possibilidade de adicionar novas categorias, moedas e mercados.
+
+---
+
+# PARTE V — ARQUITECTURA TECNOLÓGICA
+
+## 26. Frontend
+
+- Quasar Framework.
+- Vue 3.
+- TypeScript.
+- Composition API.
+- Pinia.
+- Vue Router.
+- Axios.
+- Socket.IO Client.
+- SCSS.
+- Vite.
+
+## 27. Backend
+
+- Node.js.
+- Express.js.
+- TypeScript.
+- PostgreSQL.
+- Prisma ORM.
+- Redis.
+- Socket.IO.
+- Zod.
+- JWT ou sessões seguras.
+- Serviço de processamento de tarefas em background.
+
+## 28. Infraestrutura
+
+- Armazenamento de imagens em object storage.
+- CDN para conteúdos estáticos.
+- PostgreSQL gerido ou servidor dedicado.
+- Redis.
+- Serviço de email.
+- Gateway SMS.
+- Integração com prestadores de pagamento.
+- Monitorização e logging.
+- Backups automáticos.
+
+## 29. Organização do frontend
+
+```text
+mozbid-frontend/
+│
+├── public/
+│
+├── src/
+│   ├── assets/
+│   │   ├── images/
+│   │   ├── icons/
+│   │   └── styles/
+│   │
+│   ├── boot/
+│   │
+│   ├── components/
+│   │   ├── common/
+│   │   ├── auction/
+│   │   ├── product/
+│   │   ├── marketplace/
+│   │   └── dashboard/
+│   │
+│   ├── layouts/
+│   │   ├── PublicLayout.vue
+│   │   ├── BuyerLayout.vue
+│   │   ├── SellerLayout.vue
+│   │   └── AdminLayout.vue
+│   │
+│   ├── pages/
+│   │   ├── public/
+│   │   ├── auth/
+│   │   ├── buyer/
+│   │   ├── seller/
+│   │   ├── admin/
+│   │   └── errors/
+│   │
+│   ├── router/
+│   ├── stores/
+│   ├── services/
+│   ├── composables/
+│   ├── types/
+│   ├── utils/
+│   ├── css/
+│   └── App.vue
+│
+├── tests/
+├── package.json
+└── tsconfig.json
+```
+
+---
+
+# PARTE VI — MODELO DE DADOS POSTGRESQL
+
+## 30. Convenções
+
+- Chaves primárias UUID.
+- Valores monetários NUMERIC(14,2).
+- Datas TIMESTAMPTZ.
+- Valores monetários expressos em MZN na primeira versão.
+- Chaves estrangeiras com integridade referencial.
+- Índices para pesquisas frequentes.
+- Histórico financeiro e de licitações preservado.
+- Exclusão lógica para entidades que necessitem de histórico.
+
+## 31. Tabelas principais
+
+### 31.1. users
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| id | UUID | PK |
+| full_name | VARCHAR(150) | Nome |
+| email | VARCHAR(255) | Email único |
+| phone | VARCHAR(30) | Telefone |
+| password_hash | TEXT | Hash |
+| status | VARCHAR(30) | Estado |
+| email_verified_at | TIMESTAMPTZ | Verificação |
+| phone_verified_at | TIMESTAMPTZ | Verificação |
+| created_at | TIMESTAMPTZ | Criação |
+| updated_at | TIMESTAMPTZ | Actualização |
+
+### 31.2. roles
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| name | VARCHAR(50) |
+| description | TEXT |
+
+### 31.3. user_roles
+
+| Campo | Tipo |
+|---|---|
+| user_id | UUID FK |
+| role_id | UUID FK |
+| assigned_at | TIMESTAMPTZ |
+
+Um utilizador pode possuir mais de uma função.
+
+### 31.4. seller_profiles
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| user_id | UUID FK |
+| seller_type | VARCHAR(30) |
+| business_name | VARCHAR(200) |
+| nuit | VARCHAR(30) |
+| description | TEXT |
+| verification_status | VARCHAR(30) |
+| approved_at | TIMESTAMPTZ |
+| created_at | TIMESTAMPTZ |
+
+### 31.5. categories
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| parent_id | UUID FK nullable |
+| name | VARCHAR(100) |
+| slug | VARCHAR(120) |
+| description | TEXT |
+| image_url | TEXT |
+| is_active | BOOLEAN |
+
+### 31.6. products
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| seller_id | UUID FK |
+| category_id | UUID FK |
+| title | VARCHAR(200) |
+| slug | VARCHAR(220) |
+| description | TEXT |
+| condition | VARCHAR(30) |
+| attributes | JSONB |
+| province | VARCHAR(100) |
+| district | VARCHAR(100) |
+| status | VARCHAR(30) |
+| created_at | TIMESTAMPTZ |
+
+### 31.7. product_images
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| product_id | UUID FK |
+| image_url | TEXT |
+| display_order | INTEGER |
+| is_primary | BOOLEAN |
+| created_at | TIMESTAMPTZ |
+
+### 31.8. auctions
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| product_id | UUID FK |
+| seller_id | UUID FK |
+| auction_type | VARCHAR(30) |
+| starting_price | NUMERIC(14,2) |
+| current_price | NUMERIC(14,2) |
+| minimum_increment | NUMERIC(14,2) |
+| reserve_price | NUMERIC(14,2) nullable |
+| buy_now_price | NUMERIC(14,2) nullable |
+| reserve_met | BOOLEAN |
+| start_at | TIMESTAMPTZ |
+| end_at | TIMESTAMPTZ |
+| original_end_at | TIMESTAMPTZ |
+| extension_window_seconds | INTEGER |
+| extension_seconds | INTEGER |
+| status | VARCHAR(30) |
+| winner_id | UUID FK nullable |
+| bid_count | INTEGER |
+| created_at | TIMESTAMPTZ |
+| updated_at | TIMESTAMPTZ |
+
+O preço de reserva deve ter acesso restrito e nunca ser exposto pela API pública.
+
+### 31.9. bids
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| auction_id | UUID FK |
+| bidder_id | UUID FK |
+| amount | NUMERIC(14,2) |
+| bid_type | VARCHAR(30) |
+| status | VARCHAR(30) |
+| idempotency_key | VARCHAR(100) |
+| created_at | TIMESTAMPTZ |
+
+As licitações aceites devem ser imutáveis.
+
+### 31.10. automatic_bids
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| auction_id | UUID FK |
+| user_id | UUID FK |
+| maximum_amount | NUMERIC(14,2) |
+| status | VARCHAR(30) |
+| created_at | TIMESTAMPTZ |
+| updated_at | TIMESTAMPTZ |
+
+### 31.11. auction_extensions
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| auction_id | UUID FK |
+| triggered_by_bid_id | UUID FK |
+| previous_end_at | TIMESTAMPTZ |
+| new_end_at | TIMESTAMPTZ |
+| created_at | TIMESTAMPTZ |
+
+### 31.12. watchlists
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| user_id | UUID FK |
+| auction_id | UUID FK |
+| created_at | TIMESTAMPTZ |
+
+### 31.13. orders
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| auction_id | UUID FK |
+| buyer_id | UUID FK |
+| seller_id | UUID FK |
+| final_amount | NUMERIC(14,2) |
+| currency | CHAR(3) |
+| status | VARCHAR(30) |
+| payment_deadline | TIMESTAMPTZ |
+| created_at | TIMESTAMPTZ |
+
+### 31.14. payments
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| order_id | UUID FK |
+| provider | VARCHAR(50) |
+| provider_reference | VARCHAR(150) |
+| amount | NUMERIC(14,2) |
+| currency | CHAR(3) |
+| status | VARCHAR(30) |
+| idempotency_key | VARCHAR(100) |
+| paid_at | TIMESTAMPTZ |
+| created_at | TIMESTAMPTZ |
+
+### 31.15. commissions
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| order_id | UUID FK |
+| rate | NUMERIC(6,3) |
+| amount | NUMERIC(14,2) |
+| status | VARCHAR(30) |
+| created_at | TIMESTAMPTZ |
+
+### 31.16. deliveries
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| order_id | UUID FK |
+| delivery_method | VARCHAR(50) |
+| tracking_reference | VARCHAR(150) |
+| status | VARCHAR(30) |
+| shipped_at | TIMESTAMPTZ |
+| delivered_at | TIMESTAMPTZ |
+
+### 31.17. notifications
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| user_id | UUID FK |
+| type | VARCHAR(50) |
+| title | VARCHAR(200) |
+| message | TEXT |
+| read_at | TIMESTAMPTZ |
+| created_at | TIMESTAMPTZ |
+
+### 31.18. reviews
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| order_id | UUID FK |
+| reviewer_id | UUID FK |
+| reviewed_user_id | UUID FK |
+| rating | SMALLINT |
+| comment | TEXT |
+| created_at | TIMESTAMPTZ |
+
+### 31.19. disputes
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| order_id | UUID FK |
+| opened_by | UUID FK |
+| reason | VARCHAR(100) |
+| description | TEXT |
+| status | VARCHAR(30) |
+| resolution | TEXT |
+| created_at | TIMESTAMPTZ |
+| resolved_at | TIMESTAMPTZ |
+
+### 31.20. audit_logs
+
+| Campo | Tipo |
+|---|---|
+| id | UUID |
+| actor_id | UUID nullable |
+| action | VARCHAR(100) |
+| entity_type | VARCHAR(100) |
+| entity_id | UUID |
+| old_values | JSONB |
+| new_values | JSONB |
+| ip_address | INET |
+| created_at | TIMESTAMPTZ |
+
+## 32. Relacionamentos
+
+- users 1:N seller_profiles (com validação do modelo de perfil).
+- users N:M roles através de user_roles.
+- users 1:N products.
+- categories 1:N products.
+- products 1:N product_images.
+- products 1:N auctions ao longo do histórico, respeitando a regra de apenas um leilão activo por produto.
+- auctions 1:N bids.
+- users 1:N bids.
+- auctions 1:N automatic_bids.
+- auctions 1:N auction_extensions.
+- users N:M auctions através de watchlists.
+- auctions 0:1 orders.
+- orders 1:N payments.
+- orders 1:1 deliveries, quando aplicável.
+- orders 1:N reviews.
+- orders 1:N disputes.
+- users 1:N notifications.
+
+## 33. Índices e integridade
+
+Criar índices para:
+
+- users.email.
+- users.phone.
+- products.category_id.
+- products.seller_id.
+- products.status.
+- auctions.status.
+- auctions.end_at.
+- auctions.start_at.
+- bids.auction_id e created_at.
+- bids.bidder_id.
+- orders.buyer_id.
+- orders.seller_id.
+- payments.provider_reference.
+
+Criar também:
+- Índice único para email normalizado.
+- Índice único para telefone normalizado, quando fornecido.
+- Índice único para slug.
+- Índice único para idempotency_key no contexto adequado.
+- Índice parcial para impedir mais de um leilão activo por produto.
+- Restrições CHECK para valores positivos e ratings entre 1 e 5.
+- Restrições de integridade para evitar relações duplicadas.
+
+---
+
+# PARTE VII — REGRAS TÉCNICAS DO MOTOR DE LEILÕES
+
+## 34. Processamento de licitações
+
+A operação de licitação deverá executar uma transacção:
+
+1. Receber a solicitação.
+2. Validar autenticação.
+3. Verificar idempotency key.
+4. Bloquear o registo do leilão com SELECT FOR UPDATE.
+5. Confirmar estado ACTIVE.
+6. Comparar o horário actual do servidor com end_at.
+7. Confirmar que o utilizador não é o vendedor.
+8. Calcular o valor mínimo.
+9. Validar o valor apresentado.
+10. Inserir a licitação.
+11. Actualizar current_price e bid_count.
+12. Verificar a reserva.
+13. Aplicar extensão automática, se necessária.
+14. Confirmar a transacção.
+15. Emitir evento WebSocket.
+16. Processar notificações em background.
+
+O sistema deverá garantir que as actualizações do banco de dados e os eventos publicados não entram em conflito. Recomenda-se implementar o padrão Transactional Outbox para os eventos críticos.
+
+## 35. Encerramento automático
+
+Criar um serviço de background que:
+
+- Identifica leilões cujo end_at foi atingido.
+- Bloqueia cada registo.
+- Confirma novamente o estado e o horário.
+- Processa as ofertas válidas.
+- Determina o vencedor.
+- Verifica o preço de reserva.
+- Cria a ordem de pagamento, se aplicável.
+- Actualiza o estado.
+- Regista o resultado.
+- Envia notificações.
+
+O processo deve ser idempotente e recuperável após reinício do servidor.
+
+---
+
+# PARTE VIII — API PRINCIPAL
+
+## 36. Endpoints sugeridos
+
+### Autenticação
+
+```http
+POST /api/v1/auth/register
+POST /api/v1/auth/login
+POST /api/v1/auth/logout
+POST /api/v1/auth/refresh
+POST /api/v1/auth/forgot-password
+POST /api/v1/auth/reset-password
+GET  /api/v1/auth/me
+```
+
+### Produtos
+
+```http
+GET    /api/v1/products
+GET    /api/v1/products/:id
+POST   /api/v1/products
+PATCH  /api/v1/products/:id
+DELETE /api/v1/products/:id
+```
+
+### Leilões
+
+```http
+GET  /api/v1/auctions
+GET  /api/v1/auctions/:id
+POST /api/v1/auctions
+POST /api/v1/auctions/:id/submit
+POST /api/v1/auctions/:id/cancel
+GET  /api/v1/auctions/:id/bids
+```
+
+### Licitações
+
+```http
+POST   /api/v1/auctions/:id/bids
+GET    /api/v1/auctions/:id/bids
+POST   /api/v1/auctions/:id/automatic-bids
+DELETE /api/v1/automatic-bids/:id
+```
+
+### Comprador
+
+```http
+GET    /api/v1/buyer/dashboard
+GET    /api/v1/buyer/bids
+GET    /api/v1/buyer/wins
+GET    /api/v1/buyer/watchlist
+POST   /api/v1/buyer/watchlist/:auctionId
+DELETE /api/v1/buyer/watchlist/:auctionId
+```
+
+### Vendedor
+
+```http
+GET  /api/v1/seller/dashboard
+GET  /api/v1/seller/products
+GET  /api/v1/seller/auctions
+GET  /api/v1/seller/orders
+GET  /api/v1/seller/analytics
+```
+
+### Pagamentos
+
+```http
+POST /api/v1/orders/:id/payments
+GET  /api/v1/orders/:id
+GET  /api/v1/payments/:id
+POST /api/v1/webhooks/payments/:provider
+```
+
+### Administração
+
+```http
+GET   /api/v1/admin/dashboard
+GET   /api/v1/admin/users
+GET   /api/v1/admin/sellers
+PATCH /api/v1/admin/sellers/:id/approve
+GET   /api/v1/admin/products/pending
+PATCH /api/v1/admin/products/:id/approve
+GET   /api/v1/admin/auctions
+GET   /api/v1/admin/payments
+GET   /api/v1/admin/disputes
+GET   /api/v1/admin/audit-logs
+```
+
+---
+
+# PARTE IX — PLANO DE DESENVOLVIMENTO
+
+## 37. Etapas
+
+### Fase 1 — Frontend e identidade visual
+
+- Implementar sistema visual.
+- Criar página inicial.
+- Criar catálogo.
+- Criar página de detalhes.
+- Criar autenticação.
+- Criar layouts de comprador, vendedor e administrador.
+- Criar componentes reutilizáveis.
+
+### Fase 2 — Backend e autenticação
+
+- Configurar Express.
+- Configurar PostgreSQL.
+- Criar migrations.
+- Implementar autenticação.
+- Implementar roles e permissions.
+- Implementar validações.
+
+### Fase 3 — Produtos e vendedores
+
+- Perfis de vendedores.
+- Aprovação de contas.
+- Categorias.
+- Produtos.
+- Fotografias.
+- Moderação.
+
+### Fase 4 — Motor de leilões
+
+- Criar leilões.
+- Licitações.
+- Incrementos.
+- Histórico.
+- Reserva.
+- Extensão automática.
+- Licitações automáticas.
+- Encerramento.
+
+### Fase 5 — Experiência dos utilizadores
+
+- Dashboards.
+- Favoritos.
+- Notificações.
+- Estatísticas.
+- Histórico.
+
+### Fase 6 — Transacções
+
+- Ordens.
+- Pagamentos.
+- Comissões.
+- Entregas.
+- Avaliações.
+- Reclamações.
+
+### Fase 7 — Administração
+
+- Painel administrativo.
+- Relatórios.
+- Auditoria.
+- Monitorização.
+- Configurações.
+
+### Fase 8 — Testes e lançamento
+
+- Testes funcionais.
+- Testes de concorrência.
+- Testes de segurança.
+- Testes de pagamentos.
+- Testes responsivos.
+- Deploy.
+- Monitorização.
+
+---
+
+# PARTE X — CRITÉRIOS DE ACEITAÇÃO
+
+## 38. Condições para considerar o MVP funcional
+
+O MVP só será considerado funcional quando:
+
+1. Um visitante conseguir consultar os leilões.
+2. Um utilizador conseguir criar uma conta.
+3. Um vendedor aprovado conseguir publicar um produto.
+4. O administrador conseguir aprovar o anúncio.
+5. O vendedor conseguir configurar um leilão.
+6. O leilão iniciar na hora configurada.
+7. Um comprador conseguir apresentar uma oferta válida.
+8. Ofertas inferiores ao mínimo serem rejeitadas.
+9. Ofertas simultâneas serem processadas correctamente.
+10. A maior oferta ser actualizada em tempo real.
+11. O cronómetro funcionar independentemente do navegador.
+12. A extensão automática funcionar correctamente.
+13. O leilão encerrar automaticamente.
+14. O vencedor ser determinado correctamente.
+15. O preço de reserva ser respeitado.
+16. A obrigação de pagamento ser criada.
+17. O comprador receber notificações.
+18. O administrador conseguir consultar o histórico.
+19. As operações críticas ficarem registadas.
+20. A interface funcionar em desktop e dispositivos móveis.
+
+---
+
+# CONCLUSÃO
+
+O MozBid deverá ser desenvolvido como um verdadeiro marketplace transaccional, e não como um simples catálogo de produtos.
+
+A qualidade do projecto dependerá de três pilares:
+
+1. Experiência visual premium.
+2. Motor de leilões rigoroso e confiável.
+3. Segurança e transparência nas transacções.
+
+A identidade visual definida deverá ser preservada em todas as áreas da plataforma, mantendo consistência entre o marketplace público, os dashboards e as páginas de administração.1. Conceito visual definitivo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sistema de identidade visual
+
+#080808
+
+#171717
+
+#F59E0B
+
+#FFFFFF
+
+#A3A3A3
+
+Elemento	Definição
+Fundo principal	Preto profundo
+Superfícies	Cinzento quase preto
+Cor de destaque	Laranja dourado
+Texto principal	Branco
+Texto secundário	Cinzento
+Tipografia	Inter / Manrope
+Botões principais	Laranja
+Cartões	Escuros, elegantes e minimalistas
+Efeitos	Gradientes subtis e sombras controladas
+
+
+2. Estrutura funcional da plataforma
+A plataforma terá cinco grandes áreas funcionais:
+1. Marketplace público — descoberta e participação nos leilões.
+2. Área do comprador — gestão de licitações e compras.
+3. Área do vendedor — publicação e gestão de leilões.
+4. Sistema central de leilões — motor de licitações e regras.
+5. Painel administrativo — controlo de toda a plataforma.
+3. Marketplace — página inicial
+A página inicial deverá seguir a composição da imagem que enviaste.
+
+
+
+
+
+
+
+dribbble.com
+
+
+3.1. Navegação principal
+A barra superior terá:
+- Logótipo da plataforma.
+- Dashboard.
+- Leilões.
+- Categorias.
+- Como funciona.
+- Vender.
+- Favoritos.
+- Notificações.
+- Entrar / Criar conta.
+- Perfil do utilizador.
+3.2. Hero principal
+O primeiro bloco deverá ter uma imagem de um automóvel ou produto de grande valor.
+
+Informações:
+- Título de impacto: "Descubra. Licite. Conquiste."
+- Descrição da plataforma.
+- Botão "Explorar Leilões".
+- Botão "Começar a Licitar".
+- Leilão em destaque.
+- Contagem regressiva.
+- Maior oferta actual.
+3.3. Barra de pesquisa e filtros
+Inspirada no bloco inferior da imagem.
+
+Filtros:
+- Categoria.
+- Marca.
+- Modelo.
+- Ano.
+- Localização.
+- Estado do leilão.
+- Intervalo de preços.
+- Data de encerramento.
+A pesquisa deve permitir encontrar produtos por nome, referência ou descrição.
+3.4. Secções da página inicial
+Secção	Funcionalidade
+Leilões em destaque	Produtos promovidos
+A terminar em breve	Leilões próximos do encerramento
+Mais disputados	Produtos com maior actividade
+Recém-publicados	Leilões novos
+Automóveis	Leilões de viaturas
+Tecnologia	Computadores e electrónicos
+Equipamentos	Máquinas e equipamentos
+Leilões empresariais	Lotes de empresas
+Resultados recentes	Leilões já encerrados
+
+3.5. Cartão de leilão
+Cada produto deverá ter um cartão visual com:
+
+
+
+
+
+
+
+cogniteq.com
+
+
+- Fotografia principal.
+- Nome do produto.
+- Categoria.
+- Localização.
+- Preço inicial.
+- Maior oferta actual.
+- Número de licitadores.
+- Tempo restante.
+- Estado do leilão.
+- Ícone de favoritos.
+- Botão "Ver leilão".
+Os estados visuais serão:
+- A decorrer.
+- A terminar.
+- Encerrado.
+- Aguardando pagamento.
+- Vendido.
+- Não vendido.
+4. Motor de leilões — o coração da plataforma
+Esta é a funcionalidade mais importante de todo o projecto.
+
+O sistema deverá ter um motor responsável por controlar automaticamente todas as licitações, validar ofertas, gerir o tempo e determinar os vencedores.
+4.1. Criação de um leilão
+O vendedor terá um formulário de publicação organizado por etapas.
+Publicar um novo leilão
+Exemplo de formulário
+Etapa 1 — Informações do produto
+- Nome do produto.
+- Categoria e subcategoria.
+- Marca e modelo.
+- Descrição detalhada.
+- Estado: novo, usado ou recondicionado.
+  Etapa 2 — Fotografias
+- Fotografia principal.
+- Galeria de imagens.
+- Vídeo demonstrativo opcional.
+  Etapa 3 — Configuração do leilão
+- Preço inicial.
+- Incremento mínimo.
+- Preço de reserva.
+- Duração.
+- Data e hora de início.
+- Data e hora de encerramento.
+  Etapa 4 — Condições
+- Localização do produto.
+- Condições de entrega.
+- Responsabilidade pelo transporte.
+- Regras especiais.
+  Etapa 5 — Revisão
+- Pré-visualização.
+- Submissão para aprovação.
+
+O vendedor não poderá alterar livremente o preço inicial, o incremento ou o encerramento depois de o leilão começar.
+
+Alterações excepcionais deverão passar por regras de autorização e auditoria.
+4.2. Regras obrigatórias de licitação
+Estas regras devem ser implementadas no backend, e não apenas no frontend.
+Regra	Comportamento
+Oferta mínima	Não aceitar ofertas inferiores ao mínimo permitido
+Maior oferta	Actualizar automaticamente a oferta vencedora
+Concorrência	Processar ofertas simultâneas sem inconsistências
+Cronómetro	Actualizar em tempo real
+Encerramento	Bloquear novas ofertas após o fim
+Histórico	Guardar todas as licitações válidas
+Identificação	Associar cada oferta a um utilizador
+Vendedor	Não pode licitar no próprio produto
+Cancelamento	Não permitir cancelamentos arbitrários
+Auditoria	Registar todas as operações relevantes
+
+Exemplo prático de licitação
+Imaginemos um automóvel com preço inicial de 500.000 MT e incremento mínimo de 5.000 MT.
+BMW Série 3
+A decorrer
+
+
+
+
+
+
+
+
+aurumdrive.in
+
+
+Oferta actual
+575.000 MT
+
+Incremento mínimo
+5.000 MT
+
+
+
+Histórico de licitações
+Utilizador A
+
+500.000 MT
+
+Utilizador B
+
+520.000 MT
+
+Utilizador C
+
+550.000 MT
+
+Utilizador D
+
+575.000 MT
+
+
+Próxima oferta mínima
+580.000 MT
+Exemplo ilustrativo da interface de licitação.
+O cálculo será:
+\[
+Oferta_{\minima}=Oferta_{\actual}+Incremento
+\]
+
+Neste exemplo:
+\[
+575.000+5.000=580.000\ MT
+\]
+
+Se o comprador apresentar 570.000 MT, a plataforma rejeita a oferta porque é inferior ao mínimo.
+
+Se apresentar 580.000 MT, a oferta será validada, desde que o leilão ainda esteja aberto.
+4.3. Extensão automática do tempo (Anti-Sniping)
+Uma das funcionalidades que recomendo implementar obrigatoriamente.
+
+Imagine que o leilão termina às 15h00.
+
+Um utilizador apresenta uma oferta às 14h59min45s.
+
+Em vez de encerrar imediatamente, o sistema acrescenta 60 segundos ao leilão.
+Situação	Resultado
+Licitação a 5 minutos do fim	Não altera o tempo
+Licitação a 45 segundos do fim	Acrescenta 60 segundos
+Nova licitação durante a extensão	Acrescenta novamente 60 segundos
+Sem novas ofertas	O leilão termina
+
+O tempo deve ser controlado pelo servidor. O relógio do navegador nunca deve determinar o encerramento.
+4.4. Licitação automática
+O comprador poderá estabelecer um limite máximo.
+
+Exemplo:
+- Oferta actual: 100.000 MT.
+- Incremento: 5.000 MT.
+- Comprador A define limite máximo de 150.000 MT.
+- Comprador B oferece 110.000 MT.
+O sistema poderá apresentar automaticamente uma oferta de 115.000 MT em nome do comprador A, desde que as regras de licitação e os limites definidos o permitam.
+
+O limite máximo do comprador nunca deverá ser revelado aos outros participantes nem ao vendedor.
+4.5. Preço de reserva
+O vendedor poderá estabelecer um valor mínimo confidencial para aceitar a venda.
+
+Exemplo:
+- Preço inicial: 300.000 MT.
+- Preço de reserva: 450.000 MT.
+- Oferta final: 400.000 MT.
+Resultado: o leilão termina sem venda, porque a reserva não foi atingida.
+
+Se a oferta final for 450.000 MT ou superior, o requisito de reserva é satisfeito.
+
+O sistema deverá mostrar ao comprador se o preço de reserva foi atingido, mas nunca revelar o valor confidencial antes do encerramento.
+4.6. Encerramento e determinação do vencedor
+Quando o tempo terminar, o backend deverá:
+1. Bloquear novas licitações.
+2. Confirmar todas as ofertas aceites.
+3. Identificar a maior oferta válida.
+4. Verificar se o preço de reserva foi atingido.
+5. Determinar o vencedor.
+6. Alterar o estado do leilão.
+7. Criar uma obrigação de pagamento.
+8. Enviar notificações ao comprador e vendedor.
+9. Registar o resultado na auditoria.
+Se não existirem licitações válidas, o leilão termina sem vencedor.
+
+Se o preço de reserva não for atingido, também não existe venda obrigatória.
+5. Página individual do leilão
+Esta página deve ser uma das mais trabalhadas visualmente.
