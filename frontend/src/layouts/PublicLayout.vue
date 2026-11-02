@@ -1,12 +1,12 @@
 <template>
-  <div class="public-layout">
+  <q-layout view="hHh lpR fFf" class="bg-surface text-on-surface min-h-screen">
     <AppNavbar />
-    <main class="public-main">
+    <q-page-container>
       <router-view />
-    </main>
+    </q-page-container>
     <AppFooter />
     <ToastContainer />
-  </div>
+  </q-layout>
 </template>
 
 <script setup lang="ts">
@@ -16,14 +16,4 @@ import ToastContainer from '../components/common/ToastContainer.vue';
 </script>
 
 <style scoped>
-.public-layout {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--color-background);
-}
-
-.public-main {
-  flex: 1;
-}
 </style>
