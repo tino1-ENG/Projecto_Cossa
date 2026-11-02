@@ -1,40 +1,40 @@
 <template>
-  <div class="w-full bg-surface text-on-surface min-h-screen py-space-xl">
-    <div class="max-w-[1440px] mx-auto px-margin">
+  <div class="w-full bg-surface text-on-surface min-h-screen py-space-md sm:py-space-xl">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-margin">
       <!-- Breadcrumb & Header -->
-      <div class="flex flex-col gap-space-xs mb-space-xl">
-        <nav class="flex items-center gap-2 text-body-sm text-on-surface-variant/70">
+      <div class="flex flex-col gap-space-xs mb-space-lg sm:mb-space-xl">
+        <nav class="flex items-center gap-2 text-body-sm text-on-surface-variant/70 text-xs sm:text-sm">
           <router-link to="/" class="hover:text-primary transition-colors">Início</router-link>
           <span>/</span>
           <span class="text-on-surface font-medium">Catálogo de Leilões</span>
         </nav>
         <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary">Registo Oficial de Lotes</span>
-        <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+        <h1 class="text-2xl sm:text-3xl md:text-headline-lg font-bold text-on-surface tracking-tight font-display">
           Catálogo Geral de Leilões em Moçambique
         </h1>
-        <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+        <p class="font-body-md text-sm sm:text-base text-on-surface-variant max-w-2xl">
           Consulte o portfólio completo de supercarros, frotas institucionais, maquinaria industrial e equipamentos raros autenticados por escritura notarial.
         </p>
       </div>
 
       <!-- Filter Console Panel -->
-      <div class="w-full bg-surface-container rounded-2xl p-space-md sm:p-space-lg border border-white/[0.08] shadow-2xl mb-space-2xl flex flex-col gap-space-md">
+      <div class="w-full bg-surface-container rounded-2xl p-4 sm:p-space-lg border border-white/[0.08] shadow-2xl mb-space-xl sm:mb-space-2xl flex flex-col gap-space-md">
         <!-- Top Search Row -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-space-md items-center">
           <div class="md:col-span-8 relative">
-            <span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+            <span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
             <input
               v-model="searchQuery"
               type="text"
               placeholder="Pesquisar por título, marca, modelo ou lote..."
-              class="w-full bg-surface-container-low border border-white/[0.08] rounded-lg pl-12 pr-space-md py-space-sm text-on-surface placeholder:text-on-surface-variant/50 font-body-md text-body-md focus:outline-none focus:border-primary"
+              class="w-full bg-surface-container-low border border-white/[0.08] rounded-lg pl-11 sm:pl-12 pr-space-md py-2.5 sm:py-space-sm text-on-surface placeholder:text-on-surface-variant/50 font-body-md text-sm sm:text-body-md focus:outline-none focus:border-primary"
               @keyup.enter="applyFilters"
             />
           </div>
 
-          <div class="md:col-span-4 flex items-center gap-space-sm">
+          <div class="md:col-span-4 flex items-center gap-2 sm:gap-space-sm">
             <button
-              class="flex-1 py-space-sm rounded-lg bg-primary hover:bg-primary-fixed-dim text-on-primary font-headline-sm text-title-md transition-all shadow-md flex items-center justify-center gap-space-xs"
+              class="flex-1 py-2.5 sm:py-space-sm rounded-lg bg-primary hover:bg-primary-fixed-dim text-on-primary font-headline-sm text-sm sm:text-title-md transition-all shadow-md flex items-center justify-center gap-space-xs font-bold"
               @click="applyFilters"
               type="button"
             >
@@ -43,7 +43,7 @@
             </button>
             <button
               v-if="hasActiveFilters"
-              class="px-space-md py-space-sm rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-white/[0.08] text-on-surface-variant font-label-caps text-label-caps"
+              class="px-3 sm:px-space-md py-2.5 sm:py-space-sm rounded-lg bg-surface-container-high hover:bg-surface-container-highest border border-white/[0.08] text-on-surface-variant font-label-caps text-xs sm:text-label-caps"
               @click="clearAllFilters"
               type="button"
             >
@@ -53,13 +53,13 @@
         </div>
 
         <!-- Filter Selectors Row -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md pt-space-sm border-t border-white/[0.06]">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-space-md pt-space-sm border-t border-white/[0.06]">
           <!-- Category -->
           <div class="flex flex-col gap-1">
             <label class="font-label-caps text-[10px] text-on-surface-variant uppercase">Categoria de Ativos</label>
             <select
               v-model="selectedCategory"
-              class="bg-surface-container-low border border-white/[0.08] rounded-lg px-space-md py-2 text-on-surface font-body-md text-body-sm focus:outline-none focus:border-primary"
+              class="bg-surface-container-low border border-white/[0.08] rounded-lg px-3 py-2 text-on-surface font-body-md text-xs sm:text-body-sm focus:outline-none focus:border-primary"
               @change="applyFilters"
             >
               <option value="all">Todas as Categorias</option>
@@ -74,7 +74,7 @@
             <label class="font-label-caps text-[10px] text-on-surface-variant uppercase">Localização / Província</label>
             <select
               v-model="selectedProvince"
-              class="bg-surface-container-low border border-white/[0.08] rounded-lg px-space-md py-2 text-on-surface font-body-md text-body-sm focus:outline-none focus:border-primary"
+              class="bg-surface-container-low border border-white/[0.08] rounded-lg px-3 py-2 text-on-surface font-body-md text-xs sm:text-body-sm focus:outline-none focus:border-primary"
               @change="applyFilters"
             >
               <option value="all">Todo o Território Nacional</option>
@@ -95,7 +95,7 @@
             <label class="font-label-caps text-[10px] text-on-surface-variant uppercase">Estado do Leilão</label>
             <select
               v-model="selectedStatus"
-              class="bg-surface-container-low border border-white/[0.08] rounded-lg px-space-md py-2 text-on-surface font-body-md text-body-sm focus:outline-none focus:border-primary"
+              class="bg-surface-container-low border border-white/[0.08] rounded-lg px-3 py-2 text-on-surface font-body-md text-xs sm:text-body-sm focus:outline-none focus:border-primary"
               @change="applyFilters"
             >
               <option value="all">Todos os Estados</option>
@@ -110,7 +110,7 @@
             <label class="font-label-caps text-[10px] text-on-surface-variant uppercase">Ordenação do Livro de Ofertas</label>
             <select
               v-model="selectedSort"
-              class="bg-surface-container-low border border-white/[0.08] rounded-lg px-space-md py-2 text-on-surface font-body-md text-body-sm focus:outline-none focus:border-primary"
+              class="bg-surface-container-low border border-white/[0.08] rounded-lg px-3 py-2 text-on-surface font-body-md text-xs sm:text-body-sm focus:outline-none focus:border-primary"
               @change="applyFilters"
             >
               <option value="ending_soon">A Terminar Primeiro (Mais Urgentes)</option>
@@ -123,13 +123,13 @@
         </div>
 
         <!-- Active Badges Indicator -->
-        <div class="flex items-center justify-between text-body-sm text-on-surface-variant pt-space-xs border-t border-white/[0.04]">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between text-body-sm text-on-surface-variant pt-space-xs border-t border-white/[0.04] gap-1 text-xs">
           <span class="font-label-numeric">
             A apresentar <strong>{{ filteredAuctions.length }}</strong> lotes certificados
           </span>
           <div class="flex items-center gap-space-xs">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span class="text-xs">Sincronização em tempo real via Socket.IO</span>
+            <span>Sincronização em tempo real via Socket.IO</span>
           </div>
         </div>
       </div>
@@ -141,14 +141,14 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="filteredAuctions.length === 0" class="py-20 text-center rounded-2xl bg-surface-container border border-white/[0.08] p-space-2xl">
-        <span class="material-symbols-outlined text-[48px] text-on-surface-variant/40 mb-2">search_off</span>
-        <h3 class="font-headline-sm text-on-surface">Nenhum lote encontrado para os critérios selecionados</h3>
-        <p class="font-body-md text-on-surface-variant mt-1 max-w-md mx-auto">
+      <div v-else-if="filteredAuctions.length === 0" class="py-16 sm:py-20 text-center rounded-2xl bg-surface-container border border-white/[0.08] p-6 sm:p-space-2xl">
+        <span class="material-symbols-outlined text-[44px] sm:text-[48px] text-on-surface-variant/40 mb-2">search_off</span>
+        <h3 class="text-lg sm:text-headline-sm font-bold text-on-surface font-display">Nenhum lote encontrado para os critérios selecionados</h3>
+        <p class="font-body-md text-sm sm:text-base text-on-surface-variant mt-1 max-w-md mx-auto">
           Tente alargar os seus termos de pesquisa ou remover alguns filtros para encontrar lotes disponíveis.
         </p>
         <button
-          class="mt-space-md px-space-lg py-2 rounded bg-primary text-on-primary font-label-caps text-label-caps uppercase shadow-md"
+          class="mt-space-md px-space-lg py-2 rounded bg-primary text-on-primary font-label-caps text-label-caps uppercase shadow-md font-bold"
           @click="clearAllFilters"
           type="button"
         >
@@ -157,7 +157,7 @@
       </div>
 
       <!-- Grid of Lots -->
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-gutter">
         <div v-for="item in filteredAuctions" :key="item.id">
           <AuctionCard :auction="item" />
         </div>

@@ -5,40 +5,40 @@
       <!-- Subtle Ambient Core Glow Behind Content -->
       <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-primary/10 blur-[140px] pointer-events-none rounded-full"></div>
 
-      <div class="max-w-[1440px] mx-auto px-margin relative z-10">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-margin relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:gap-space-xl items-center">
           <!-- Left Column: Copy & Value Proposition -->
-          <div class="lg:col-span-7 flex flex-col gap-space-lg">
+          <div class="lg:col-span-7 flex flex-col gap-space-md sm:gap-space-lg">
             <!-- Origin Pill -->
-            <div class="inline-flex items-center gap-space-xs px-space-md py-1 rounded bg-surface-container-high border border-white/[0.08] w-fit shadow-sm">
-              <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
-              <span class="font-label-caps text-label-caps text-on-surface-variant">🇲🇿 A Principal Casa de Leilões de Luxo de Moçambique</span>
+            <div class="inline-flex items-center gap-space-xs px-2.5 sm:px-space-md py-1 rounded bg-surface-container-high border border-white/[0.08] w-fit shadow-sm max-w-full">
+              <span class="w-2 h-2 rounded-full bg-primary animate-ping shrink-0"></span>
+              <span class="font-label-caps text-[10px] sm:text-label-caps text-on-surface-variant truncate">🇲🇿 Casa Oficial de Leilões de Luxo de Moçambique</span>
             </div>
 
             <!-- Main Headline -->
-            <h1 class="font-headline-lg md:text-[56px] md:leading-[64px] font-bold text-on-surface tracking-tight">
+            <h1 class="text-3xl sm:text-4xl md:text-[56px] leading-tight sm:leading-[44px] md:leading-[64px] font-bold text-on-surface tracking-tight font-display">
               Descubra Leilões Exclusivos. <br class="hidden sm:inline" />
               <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-fixed-dim to-on-surface">Licite com Confiança.</span>
             </h1>
 
             <!-- Subtitle -->
-            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+            <p class="font-body-md sm:font-body-lg text-sm sm:text-base text-on-surface-variant max-w-xl leading-relaxed">
               A plataforma oficial em Moçambique para aquisição de frotas executivas, supercarros, relógios de coleção e maquinaria industrial com liquidação em Meticais (MZN).
             </p>
 
             <!-- Quick Metrics Bar -->
-            <div class="grid grid-cols-3 gap-space-md pt-space-md border-t border-white/[0.08] max-w-lg">
+            <div class="grid grid-cols-3 gap-2 sm:gap-space-md pt-space-md border-t border-white/[0.08] max-w-lg">
               <div class="flex flex-col">
-                <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">2.4B MZN</span>
-                <span class="font-body-sm text-body-sm text-on-surface-variant/70">Volume Transacionado</span>
+                <span class="text-lg sm:text-headline-sm text-on-surface font-semibold font-display">2.4B MZN</span>
+                <span class="text-[10px] sm:text-body-sm text-on-surface-variant/70">Volume Total</span>
               </div>
-              <div class="flex flex-col border-l border-white/[0.08] pl-space-md">
-                <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">100%</span>
-                <span class="font-body-sm text-body-sm text-on-surface-variant/70">Custódia em Escrow</span>
+              <div class="flex flex-col border-l border-white/[0.08] pl-2 sm:pl-space-md">
+                <span class="text-lg sm:text-headline-sm text-on-surface font-semibold font-display">100%</span>
+                <span class="text-[10px] sm:text-body-sm text-on-surface-variant/70">Custódia Escrow</span>
               </div>
-              <div class="flex flex-col border-l border-white/[0.08] pl-space-md">
-                <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">14,200+</span>
-                <span class="font-body-sm text-body-sm text-on-surface-variant/70">Licitadores Ativos</span>
+              <div class="flex flex-col border-l border-white/[0.08] pl-2 sm:pl-space-md">
+                <span class="text-lg sm:text-headline-sm text-on-surface font-semibold font-display">14,200+</span>
+                <span class="text-[10px] sm:text-body-sm text-on-surface-variant/70">Licitadores</span>
               </div>
             </div>
           </div>
@@ -98,17 +98,17 @@
                   </h3>
                 </div>
 
-                <div class="p-space-md rounded-xl bg-surface-container-low border border-white/[0.06] flex items-center justify-between">
+                <div class="p-space-md rounded-xl bg-surface-container-low border border-white/[0.06] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                   <div class="flex flex-col">
                     <span class="font-label-caps text-label-caps text-on-surface-variant">Licitação Atual Mais Alta</span>
-                    <span class="font-currency-display text-[26px] sm:text-[28px] text-on-surface">
+                    <span class="font-currency-display text-[22px] sm:text-[28px] text-on-surface">
                       {{ formatMoneyDigits(heroLot?.current_price || 1845000000) }}
                       <span class="text-body-sm font-label-caps text-primary">MZN</span>
                     </span>
                   </div>
                   <router-link
                     :to="heroLot ? `/auctions/${heroLot.id}` : '/catalog'"
-                    class="px-space-lg py-space-sm rounded bg-primary hover:bg-primary-fixed-dim text-on-primary font-label-caps text-label-caps uppercase transition-all shadow-lg flex items-center gap-1.5"
+                    class="px-space-lg py-space-sm rounded bg-primary hover:bg-primary-fixed-dim text-on-primary font-label-caps text-label-caps uppercase transition-all shadow-lg flex items-center justify-center gap-1.5 text-center"
                   >
                     <span>Licitar em Meticais</span>
                     <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
@@ -122,15 +122,15 @@
     </section>
 
     <!-- SECTION 2: FLOATING MULTI-PARAMETRIC SEARCH BAR -->
-    <section class="relative z-20 max-w-[1440px] mx-auto px-margin -mt-space-md">
-      <div class="w-full bg-surface-container rounded-2xl p-space-md md:p-space-lg border border-white/[0.08] shadow-2xl">
+    <section class="relative z-20 max-w-[1440px] mx-auto px-4 sm:px-margin -mt-space-md">
+      <div class="w-full bg-surface-container rounded-2xl p-space-md sm:p-space-lg border border-white/[0.08] shadow-2xl">
         <!-- Category Filter Tabs -->
-        <div class="flex items-center gap-space-xs overflow-x-auto pb-space-sm mb-space-md scrollbar-none border-b border-white/[0.06]">
+        <div class="flex items-center gap-space-xs overflow-x-auto pb-space-sm mb-space-md scrollbar-none border-b border-white/[0.06] -mx-2 px-2 sm:mx-0 sm:px-0">
           <button
             v-for="tab in filterTabs"
             :key="tab.slug"
             type="button"
-            class="px-space-md py-1.5 rounded-full font-label-caps text-label-caps whitespace-nowrap transition-colors"
+            class="px-3 sm:px-space-md py-1.5 rounded-full font-label-caps text-[10px] sm:text-label-caps whitespace-nowrap transition-colors"
             :class="selectedTab === tab.slug ? 'bg-primary text-on-primary shadow-sm' : 'bg-surface-container-high text-on-surface-variant hover:text-on-surface'"
             @click="selectTab(tab.slug)"
           >
@@ -207,17 +207,17 @@
     </section>
 
     <!-- SECTION 3: ENDING SOON AUCTIONS (LOTES CRÍTICOS EM DISPUTA) -->
-    <section class="max-w-[1440px] mx-auto px-margin py-space-3xl">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-xl">
+    <section class="max-w-[1440px] mx-auto px-4 sm:px-margin py-space-xl sm:py-space-3xl">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg sm:mb-space-xl">
         <div class="flex flex-col gap-space-xs">
           <span class="font-label-caps text-label-caps uppercase tracking-wider text-error flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
             Lotes Críticos em Disputa
           </span>
-          <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          <h2 class="text-2xl sm:text-headline-lg font-bold text-on-surface tracking-tight font-display">
             A Terminar em Breve
           </h2>
-          <p class="font-body-md text-body-md text-on-surface-variant">
+          <p class="font-body-md text-sm sm:text-base text-on-surface-variant">
             Segundos finais para submeter licitações fiduciárias antes do fecho irrevogável dos lotes.
           </p>
         </div>
@@ -231,7 +231,7 @@
       </div>
 
       <!-- Grid of Ending Soon Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-gutter">
         <div v-for="item in endingSoonList" :key="item.id">
           <AuctionCard :auction="item" />
         </div>
@@ -239,17 +239,17 @@
     </section>
 
     <!-- SECTION 4: FEATURED AUCTIONS (CURATED PORTFOLIO) -->
-    <section class="w-full bg-surface-container-low py-space-3xl border-y border-white/[0.04]">
-      <div class="max-w-[1440px] mx-auto px-margin">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-xl">
+    <section class="w-full bg-surface-container-low py-space-xl sm:py-space-3xl border-y border-white/[0.04]">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-margin">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg sm:mb-space-xl">
           <div class="flex flex-col gap-space-xs">
             <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary">
               Registo Institucional de Moçambique
             </span>
-            <h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+            <h2 class="text-2xl sm:text-headline-lg font-bold text-on-surface tracking-tight font-display">
               Leilões em Destaque
             </h2>
-            <p class="font-body-md text-body-md text-on-surface-variant">
+            <p class="font-body-md text-sm sm:text-base text-on-surface-variant">
               Descubra artigos de referência selecionados das nossas sessões mais prestigiadas e concorridas.
             </p>
           </div>
@@ -263,7 +263,7 @@
         </div>
 
         <!-- 4-Card Refined Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-gutter">
           <div v-for="item in featuredList" :key="item.id">
             <AuctionCard :auction="item" />
           </div>
@@ -272,29 +272,29 @@
     </section>
 
     <!-- SECTION 5: CATEGORY EXPLORATION TILES -->
-    <section class="w-full max-w-[1440px] mx-auto px-margin py-space-3xl">
-      <div class="flex flex-col items-center text-center gap-space-xs mb-space-2xl">
+    <section class="w-full max-w-[1440px] mx-auto px-4 sm:px-margin py-space-xl sm:py-space-3xl">
+      <div class="flex flex-col items-center text-center gap-space-xs mb-space-xl sm:mb-space-2xl">
         <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary">Classificação de Ativos</span>
-        <h2 class="font-headline-lg text-headline-lg text-on-surface">Explorar por Categoria</h2>
-        <p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+        <h2 class="text-2xl sm:text-headline-lg font-bold text-on-surface font-display">Explorar por Categoria</h2>
+        <p class="font-body-md text-sm sm:text-base text-on-surface-variant max-w-xl">
           De frotas corporativas a peças de alta joalharia e maquinaria pesada, explore listagens verificadas em Moçambique.
         </p>
       </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-gutter">
         <router-link
           v-for="cat in categoryTiles"
           :key="cat.slug"
           :to="`/catalog?category=${cat.slug}`"
-          class="group relative flex flex-col items-center justify-center p-space-lg rounded-xl bg-surface-container hover:bg-surface-container-high border border-white/[0.06] hover:border-primary/40 transition-all duration-300 shadow-md"
+          class="group relative flex flex-col items-center justify-center p-space-md sm:p-space-lg rounded-xl bg-surface-container hover:bg-surface-container-high border border-white/[0.06] hover:border-primary/40 transition-all duration-300 shadow-md"
         >
-          <div class="w-14 h-14 rounded-full bg-surface-container-low group-hover:bg-primary flex items-center justify-center text-primary group-hover:text-on-primary transition-colors mb-space-sm shadow-inner">
-            <span class="material-symbols-outlined text-[28px]">{{ cat.icon }}</span>
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-surface-container-low group-hover:bg-primary flex items-center justify-center text-primary group-hover:text-on-primary transition-colors mb-space-sm shadow-inner">
+            <span class="material-symbols-outlined text-[24px] sm:text-[28px]">{{ cat.icon }}</span>
           </div>
-          <span class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors text-center">
+          <span class="font-title-md text-sm sm:text-title-md text-on-surface group-hover:text-primary transition-colors text-center line-clamp-1">
             {{ cat.name }}
           </span>
-          <span class="font-body-sm text-body-sm text-on-surface-variant/70 mt-1">
+          <span class="font-body-sm text-[11px] sm:text-body-sm text-on-surface-variant/70 mt-1">
             {{ cat.count }} Lotes Ativos
           </span>
         </router-link>
@@ -302,15 +302,15 @@
     </section>
 
     <!-- SECTION 6: HOW IT WORKS & SECURITY PROMISE -->
-    <section class="w-full bg-surface-container-lowest py-space-3xl relative overflow-hidden border-t border-white/[0.04]" id="how-it-works">
-      <div class="max-w-[1440px] mx-auto px-margin">
+    <section class="w-full bg-surface-container-lowest py-space-xl sm:py-space-3xl relative overflow-hidden border-t border-white/[0.04]" id="how-it-works">
+      <div class="max-w-[1440px] mx-auto px-4 sm:px-margin">
         <!-- Security Credential Banner -->
-        <div class="bg-gradient-to-r from-surface-container-low via-surface-container to-surface-container-low p-space-xl rounded-2xl border border-white/[0.08] shadow-xl mb-space-3xl">
+        <div class="bg-gradient-to-r from-surface-container-low via-surface-container to-surface-container-low p-space-lg sm:p-space-xl rounded-2xl border border-white/[0.08] shadow-xl mb-space-2xl sm:mb-space-3xl">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
             <div class="lg:col-span-8 flex flex-col gap-space-sm">
               <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary">Proteção Financeira Institucional</span>
-              <h3 class="font-headline-lg text-headline-lg text-on-surface">O Padrão de Escrow e Conformidade da MozBid</h3>
-              <p class="font-body-lg text-body-lg text-on-surface-variant">
+              <h3 class="text-xl sm:text-headline-lg font-bold text-on-surface font-display">O Padrão de Escrow e Conformidade da MozBid</h3>
+              <p class="font-body-md sm:font-body-lg text-sm sm:text-base text-on-surface-variant leading-relaxed">
                 Cada lance em Meticais na MozBid é totalmente respaldado por custódia fiduciária (escrow) em instituições bancárias comerciais autorizadas em Moçambique. Depósitos de licitações não vencedoras são libertados imediatamente após a conclusão do lote.
               </p>
             </div>

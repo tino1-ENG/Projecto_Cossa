@@ -55,9 +55,9 @@
         </span>
       </div>
 
-      <div class="font-currency-display text-[32px] sm:text-[36px] text-on-surface leading-tight mt-1">
+      <div class="font-currency-display text-2xl sm:text-[32px] md:text-[36px] text-on-surface leading-tight mt-1 break-words">
         {{ formatMoneyDigits(auction.current_price) }}
-        <span class="text-title-md font-label-caps text-primary">MZN</span>
+        <span class="text-sm sm:text-title-md font-label-caps text-primary">MZN</span>
       </div>
 
       <!-- User Leading / Outbid Alert -->

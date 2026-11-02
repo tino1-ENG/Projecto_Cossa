@@ -40,9 +40,17 @@
 
       <!-- Right Form Side -->
       <div class="auth-form-side">
-        <div class="auth-top-nav">
+        <div class="auth-top-nav flex items-center justify-between">
           <router-link to="/" class="back-link">
-            <ArrowLeft :size="16" /> Voltar ao Marketplace
+            <ArrowLeft :size="16" /> <span class="hidden sm:inline">Voltar ao Marketplace</span><span class="sm:hidden">Marketplace</span>
+          </router-link>
+
+          <!-- Mobile Only Brand Header -->
+          <router-link to="/" class="flex sm:hidden items-center gap-2">
+            <div class="w-8 h-8 rounded bg-primary text-black flex items-center justify-center font-bold">
+              <Gavel :size="16" />
+            </div>
+            <span class="font-display font-bold text-white text-base">MOZ<span class="text-gold">BID</span></span>
           </router-link>
         </div>
 

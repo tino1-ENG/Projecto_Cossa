@@ -1,20 +1,20 @@
 <template>
-  <div class="w-full bg-surface text-on-surface min-h-screen py-space-xl">
-    <div class="max-w-[1440px] mx-auto px-margin">
+  <div class="w-full bg-surface text-on-surface min-h-screen py-space-md sm:py-space-xl">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-margin">
       <!-- Header -->
-      <div class="flex flex-col gap-space-xs mb-space-2xl text-center max-w-3xl mx-auto">
+      <div class="flex flex-col gap-space-xs mb-space-xl sm:mb-space-2xl text-center max-w-3xl mx-auto">
         <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary">Regulamento Operacional & Jurídico</span>
-        <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+        <h1 class="text-2xl sm:text-3xl md:text-headline-lg font-bold text-on-surface tracking-tight font-display">
           Como Funciona a Bolsa de Leilões MozBid
         </h1>
-        <p class="font-body-lg text-body-lg text-on-surface-variant mt-2">
+        <p class="font-body-md sm:font-body-lg text-sm sm:text-base text-on-surface-variant mt-2 leading-relaxed">
           Conheça as regras de licitação em Meticais (MZN), o motor anti-sniping, as garantias fiduciárias de escrow bancário e a verificação oficial de NUIT em Moçambique.
         </p>
       </div>
 
       <!-- 3 Structured Pillars Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-space-3xl">
-        <div class="p-space-xl rounded-2xl bg-surface-container border border-white/[0.08] flex flex-col justify-between gap-space-lg shadow-xl hover:bg-surface-container-high transition-colors">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-gutter mb-space-2xl sm:mb-space-3xl">
+        <div class="p-5 sm:p-space-xl rounded-2xl bg-surface-container border border-white/[0.08] flex flex-col justify-between gap-space-md sm:gap-space-lg shadow-xl hover:bg-surface-container-high transition-colors">
           <div class="flex items-center justify-between">
             <span class="font-headline-lg text-[44px] font-bold text-primary/30">01</span>
             <div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center text-primary border border-white/[0.08]">

@@ -646,14 +646,22 @@ onMounted(() => {
 @media (max-width: 900px) {
   .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 520px) {
+  .kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 }
 
 .kpi-card {
-  padding: 20px;
+  padding: 16px;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .kpi-icon-box {
@@ -760,10 +768,13 @@ onMounted(() => {
 
 .table-wrapper {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
 }
 
 .data-table {
   width: 100%;
+  min-width: 580px;
   border-collapse: collapse;
   text-align: left;
 }

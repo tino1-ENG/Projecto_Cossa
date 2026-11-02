@@ -1,20 +1,20 @@
 <template>
-  <div class="w-full bg-surface text-on-surface min-h-screen py-space-xl">
-    <div v-if="auctionStore.loading && !auction" class="max-w-[1440px] mx-auto px-margin py-20 flex flex-col items-center justify-center gap-space-md">
+  <div class="w-full bg-surface text-on-surface min-h-screen py-space-md sm:py-space-xl">
+    <div v-if="auctionStore.loading && !auction" class="max-w-[1440px] mx-auto px-4 sm:px-margin py-20 flex flex-col items-center justify-center gap-space-md">
       <div class="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
       <p class="font-body-md text-on-surface-variant">A carregar detalhes do lote em tempo real...</p>
     </div>
 
-    <div v-else-if="!auction" class="max-w-[1440px] mx-auto px-margin py-20 text-center">
+    <div v-else-if="!auction" class="max-w-[1440px] mx-auto px-4 sm:px-margin py-20 text-center">
       <h3 class="font-headline-sm text-on-surface">Lote não encontrado</h3>
-      <router-link to="/catalog" class="mt-4 inline-block px-space-md py-2 rounded bg-primary text-on-primary font-label-caps uppercase">
+      <router-link to="/catalog" class="mt-4 inline-block px-space-md py-2 rounded bg-primary text-on-primary font-label-caps uppercase font-bold">
         Voltar ao Catálogo
       </router-link>
     </div>
 
-    <div v-else class="max-w-[1440px] mx-auto px-margin">
+    <div v-else class="max-w-[1440px] mx-auto px-4 sm:px-margin">
       <!-- Breadcrumbs -->
-      <nav class="flex items-center gap-2 text-body-sm text-on-surface-variant/70 mb-space-md flex-wrap">
+      <nav class="flex items-center gap-2 text-body-sm text-on-surface-variant/70 mb-space-md flex-wrap text-xs sm:text-sm">
         <router-link to="/" class="hover:text-primary transition-colors">Início</router-link>
         <span>/</span>
         <router-link to="/catalog" class="hover:text-primary transition-colors">Catálogo</router-link>
@@ -27,29 +27,29 @@
       </nav>
 
       <!-- Lot Title Header -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-xl pb-space-lg border-b border-white/[0.08]">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg sm:mb-space-xl pb-space-md sm:pb-space-lg border-b border-white/[0.08]">
         <div class="flex flex-col gap-space-xs">
           <div class="flex items-center gap-space-xs flex-wrap">
-            <span class="px-space-sm py-0.5 rounded bg-surface-container text-primary font-label-caps text-[10px] tracking-wider uppercase border border-white/[0.08]">
+            <span class="px-2 sm:px-space-sm py-0.5 rounded bg-surface-container text-primary font-label-caps text-[10px] tracking-wider uppercase border border-white/[0.08]">
               {{ auction.category_name }}
             </span>
-            <span v-if="auction.status === 'active'" class="px-space-sm py-0.5 rounded bg-primary/20 text-primary font-label-caps text-[10px] flex items-center gap-1 font-bold">
+            <span v-if="auction.status === 'active'" class="px-2 sm:px-space-sm py-0.5 rounded bg-primary/20 text-primary font-label-caps text-[10px] flex items-center gap-1 font-bold">
               <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
               LEILÃO AO VIVO
             </span>
-            <span v-else class="px-space-sm py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-caps text-[10px]">
+            <span v-else class="px-2 sm:px-space-sm py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-caps text-[10px]">
               ENCERRADO
             </span>
-            <span class="font-label-caps text-[11px] text-on-surface-variant uppercase tracking-wider">
+            <span class="font-label-caps text-[10px] sm:text-[11px] text-on-surface-variant uppercase tracking-wider">
               LOTE #{{ auction.id }}
             </span>
           </div>
 
-          <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          <h1 class="text-2xl sm:text-3xl md:text-headline-lg font-bold text-on-surface tracking-tight font-display leading-tight mt-1">
             {{ auction.title }}
           </h1>
 
-          <div class="flex items-center gap-1.5 text-body-sm text-on-surface-variant">
+          <div class="flex items-center gap-1.5 text-xs sm:text-body-sm text-on-surface-variant mt-0.5">
             <span class="material-symbols-outlined text-[16px] text-primary">location_on</span>
             <span>{{ auction.location_city }}, {{ auction.location_province }} • Moçambique</span>
           </div>
@@ -57,7 +57,7 @@
 
         <div class="flex items-center gap-space-sm">
           <button
-            class="px-space-md py-2 rounded bg-surface-container hover:bg-surface-container-high border border-white/[0.08] text-on-surface font-label-caps text-label-caps flex items-center gap-2 transition-colors"
+            class="w-full sm:w-auto px-space-md py-2 rounded bg-surface-container hover:bg-surface-container-high border border-white/[0.08] text-on-surface font-label-caps text-xs sm:text-label-caps flex items-center justify-center gap-2 transition-colors"
             :class="{ 'border-primary text-primary': auction.is_watchlisted }"
             @click="handleToggleFav"
             type="button"
@@ -70,30 +70,30 @@
         </div>
       </div>
 
-      <!-- ASYMMETRIC 7:5 GRID LAYOUT -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+      <!-- ASYMMETRIC 7:5 GRID LAYOUT (Stacks cleanly on Mobile & Tablets) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:gap-space-xl items-start">
         <!-- 7 COLUMNS: Gallery, Description, Specs & Provenance -->
-        <div class="lg:col-span-7 flex flex-col gap-space-xl">
+        <div class="lg:col-span-7 flex flex-col gap-space-lg lg:gap-space-xl">
           <!-- Gallery -->
           <ProductGallery :images="auction.images" :title="auction.title" />
 
           <!-- Quick Specs Ribbon -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm p-space-md rounded-xl bg-surface-container border border-white/[0.08] shadow-md">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-space-sm p-3 sm:p-space-md rounded-xl bg-surface-container border border-white/[0.08] shadow-md">
             <div class="flex flex-col">
-              <span class="font-label-caps text-[10px] text-on-surface-variant/70 uppercase">Marca / Fabricante</span>
-              <span class="font-title-md text-[14px] text-on-surface font-semibold truncate">{{ auction.brand || 'Original' }}</span>
+              <span class="font-label-caps text-[9px] sm:text-[10px] text-on-surface-variant/70 uppercase">Marca</span>
+              <span class="font-title-md text-[13px] sm:text-[14px] text-on-surface font-semibold truncate">{{ auction.brand || 'Original' }}</span>
             </div>
-            <div class="flex flex-col border-l border-white/[0.06] pl-space-sm">
-              <span class="font-label-caps text-[10px] text-on-surface-variant/70 uppercase">Ano de Fabrico</span>
-              <span class="font-title-md text-[14px] text-on-surface font-semibold">{{ auction.year || '2023' }}</span>
+            <div class="flex flex-col border-l border-white/[0.06] pl-2 sm:pl-space-sm">
+              <span class="font-label-caps text-[9px] sm:text-[10px] text-on-surface-variant/70 uppercase">Ano</span>
+              <span class="font-title-md text-[13px] sm:text-[14px] text-on-surface font-semibold">{{ auction.year || '2023' }}</span>
             </div>
-            <div class="flex flex-col border-l border-white/[0.06] pl-space-sm">
-              <span class="font-label-caps text-[10px] text-on-surface-variant/70 uppercase">Condição Notarial</span>
-              <span class="font-title-md text-[14px] text-primary font-semibold">{{ conditionLabel(auction.condition) }}</span>
+            <div class="flex flex-col border-t sm:border-t-0 sm:border-l border-white/[0.06] pt-2 sm:pt-0 sm:pl-space-sm">
+              <span class="font-label-caps text-[9px] sm:text-[10px] text-on-surface-variant/70 uppercase">Condição</span>
+              <span class="font-title-md text-[13px] sm:text-[14px] text-primary font-semibold truncate">{{ conditionLabel(auction.condition) }}</span>
             </div>
-            <div class="flex flex-col border-l border-white/[0.06] pl-space-sm">
-              <span class="font-label-caps text-[10px] text-on-surface-variant/70 uppercase">Quilometragem / Uso</span>
-              <span class="font-title-md text-[14px] text-on-surface font-semibold">{{ auction.mileage_or_hours || 'Certificado' }}</span>
+            <div class="flex flex-col border-t sm:border-t-0 border-l border-white/[0.06] pt-2 sm:pt-0 pl-2 sm:pl-space-sm">
+              <span class="font-label-caps text-[9px] sm:text-[10px] text-on-surface-variant/70 uppercase">Uso / Km</span>
+              <span class="font-title-md text-[13px] sm:text-[14px] text-on-surface font-semibold truncate">{{ auction.mileage_or_hours || 'Certificado' }}</span>
             </div>
           </div>
 
@@ -111,38 +111,38 @@
           <!-- Interactive Technical Tabs: Specs, 120-Point Inspection, Notarial Terms -->
           <div class="rounded-xl bg-surface-container border border-white/[0.08] shadow-md overflow-hidden">
             <!-- Tab Headers -->
-            <div class="flex items-center border-b border-white/[0.08] bg-surface-container-low px-space-md pt-2 overflow-x-auto gap-space-xs">
+            <div class="flex items-center border-b border-white/[0.08] bg-surface-container-low px-2 sm:px-space-md pt-2 overflow-x-auto gap-1 sm:gap-space-xs scrollbar-none">
               <button
                 type="button"
-                class="px-space-md py-3 font-label-caps text-label-caps uppercase border-b-2 transition-all flex items-center gap-2 whitespace-nowrap"
+                class="px-3 sm:px-space-md py-2.5 sm:py-3 font-label-caps text-xs sm:text-label-caps uppercase border-b-2 transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
                 :class="activeTab === 'specs' ? 'border-primary text-primary font-bold' : 'border-transparent text-on-surface-variant hover:text-on-surface'"
                 @click="activeTab = 'specs'"
               >
-                <span class="material-symbols-outlined text-[18px]">tune</span>
-                <span>Ficha Técnica & Telemetria</span>
+                <span class="material-symbols-outlined text-[16px] sm:text-[18px]">tune</span>
+                <span>Ficha Técnica</span>
               </button>
               <button
                 type="button"
-                class="px-space-md py-3 font-label-caps text-label-caps uppercase border-b-2 transition-all flex items-center gap-2 whitespace-nowrap"
+                class="px-3 sm:px-space-md py-2.5 sm:py-3 font-label-caps text-xs sm:text-label-caps uppercase border-b-2 transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
                 :class="activeTab === 'inspection' ? 'border-primary text-primary font-bold' : 'border-transparent text-on-surface-variant hover:text-on-surface'"
                 @click="activeTab = 'inspection'"
               >
-                <span class="material-symbols-outlined text-[18px]">fact_check</span>
+                <span class="material-symbols-outlined text-[16px] sm:text-[18px]">fact_check</span>
                 <span>Inspeção 120 Pontos</span>
               </button>
               <button
                 type="button"
-                class="px-space-md py-3 font-label-caps text-label-caps uppercase border-b-2 transition-all flex items-center gap-2 whitespace-nowrap"
+                class="px-3 sm:px-space-md py-2.5 sm:py-3 font-label-caps text-xs sm:text-label-caps uppercase border-b-2 transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap"
                 :class="activeTab === 'legal' ? 'border-primary text-primary font-bold' : 'border-transparent text-on-surface-variant hover:text-on-surface'"
                 @click="activeTab = 'legal'"
               >
-                <span class="material-symbols-outlined text-[18px]">gavel</span>
-                <span>Condições Notariais & Escrow</span>
+                <span class="material-symbols-outlined text-[16px] sm:text-[18px]">gavel</span>
+                <span>Termos & Escrow</span>
               </button>
             </div>
 
             <!-- Tab 1: Specs -->
-            <div v-if="activeTab === 'specs'" class="p-space-lg flex flex-col gap-space-sm animate-fadeIn">
+            <div v-if="activeTab === 'specs'" class="p-4 sm:p-space-lg flex flex-col gap-space-sm animate-fadeIn">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-space-lg gap-y-2 font-body-sm text-body-sm">
                 <div class="flex justify-between py-2 border-b border-white/[0.04]">
                   <span class="text-on-surface-variant">Número de Chassi / VIN:</span>

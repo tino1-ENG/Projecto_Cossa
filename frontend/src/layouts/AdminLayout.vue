@@ -1,39 +1,55 @@
 <template>
   <div class="dashboard-layout">
+    <!-- Backdrop for mobile drawer -->
+    <div
+      v-if="isMobileMenuOpen"
+      class="sidebar-backdrop"
+      @click="isMobileMenuOpen = false"
+    ></div>
+
     <!-- Admin Sidebar -->
-    <aside class="dashboard-sidebar">
+    <aside class="dashboard-sidebar" :class="{ 'mobile-open': isMobileMenuOpen }">
       <div class="sidebar-header">
-        <router-link to="/" class="sidebar-brand">
+        <router-link to="/" class="sidebar-brand" @click="isMobileMenuOpen = false">
           <div class="logo-box-xs">
             <Gavel :size="16" />
           </div>
           <span class="sidebar-brand-name">MOZ<span class="text-gold">BID</span></span>
         </router-link>
-        <span class="sidebar-badge-admin">ADMIN</span>
+        <div class="flex items-center gap-2">
+          <span class="sidebar-badge-admin">ADMIN</span>
+          <button
+            class="mobile-close-btn"
+            @click="isMobileMenuOpen = false"
+            aria-label="Fechar menu"
+          >
+            <X :size="18" />
+          </button>
+        </div>
       </div>
 
       <!-- Navigation Links -->
       <nav class="sidebar-nav">
-        <router-link to="/admin/dashboard" class="sidebar-link" active-class="sidebar-link-active">
+        <router-link to="/admin/dashboard" class="sidebar-link" active-class="sidebar-link-active" @click="isMobileMenuOpen = false">
           <ShieldAlert :size="18" /> Painel de Controlo
         </router-link>
-        <router-link to="/admin/dashboard" class="sidebar-link">
+        <router-link to="/admin/dashboard?tab=users" class="sidebar-link" @click="isMobileMenuOpen = false">
           <Users :size="18" /> Utilizadores
         </router-link>
-        <router-link to="/admin/dashboard" class="sidebar-link">
+        <router-link to="/admin/dashboard?tab=sellers" class="sidebar-link" @click="isMobileMenuOpen = false">
           <ShieldCheck :size="18" /> Verificação Vendedores
         </router-link>
-        <router-link to="/admin/dashboard" class="sidebar-link">
+        <router-link to="/admin/dashboard?tab=auctions" class="sidebar-link" @click="isMobileMenuOpen = false">
           <Gavel :size="18" /> Moderação de Leilões
         </router-link>
-        <router-link to="/admin/dashboard" class="sidebar-link">
+        <router-link to="/admin/dashboard?tab=overview" class="sidebar-link" @click="isMobileMenuOpen = false">
           <FileText :size="18" /> Logs de Auditoria
         </router-link>
       </nav>
 
       <!-- Sidebar Footer -->
       <div class="sidebar-footer">
-        <router-link to="/" class="switch-role-btn">
+        <router-link to="/" class="switch-role-btn" @click="isMobileMenuOpen = false">
           <Home :size="16" /> Ir ao Marketplace
         </router-link>
         <button class="logout-btn" @click="handleLogout">
@@ -45,13 +61,23 @@
     <!-- Main Content Area -->
     <div class="dashboard-content-area">
       <header class="dashboard-topbar">
-        <div class="topbar-title">
-          <h2>Administração MozBid — Sistema Central</h2>
+        <div class="topbar-left">
+          <button
+            class="mobile-toggle-btn"
+            @click="isMobileMenuOpen = !isMobileMenuOpen"
+            aria-label="Abrir menu"
+          >
+            <Menu :size="20" />
+          </button>
+          <div class="topbar-title">
+            <h2>Administração MozBid</h2>
+          </div>
         </div>
         <div class="topbar-actions">
           <div class="sqlite-status-tag">
             <span class="pulse-dot"></span>
-            <span>MongoDB Activo</span>
+            <span class="hidden sm:inline">MongoDB Activo</span>
+            <span class="sm:hidden">Online</span>
           </div>
         </div>
       </header>
@@ -66,15 +92,17 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import ToastContainer from '../components/common/ToastContainer.vue';
 import {
-  Gavel, ShieldAlert, Users, ShieldCheck, FileText, Home, LogOut
+  Gavel, ShieldAlert, Users, ShieldCheck, FileText, Home, LogOut, Menu, X
 } from 'lucide-vue-next';
 
 const router = useRouter();
 const authStore = useAuthStore();
+const isMobileMenuOpen = ref(false);
 
 function handleLogout() {
   authStore.logout();
@@ -87,6 +115,7 @@ function handleLogout() {
   display: flex;
   min-height: 100vh;
   background-color: var(--color-background);
+  position: relative;
 }
 
 .dashboard-sidebar {
@@ -97,6 +126,72 @@ function handleLogout() {
   flex-direction: column;
   padding: 24px 16px;
   flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+.mobile-toggle-btn {
+  display: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-md);
+  padding: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-close-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 860px) {
+  .dashboard-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 280px;
+    transform: translateX(-100%);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+  }
+
+  .dashboard-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 99;
+  }
+
+  .mobile-toggle-btn {
+    display: flex;
+  }
+
+  .mobile-close-btn {
+    display: flex;
+  }
 }
 
 @media (max-width: 860px) {

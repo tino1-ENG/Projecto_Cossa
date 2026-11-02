@@ -1,8 +1,8 @@
 <template>
-  <footer class="w-full bg-[#0a0a0a] border-t border-white/[0.08] pt-space-2xl pb-space-xl mt-space-3xl">
-    <div class="w-full max-w-[1440px] mx-auto px-margin">
+  <footer class="w-full bg-[#0a0a0a] border-t border-white/[0.08] pt-space-xl sm:pt-space-2xl pb-space-lg sm:pb-space-xl mt-space-2xl sm:mt-space-3xl">
+    <div class="w-full max-w-[1440px] mx-auto px-4 sm:px-margin">
       <!-- Top 3 Credential Badges -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter pb-space-xl border-b border-white/[0.08]">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md sm:gap-gutter pb-space-lg sm:pb-space-xl border-b border-white/[0.08]">
         <div class="flex items-center gap-space-md">
           <div class="w-10 h-10 rounded bg-surface-container-low flex items-center justify-center border border-white/[0.08] text-primary">
             <span class="material-symbols-outlined">verified_user</span>
