@@ -1,44 +1,45 @@
 <template>
-  <header class="sticky top-0 z-50 w-full bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/[0.08]">
-    <div class="max-w-[1440px] mx-auto px-3 sm:px-margin h-16 sm:h-20 flex items-center justify-between">
+  <q-header elevated class="bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/[0.08] text-white">
+    <q-toolbar class="max-w-[1440px] mx-auto px-3 sm:px-margin h-16 sm:h-20 flex items-center justify-between">
       <!-- Brand / Logo -->
-      <router-link to="/" class="flex items-center gap-2 sm:gap-space-sm group shrink-0">
+      <router-link to="/" class="flex items-center gap-2 sm:gap-space-sm group shrink-0 no-underline text-white">
         <div class="w-9 h-9 sm:w-10 sm:h-10 rounded bg-surface-container flex items-center justify-center border border-white/[0.08] group-hover:border-primary/50 transition-colors shadow-sm">
           <span class="material-symbols-outlined text-primary text-[20px] sm:text-[24px]">gavel</span>
         </div>
         <div class="flex flex-col">
-          <span class="font-headline-sm text-base sm:text-headline-sm uppercase tracking-wider text-on-surface">MozBid</span>
+          <span class="font-headline-sm text-base sm:text-headline-sm uppercase tracking-wider text-on-surface font-bold">MozBid</span>
           <span class="font-label-caps text-[8px] sm:text-[9px] tracking-[0.2em] text-primary -mt-1 font-bold">MOÇAMBIQUE</span>
         </div>
       </router-link>
 
-      <!-- Navigation Center -->
+      <!-- Navigation Center (Desktop) -->
       <nav class="hidden md:flex items-center gap-space-lg">
         <router-link
           to="/"
-          class="font-title-md text-title-md transition-colors pb-1"
-          :class="$route.path === '/' ? 'text-on-surface border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'"
+          class="font-title-md text-title-md transition-colors pb-1 no-underline"
+          :class="$route.path === '/' ? 'text-primary border-b-2 border-primary font-bold' : 'text-on-surface-variant hover:text-primary'"
         >
           Início
         </router-link>
         <router-link
           to="/catalog"
-          class="font-title-md text-title-md transition-colors pb-1"
-          :class="$route.path === '/catalog' && !$route.query.status ? 'text-on-surface border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'"
+          class="font-title-md text-title-md transition-colors pb-1 no-underline"
+          :class="$route.path === '/catalog' && !$route.query.status ? 'text-primary border-b-2 border-primary font-bold' : 'text-on-surface-variant hover:text-primary'"
         >
           Explorar Leilões
         </router-link>
         <router-link
           to="/catalog?status=active"
-          class="font-title-md text-title-md transition-colors pb-1"
-          :class="$route.query.status === 'active' ? 'text-on-surface border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'"
+          class="font-title-md text-title-md transition-colors pb-1 no-underline flex items-center gap-1.5"
+          :class="$route.query.status === 'active' ? 'text-primary border-b-2 border-primary font-bold' : 'text-on-surface-variant hover:text-primary'"
         >
-          Ao Vivo
+          <span class="w-2 h-2 rounded-full bg-primary radar-ring"></span>
+          <span>Ao Vivo</span>
         </router-link>
         <router-link
           to="/how-it-works"
-          class="font-title-md text-title-md transition-colors pb-1"
-          :class="$route.path === '/how-it-works' ? 'text-on-surface border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'"
+          class="font-title-md text-title-md transition-colors pb-1 no-underline"
+          :class="$route.path === '/how-it-works' ? 'text-primary border-b-2 border-primary font-bold' : 'text-on-surface-variant hover:text-primary'"
         >
           Como Funciona
         </router-link>
@@ -47,46 +48,54 @@
       <!-- Right Action Controls -->
       <div class="flex items-center gap-1.5 sm:gap-space-md">
         <!-- Currency Pill -->
-        <div class="hidden sm:flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container border border-white/[0.08] text-on-surface font-label-numeric text-label-numeric">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <q-badge
+          outline
+          color="primary"
+          class="hidden sm:inline-flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container border border-white/[0.08] text-on-surface font-label-numeric text-label-numeric cursor-default"
+        >
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span>MZN</span>
-          <span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
-        </div>
+        </q-badge>
 
         <!-- Search Icon Link -->
-        <router-link
+        <q-btn
+          flat
+          round
+          dense
+          icon="search"
           to="/catalog"
-          class="w-8 h-8 sm:w-10 sm:h-10 rounded bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
+          class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
           title="Pesquisar Leilões"
+        />
+
+        <!-- Notifications Dropdown (Quasar Menu) -->
+        <q-btn
+          flat
+          round
+          dense
+          icon="notifications"
+          class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
+          title="Notificações"
         >
-          <span class="material-symbols-outlined text-[18px] sm:text-[20px]">search</span>
-        </router-link>
-
-        <!-- Notifications Dropdown -->
-        <div class="relative">
-          <button
-            class="relative w-8 h-8 sm:w-10 sm:h-10 rounded bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
-            @click="toggleNotifs"
-            title="Notificações"
-            type="button"
-          >
-            <span class="material-symbols-outlined text-[18px] sm:text-[20px]">notifications</span>
-            <span v-if="unreadCount > 0" class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-          </button>
-
-          <!-- Notifications Tray -->
-          <div
-            v-if="showNotifs"
-            class="fixed sm:absolute inset-x-3 sm:inset-x-auto right-3 sm:right-0 top-16 sm:top-auto sm:mt-2 w-auto sm:w-96 max-w-sm rounded-xl bg-surface-container border border-white/[0.08] shadow-2xl p-space-md z-50 backdrop-blur-xl"
-          >
+          <q-badge
+            v-if="unreadCount > 0"
+            color="primary"
+            floating
+            rounded
+            class="animate-pulse"
+          />
+          <q-menu dark class="bg-surface-container border border-white/[0.08] shadow-2xl p-space-md w-80 sm:w-96 rounded-xl">
             <div class="flex items-center justify-between pb-space-sm border-b border-white/[0.08] mb-space-sm">
-              <span class="font-title-md text-title-md text-on-surface">Notificações</span>
-              <button
-                class="font-label-caps text-[10px] text-primary hover:underline"
+              <span class="font-title-md text-title-md text-on-surface font-bold">Notificações</span>
+              <q-btn
+                flat
+                dense
+                no-caps
+                size="sm"
+                color="primary"
+                label="Marcar lidas"
                 @click="markAllRead"
-              >
-                Marcar lidas
-              </button>
+              />
             </div>
             <div class="flex flex-col gap-space-xs max-h-72 overflow-y-auto">
               <div v-if="notifications.length === 0" class="py-6 text-center text-body-sm text-on-surface-variant/60">
@@ -106,260 +115,198 @@
                 <p class="font-body-sm text-[12px] text-on-surface-variant leading-snug">{{ item.message }}</p>
               </div>
             </div>
-          </div>
-        </div>
+          </q-menu>
+        </q-btn>
 
-        <!-- Watchlist Button (hidden on extra small screens, available in mobile menu) -->
-        <router-link
+        <!-- Watchlist Button (Desktop/Tablet) -->
+        <q-btn
+          flat
+          round
+          dense
+          icon="bookmark"
           to="/buyer/dashboard?tab=watchlist"
-          class="hidden xs:flex relative w-8 h-8 sm:w-10 sm:h-10 rounded bg-surface-container items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
+          class="hidden xs:inline-flex text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
           title="Lotes Marcados"
         >
-          <span class="material-symbols-outlined text-[18px] sm:text-[20px]">bookmark</span>
-          <span
+          <q-badge
             v-if="watchlistCount > 0"
-            class="absolute -top-1 -right-1 px-1.5 py-0.2 rounded-full bg-surface-container-highest text-primary font-label-numeric text-[10px]"
-          >
-            {{ watchlistCount }}
-          </span>
-        </router-link>
+            color="primary"
+            text-color="dark"
+            floating
+            rounded
+            :label="watchlistCount"
+          />
+        </q-btn>
 
         <!-- Começar a Vender Button -->
-        <router-link
+        <q-btn
+          outline
+          no-caps
+          color="primary"
           :to="sellerDestination"
-          class="hidden lg:flex items-center justify-center px-space-md py-space-xs rounded border border-white/[0.12] hover:border-primary text-on-surface hover:text-primary font-label-caps text-label-caps tracking-wider transition-all"
-        >
-          Começar a Vender
-        </router-link>
+          label="Começar a Vender"
+          class="hidden lg:inline-flex px-space-md py-space-xs rounded text-label-caps font-label-caps tracking-wider transition-all"
+        />
 
         <!-- User Authentication State -->
         <template v-if="authStore.isAuthenticated">
-          <div class="relative">
-            <button
-              class="flex items-center gap-1 sm:gap-space-xs px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high border border-white/[0.08] transition-colors"
-              @click="toggleUserMenu"
-              type="button"
-            >
-              <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-primary/20 text-primary font-bold flex items-center justify-center text-[11px] sm:text-[12px]">
-                {{ authStore.user?.name?.charAt(0) || 'U' }}
-              </div>
-              <span class="hidden sm:inline font-body-sm font-medium text-on-surface text-xs sm:text-sm">
-                {{ authStore.user?.name?.split(' ')[0] }}
-              </span>
-              <span class="material-symbols-outlined text-[14px] sm:text-[16px] text-on-surface-variant">expand_more</span>
-            </button>
+          <q-btn flat dense no-caps class="rounded-full bg-surface-container border border-white/[0.08] px-2 py-1">
+            <q-avatar size="28px" color="primary" text-color="dark" class="font-bold text-[12px]">
+              {{ authStore.user?.name?.charAt(0) || 'U' }}
+            </q-avatar>
+            <span class="hidden sm:inline-block ml-2 text-xs font-semibold text-white">
+              {{ authStore.user?.name?.split(' ')[0] }}
+            </span>
+            <q-icon name="expand_more" size="16px" class="text-on-surface-variant ml-1" />
 
             <!-- User Dropdown Menu -->
-            <div
-              v-if="showUserMenu"
-              class="fixed sm:absolute right-3 sm:right-0 top-16 sm:top-auto sm:mt-2 w-[calc(100vw-1.5rem)] sm:w-56 max-w-xs rounded-xl bg-surface-container border border-white/[0.08] shadow-2xl p-space-sm z-50 backdrop-blur-xl flex flex-col gap-1"
-            >
+            <q-menu dark class="bg-surface-container border border-white/[0.08] shadow-2xl p-space-sm w-64 rounded-xl">
               <div class="p-space-sm border-b border-white/[0.08] mb-1">
                 <div class="font-title-md text-sm text-on-surface font-semibold">{{ authStore.user?.name }}</div>
                 <div class="font-body-sm text-xs text-on-surface-variant/70 truncate">{{ authStore.user?.email }}</div>
-                <span class="inline-block mt-1 font-label-caps text-[9px] px-2 py-0.5 rounded bg-primary/20 text-primary">
+                <q-badge color="primary" text-color="dark" class="mt-1 font-bold text-[10px]">
                   {{ roleLabel(authStore.user?.role) }}
-                </span>
+                </q-badge>
               </div>
-              <router-link
-                to="/buyer/dashboard"
-                class="px-space-sm py-2 rounded text-body-sm text-on-surface hover:bg-surface-container-high hover:text-primary flex items-center gap-2 transition-colors"
-                @click="closeMenus"
-              >
-                <span class="material-symbols-outlined text-[18px]">dashboard</span>
-                <span>Painel do Comprador</span>
-              </router-link>
-              <router-link
-                v-if="authStore.isSeller"
-                to="/seller/dashboard"
-                class="px-space-sm py-2 rounded text-body-sm text-on-surface hover:bg-surface-container-high hover:text-primary flex items-center gap-2 transition-colors"
-                @click="closeMenus"
-              >
-                <span class="material-symbols-outlined text-[18px]">storefront</span>
-                <span>Painel do Vendedor</span>
-              </router-link>
-              <router-link
-                v-if="authStore.isAdmin"
-                to="/admin/dashboard"
-                class="px-space-sm py-2 rounded text-body-sm text-on-surface hover:bg-surface-container-high hover:text-primary flex items-center gap-2 transition-colors"
-                @click="closeMenus"
-              >
-                <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
-                <span>Administração Geral</span>
-              </router-link>
-              <div class="border-t border-white/[0.08] my-1"></div>
-              <button
-                class="w-full text-left px-space-sm py-2 rounded text-body-sm text-error hover:bg-error/10 flex items-center gap-2 transition-colors"
-                @click="handleLogout"
-                type="button"
-              >
-                <span class="material-symbols-outlined text-[18px]">logout</span>
-                <span>Terminar Sessão</span>
-              </button>
-            </div>
-          </div>
+
+              <q-list dense>
+                <q-item clickable v-close-popup to="/buyer/dashboard" class="rounded hover:bg-white/[0.06]">
+                  <q-item-section avatar><q-icon name="dashboard" size="18px" class="text-primary" /></q-item-section>
+                  <q-item-section class="text-sm">Painel do Comprador</q-item-section>
+                </q-item>
+
+                <q-item v-if="authStore.isSeller" clickable v-close-popup to="/seller/dashboard" class="rounded hover:bg-white/[0.06]">
+                  <q-item-section avatar><q-icon name="storefront" size="18px" class="text-primary" /></q-item-section>
+                  <q-item-section class="text-sm">Painel do Vendedor</q-item-section>
+                </q-item>
+
+                <q-item v-if="authStore.isAdmin" clickable v-close-popup to="/admin/dashboard" class="rounded hover:bg-white/[0.06]">
+                  <q-item-section avatar><q-icon name="admin_panel_settings" size="18px" class="text-primary" /></q-item-section>
+                  <q-item-section class="text-sm">Administração Central</q-item-section>
+                </q-item>
+
+                <q-separator dark class="my-1" />
+
+                <q-item clickable v-close-popup @click="handleLogout" class="rounded text-error hover:bg-error/10">
+                  <q-item-section avatar><q-icon name="logout" size="18px" /></q-item-section>
+                  <q-item-section class="text-sm font-semibold">Terminar Sessão</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
         </template>
         <template v-else>
-          <router-link
+          <q-btn
+            flat
+            no-caps
+            label="Iniciar Sessão"
             to="/auth/login"
-            class="hidden sm:inline-flex px-space-md py-space-xs rounded text-body-sm text-on-surface-variant hover:text-on-surface transition-colors"
-          >
-            Iniciar Sessão
-          </router-link>
-          <router-link
+            class="hidden sm:inline-flex text-on-surface-variant hover:text-on-surface"
+          />
+          <q-btn
+            unelevated
+            no-caps
+            color="primary"
+            text-color="dark"
+            label="Registar"
             to="/auth/register"
-            class="px-2.5 sm:px-space-md py-1 sm:py-space-xs rounded bg-primary hover:bg-primary-fixed-dim text-on-primary font-label-caps text-[10px] sm:text-label-caps uppercase transition-colors shadow-md"
-          >
-            Registar
-          </router-link>
+            class="font-bold text-xs shadow-md"
+          />
         </template>
 
         <!-- Mobile Menu Toggle Button -->
-        <button
-          class="md:hidden w-8 h-8 sm:w-10 sm:h-10 rounded bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors ml-1"
-          @click="toggleMobileMenu"
-          type="button"
+        <q-btn
+          flat
+          round
+          dense
+          class="md:hidden ml-1 text-on-surface-variant hover:text-on-surface"
+          :icon="showMobileMenu ? 'close' : 'menu'"
+          @click="showMobileMenu = !showMobileMenu"
           aria-label="Abrir menu de navegação"
-        >
-          <span class="material-symbols-outlined text-[20px] sm:text-[22px]">
-            {{ showMobileMenu ? 'close' : 'menu' }}
-          </span>
-        </button>
+        />
       </div>
-    </div>
+    </q-toolbar>
 
-    <!-- Mobile Navigation Drawer -->
-    <div
-      v-if="showMobileMenu"
-      class="md:hidden border-t border-white/[0.08] bg-surface-container-low px-4 py-space-md flex flex-col gap-1 shadow-2xl animate-fadeIn max-h-[calc(100vh-4rem)] overflow-y-auto"
+    <!-- Mobile Navigation Drawer via Quasar -->
+    <q-drawer
+      v-model="showMobileMenu"
+      side="right"
+      overlay
+      bordered
+      dark
+      :width="280"
+      class="bg-[#0e0e0e] text-white p-4 flex flex-col justify-between"
     >
-      <router-link
-        to="/"
-        class="py-2.5 px-3 rounded-lg text-on-surface font-title-md hover:bg-surface-container hover:text-primary transition-colors flex items-center gap-3"
-        @click="closeMenus"
-      >
-        <span class="material-symbols-outlined text-[20px] text-primary">home</span>
-        <span>Início</span>
-      </router-link>
-      <router-link
-        to="/catalog"
-        class="py-2.5 px-3 rounded-lg text-on-surface font-title-md hover:bg-surface-container hover:text-primary transition-colors flex items-center gap-3"
-        @click="closeMenus"
-      >
-        <span class="material-symbols-outlined text-[20px] text-primary">explore</span>
-        <span>Explorar Leilões</span>
-      </router-link>
-      <router-link
-        to="/catalog?status=active"
-        class="py-2.5 px-3 rounded-lg text-on-surface font-title-md hover:bg-surface-container hover:text-primary transition-colors flex items-center gap-3"
-        @click="closeMenus"
-      >
-        <span class="material-symbols-outlined text-[20px] text-primary">gavel</span>
-        <span class="flex items-center gap-2">
-          Leilões Ao Vivo
-          <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
-        </span>
-      </router-link>
-      <router-link
-        to="/how-it-works"
-        class="py-2.5 px-3 rounded-lg text-on-surface font-title-md hover:bg-surface-container hover:text-primary transition-colors flex items-center gap-3"
-        @click="closeMenus"
-      >
-        <span class="material-symbols-outlined text-[20px] text-primary">verified_user</span>
-        <span>Como Funciona & Garantias</span>
-      </router-link>
-      <router-link
-        :to="sellerDestination"
-        class="py-2.5 px-3 rounded-lg text-primary font-title-md hover:bg-surface-container flex items-center gap-3 font-semibold"
-        @click="closeMenus"
-      >
-        <span class="material-symbols-outlined text-[20px]">add_business</span>
-        <span>Começar a Vender</span>
-      </router-link>
-      <router-link
-        to="/buyer/dashboard?tab=watchlist"
-        class="py-2.5 px-3 rounded-lg text-on-surface font-title-md hover:bg-surface-container hover:text-primary transition-colors flex items-center justify-between"
-        @click="closeMenus"
-      >
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[20px] text-primary">bookmark</span>
-          <span>Lotes Favoritos</span>
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-4">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[22px]">gavel</span>
+            <span class="font-bold text-lg">MOZ<span class="text-primary">BID</span></span>
+          </div>
+          <q-btn flat round dense icon="close" @click="showMobileMenu = false" />
         </div>
-        <span v-if="watchlistCount > 0" class="px-2 py-0.5 rounded-full bg-primary/20 text-primary text-xs font-bold">
-          {{ watchlistCount }}
-        </span>
-      </router-link>
 
-      <div class="border-t border-white/[0.08] my-2"></div>
+        <q-list class="flex flex-col gap-1">
+          <q-item clickable v-close-popup to="/" class="rounded-lg hover:bg-white/[0.05]">
+            <q-item-section avatar><q-icon name="home" size="20px" class="text-primary" /></q-item-section>
+            <q-item-section class="text-sm font-semibold">Início</q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup to="/catalog" class="rounded-lg hover:bg-white/[0.05]">
+            <q-item-section avatar><q-icon name="search" size="20px" class="text-primary" /></q-item-section>
+            <q-item-section class="text-sm font-semibold">Explorar Catálogo</q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup to="/catalog?status=active" class="rounded-lg hover:bg-white/[0.05]">
+            <q-item-section avatar><q-icon name="sensors" size="20px" class="text-emerald-400" /></q-item-section>
+            <q-item-section class="text-sm font-semibold">Pregões Ao Vivo</q-item-section>
+          </q-item>
+          <q-item clickable v-close-popup to="/how-it-works" class="rounded-lg hover:bg-white/[0.05]">
+            <q-item-section avatar><q-icon name="help_outline" size="20px" class="text-primary" /></q-item-section>
+            <q-item-section class="text-sm font-semibold">Como Funciona</q-item-section>
+          </q-item>
 
-      <!-- Currency Info Mobile -->
-      <div class="px-3 py-2 flex items-center justify-between text-xs text-on-surface-variant bg-surface-container rounded-lg">
-        <span class="flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          Moeda Oficial: Metical Moçambicano
-        </span>
-        <span class="font-bold text-on-surface">MZN (MT)</span>
+          <q-separator dark class="my-3" />
+
+          <template v-if="authStore.isAuthenticated">
+            <q-item clickable v-close-popup to="/buyer/dashboard" class="rounded-lg hover:bg-white/[0.05]">
+              <q-item-section avatar><q-icon name="dashboard" size="20px" class="text-primary" /></q-item-section>
+              <q-item-section class="text-sm font-semibold">Painel Comprador</q-item-section>
+            </q-item>
+            <q-item v-if="authStore.isSeller" clickable v-close-popup to="/seller/dashboard" class="rounded-lg hover:bg-white/[0.05]">
+              <q-item-section avatar><q-icon name="storefront" size="20px" class="text-primary" /></q-item-section>
+              <q-item-section class="text-sm font-semibold">Painel Vendedor</q-item-section>
+            </q-item>
+            <q-item v-if="authStore.isAdmin" clickable v-close-popup to="/admin/dashboard" class="rounded-lg hover:bg-white/[0.05]">
+              <q-item-section avatar><q-icon name="admin_panel_settings" size="20px" class="text-primary" /></q-item-section>
+              <q-item-section class="text-sm font-semibold">Administração Central</q-item-section>
+            </q-item>
+          </template>
+          <template v-else>
+            <q-item clickable v-close-popup to="/auth/login" class="rounded-lg hover:bg-white/[0.05]">
+              <q-item-section avatar><q-icon name="login" size="20px" class="text-primary" /></q-item-section>
+              <q-item-section class="text-sm font-semibold">Iniciar Sessão</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup to="/auth/register" class="rounded-lg bg-primary/10 text-primary border border-primary/30">
+              <q-item-section avatar><q-icon name="person_add" size="20px" class="text-primary" /></q-item-section>
+              <q-item-section class="text-sm font-semibold">Criar Conta</q-item-section>
+            </q-item>
+          </template>
+        </q-list>
       </div>
 
-      <template v-if="authStore.isAuthenticated">
-        <div class="px-3 pt-2 text-[10px] font-label-caps uppercase text-on-surface-variant tracking-wider">
-          Conta Utilizador
-        </div>
-        <router-link
-          to="/buyer/dashboard"
-          class="py-2.5 px-3 rounded-lg text-on-surface hover:bg-surface-container font-body-md flex items-center gap-3"
-          @click="closeMenus"
-        >
-          <span class="material-symbols-outlined text-[20px] text-on-surface-variant">dashboard</span>
-          <span>Painel do Comprador</span>
-        </router-link>
-        <router-link
-          v-if="authStore.isSeller"
-          to="/seller/dashboard"
-          class="py-2.5 px-3 rounded-lg text-on-surface hover:bg-surface-container font-body-md flex items-center gap-3"
-          @click="closeMenus"
-        >
-          <span class="material-symbols-outlined text-[20px] text-on-surface-variant">storefront</span>
-          <span>Painel do Vendedor</span>
-        </router-link>
-        <router-link
-          v-if="authStore.isAdmin"
-          to="/admin/dashboard"
-          class="py-2.5 px-3 rounded-lg text-on-surface hover:bg-surface-container font-body-md flex items-center gap-3"
-          @click="closeMenus"
-        >
-          <span class="material-symbols-outlined text-[20px] text-on-surface-variant">admin_panel_settings</span>
-          <span>Administração Geral</span>
-        </router-link>
-        <button
-          type="button"
-          class="w-full text-left py-2.5 px-3 rounded-lg text-error hover:bg-error/10 font-body-md flex items-center gap-3 mt-1"
+      <div class="pt-4 border-t border-white/[0.08]">
+        <q-btn
+          v-if="authStore.isAuthenticated"
+          flat
+          color="negative"
+          icon="logout"
+          label="Terminar Sessão"
+          no-caps
+          class="w-full justify-start"
           @click="handleLogout"
-        >
-          <span class="material-symbols-outlined text-[20px]">logout</span>
-          <span>Terminar Sessão</span>
-        </button>
-      </template>
-      <template v-else>
-        <div class="grid grid-cols-2 gap-2 pt-2">
-          <router-link
-            to="/auth/login"
-            class="py-2.5 rounded-lg border border-white/[0.12] text-center text-on-surface font-title-md hover:border-primary text-sm flex items-center justify-center"
-            @click="closeMenus"
-          >
-            Iniciar Sessão
-          </router-link>
-          <router-link
-            to="/auth/register"
-            class="py-2.5 rounded-lg bg-primary text-on-primary text-center font-title-md font-bold text-sm flex items-center justify-center shadow-md"
-            @click="closeMenus"
-          >
-            Registar-se
-          </router-link>
-        </div>
-      </template>
-    </div>
-  </header>
+        />
+      </div>
+    </q-drawer>
+  </q-header>
 </template>
 
 <script setup lang="ts">
@@ -373,75 +320,46 @@ import { formatTimeAgo } from '../../utils/date';
 const router = useRouter();
 const authStore = useAuthStore();
 const auctionStore = useAuctionStore();
-const notificationStore = useNotificationStore();
+const notifStore = useNotificationStore();
 
-const showNotifs = ref(false);
-const showUserMenu = ref(false);
 const showMobileMenu = ref(false);
 
-const notifications = computed(() => notificationStore.notifications);
-const unreadCount = computed(() => notificationStore.unreadCount);
-const watchlistCount = computed(() => auctionStore.watchlist.length);
+const notifications = computed(() => notifStore.notifications);
+const unreadCount = computed(() => notifStore.unreadCount);
+const watchlistCount = computed(() => auctionStore.watchlistIds.size);
 
 const sellerDestination = computed(() => {
-  if (!authStore.isAuthenticated) return '/auth/register?role=seller';
+  if (!authStore.isAuthenticated) return '/auth/login?redirect=/seller/dashboard';
   if (authStore.isSeller) return '/seller/dashboard';
-  return '/buyer/dashboard?action=become_seller';
+  return '/seller/dashboard';
 });
 
-function toggleNotifs() {
-  showNotifs.value = !showNotifs.value;
-  if (showNotifs.value) {
-    showUserMenu.value = false;
+onMounted(() => {
+  if (authStore.isAuthenticated) {
+    notifStore.fetchNotifications();
+    auctionStore.fetchWatchlist();
   }
+});
+
+function markAllRead() {
+  notifStore.markAllAsRead();
 }
 
-function toggleUserMenu() {
-  showUserMenu.value = !showUserMenu.value;
-  if (showUserMenu.value) {
-    showNotifs.value = false;
-  }
-}
-
-function toggleMobileMenu() {
-  showMobileMenu.value = !showMobileMenu.value;
-}
-
-function closeMenus() {
-  showNotifs.value = false;
-  showUserMenu.value = false;
-  showMobileMenu.value = false;
-}
-
-async function markAllRead() {
-  await notificationStore.markAllAsRead();
-}
-
-async function onNotifClick(item: any) {
-  if (!item.is_read) {
-    await notificationStore.markAsRead(item.id);
-  }
-  closeMenus();
-  if (item.auction_id) {
-    router.push(`/auction/${item.auction_id}`);
+function onNotifClick(item: any) {
+  notifStore.markAsRead(item.id);
+  if (item.link) {
+    router.push(item.link);
   }
 }
 
 function handleLogout() {
-  closeMenus();
   authStore.logout();
   router.push('/auth/login');
 }
 
 function roleLabel(role?: string) {
   if (role === 'admin') return 'Administrador';
-  if (role === 'seller') return 'Vendedor Verificado';
-  return 'Licitador Credenciado';
+  if (role === 'seller') return 'Vendedor Homologado';
+  return 'Licitador VIP';
 }
-
-onMounted(() => {
-  if (authStore.isAuthenticated) {
-    notificationStore.fetchNotifications().catch(() => {});
-  }
-});
 </script>

@@ -40,10 +40,21 @@ export const useAuctionStore = defineStore('auction', {
   }),
 
   getters: {
-    watchlist: (state) => Array.from(state.watchlistIds)
+    watchlist: (state) => Array.from(state.watchlistIds),
+    activeAuctions: (state): Auction[] => state.auctions.filter(a => a.status === 'active')
   },
 
   actions: {
+    async fetchWatchlist() {
+      try {
+        const res = await api.get('/buyer/watchlist');
+        if (Array.isArray(res.data)) {
+          this.watchlistIds = new Set(res.data.map((item: any) => item.auction_id || item.id));
+        }
+      } catch (err) {
+        console.error('Error fetching watchlist:', err);
+      }
+    },
     async fetchCategories() {
       try {
         const res = await api.get('/categories');

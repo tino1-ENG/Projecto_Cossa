@@ -118,7 +118,11 @@
     <!-- Quasar Page Container -->
     <q-page-container>
       <q-page class="p-4 sm:p-6 lg:p-8">
-        <router-view />
+        <router-view v-slot="{ Component }">
+          <transition name="fade-slide" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
       </q-page>
     </q-page-container>
 

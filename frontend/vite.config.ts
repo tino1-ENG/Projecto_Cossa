@@ -8,7 +8,9 @@ export default defineConfig({
     vue({
       template: { transformAssetUrls }
     }),
-    quasar()
+    quasar({
+      sassVariables: 'src/quasar-variables.sass'
+    })
   ],
   resolve: {
     alias: {

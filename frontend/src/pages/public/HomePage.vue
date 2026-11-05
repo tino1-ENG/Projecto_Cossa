@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-surface text-on-surface min-h-screen">
+  <q-page class="w-full bg-surface text-on-surface min-h-screen">
     <!-- SECTION 1: HERO & LIVE DISPUTE SHOWCASE -->
     <section class="relative w-full pt-space-xl pb-space-3xl overflow-hidden">
       <!-- Subtle Ambient Core Glow Behind Content -->
@@ -10,65 +10,99 @@
           <!-- Left Column: Copy & Value Proposition -->
           <div class="lg:col-span-7 flex flex-col gap-space-md sm:gap-space-lg">
             <!-- Origin Pill -->
-            <div class="inline-flex items-center gap-space-xs px-2.5 sm:px-space-md py-1 rounded bg-surface-container-high border border-white/[0.08] w-fit shadow-sm max-w-full">
+            <div class="inline-flex items-center gap-space-xs px-2.5 sm:px-space-md py-1 rounded-full bg-surface-container-high border border-white/[0.08] w-fit shadow-sm max-w-full">
               <span class="w-2 h-2 rounded-full bg-primary animate-ping shrink-0"></span>
-              <span class="font-label-caps text-[10px] sm:text-label-caps text-on-surface-variant truncate">🇲🇿 Casa Oficial de Leilões de Luxo de Moçambique</span>
+              <span class="font-label-caps text-[10px] sm:text-label-caps text-primary tracking-widest uppercase font-bold truncate">🇲🇿 Casa Oficial de Leilões de Luxo de Moçambique</span>
             </div>
 
             <!-- Main Headline -->
             <h1 class="text-3xl sm:text-4xl md:text-[56px] leading-tight sm:leading-[44px] md:leading-[64px] font-bold text-on-surface tracking-tight font-display">
               Descubra Leilões Exclusivos. <br class="hidden sm:inline" />
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-fixed-dim to-on-surface">Licite com Confiança.</span>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-primary-fixed">Licite com Confiança.</span>
             </h1>
 
             <!-- Subtitle -->
             <p class="font-body-md sm:font-body-lg text-sm sm:text-base text-on-surface-variant max-w-xl leading-relaxed">
-              A plataforma oficial em Moçambique para aquisição de frotas executivas, supercarros, relógios de coleção e maquinaria industrial com liquidação em Meticais (MZN).
+              A plataforma soberana em Moçambique para aquisição de frotas executivas, supercarros, relógios de coleção e maquinaria industrial com liquidação em Meticais (MZN) e custódia bancária fiduciária.
             </p>
 
+            <!-- Action Buttons via Quasar -->
+            <div class="flex flex-wrap items-center gap-space-md pt-2">
+              <q-btn
+                unelevated
+                no-caps
+                color="primary"
+                text-color="dark"
+                icon-right="arrow_forward"
+                label="Explorar Leilões"
+                to="/catalog"
+                class="font-bold text-sm px-6 py-3 rounded-lg shadow-xl shimmer-gold active-press"
+              />
+              <q-btn
+                outline
+                no-caps
+                color="primary"
+                icon="verified"
+                label="Começar a Vender"
+                to="/seller/dashboard"
+                class="font-semibold text-sm px-5 py-3 rounded-lg border border-primary/40 hover:bg-primary/10 active-press"
+              />
+            </div>
+
             <!-- Quick Metrics Bar -->
-            <div class="grid grid-cols-3 gap-2 sm:gap-space-md pt-space-md border-t border-white/[0.08] max-w-lg">
+            <div class="grid grid-cols-3 gap-2 sm:gap-space-md pt-space-md border-t border-white/[0.08] max-w-lg mt-2">
               <div class="flex flex-col">
-                <span class="text-lg sm:text-headline-sm text-on-surface font-semibold font-display">2.4B MZN</span>
-                <span class="text-[10px] sm:text-body-sm text-on-surface-variant/70">Volume Total</span>
+                <span class="text-lg sm:text-headline-sm text-primary font-bold font-display">2.4B MZN</span>
+                <span class="text-[10px] sm:text-body-sm text-on-surface-variant/70 uppercase font-label-caps">Volume Transacionado</span>
               </div>
               <div class="flex flex-col border-l border-white/[0.08] pl-2 sm:pl-space-md">
-                <span class="text-lg sm:text-headline-sm text-on-surface font-semibold font-display">100%</span>
-                <span class="text-[10px] sm:text-body-sm text-on-surface-variant/70">Custódia Escrow</span>
+                <span class="text-lg sm:text-headline-sm text-on-surface font-bold font-display">100%</span>
+                <span class="text-[10px] sm:text-body-sm text-on-surface-variant/70 uppercase font-label-caps">Custódia Escrow</span>
               </div>
               <div class="flex flex-col border-l border-white/[0.08] pl-2 sm:pl-space-md">
-                <span class="text-lg sm:text-headline-sm text-on-surface font-semibold font-display">14,200+</span>
-                <span class="text-[10px] sm:text-body-sm text-on-surface-variant/70">Licitadores</span>
+                <span class="text-lg sm:text-headline-sm text-on-surface font-bold font-display">14,200+</span>
+                <span class="text-[10px] sm:text-body-sm text-on-surface-variant/70 uppercase font-label-caps">Licitadores Ativos</span>
               </div>
             </div>
           </div>
 
-          <!-- Right Column: Featured Live Car HUD Card -->
+          <!-- Right Column: Featured Live Car HUD Card with Quasar Card -->
           <div class="lg:col-span-5 relative">
-            <div class="relative rounded-2xl overflow-hidden bg-surface-container border border-white/[0.12] shadow-2xl group">
-              <!-- Hero Vehicle Image -->
+            <q-card class="relative rounded-2xl overflow-hidden bg-surface-container border border-white/[0.12] shadow-2xl group" flat>
+              <!-- Hero Vehicle Image with Quasar Image -->
               <div class="relative w-full aspect-[4/3] bg-surface-container-lowest overflow-hidden">
-                <img
+                <q-img
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   :src="heroLot?.primary_image || '/images/products/porsche-911-gt3rs.jpg'"
                   :alt="heroLot?.title || 'Porsche 911 GT3 RS Clubsport'"
-                  @error="(e) => ((e.target as HTMLImageElement).src = '/images/products/porsche-911-gt3rs.jpg')"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-black/40"></div>
+                  :ratio="4/3"
+                >
+                  <template v-slot:error>
+                    <img src="/images/products/porsche-911-gt3rs.jpg" alt="" class="w-full h-full object-cover" />
+                  </template>
+                </q-img>
+                <div class="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-black/40 pointer-events-none"></div>
 
                 <!-- Header HUD on Image -->
-                <div class="absolute top-space-md left-space-md right-space-md flex items-center justify-between">
-                  <span class="px-space-sm py-1 rounded bg-black/60 backdrop-blur-md border border-white/[0.1] text-primary font-label-caps text-label-caps flex items-center gap-1">
+                <div class="absolute top-space-md left-space-md right-space-md flex items-center justify-between z-10">
+                  <q-badge
+                    color="dark"
+                    text-color="primary"
+                    class="px-2.5 py-1 rounded bg-black/75 backdrop-blur-md border border-white/[0.1] font-bold text-[10px] flex items-center gap-1.5"
+                  >
                     <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                    LOTE #{{ heroLot?.id || '408' }} • EM DESTAQUE AO VIVO
-                  </span>
-                  <span class="px-space-sm py-1 rounded bg-black/60 backdrop-blur-md border border-white/[0.1] text-on-surface font-label-numeric text-[11px]">
-                    {{ (heroLot?.location_city || 'ENTREPOSTO ADUANEIRO DE MAPUTO').toUpperCase() }}
-                  </span>
+                    <span>LOTE #{{ heroLot?.id || '408' }} • EM DESTAQUE AO VIVO</span>
+                  </q-badge>
+                  <q-badge
+                    color="dark"
+                    text-color="white"
+                    class="px-2 py-1 rounded bg-black/75 backdrop-blur-md border border-white/[0.1] text-[10px] font-mono"
+                    :label="(heroLot?.location_city || 'ENTREPOSTO ADUANEIRO DE MAPUTO').toUpperCase()"
+                  />
                 </div>
 
                 <!-- Bottom Countdown Ribbon on Image -->
-                <div class="absolute bottom-space-md left-space-md right-space-md flex items-end justify-between">
+                <div class="absolute bottom-space-md left-space-md right-space-md flex items-end justify-between z-10">
                   <div>
                     <span class="font-label-caps text-[10px] text-on-surface-variant uppercase">Termina em:</span>
                     <div class="font-headline-sm text-headline-sm text-primary font-bold tracking-wider">
@@ -76,14 +110,17 @@
                       <span v-else>04h 12m 30s</span>
                     </div>
                   </div>
-                  <span class="px-space-sm py-1 rounded bg-primary/20 border border-primary text-primary font-label-caps text-[11px] font-bold">
-                    RESERVA ATINGIDA
-                  </span>
+                  <q-badge
+                    color="primary"
+                    text-color="dark"
+                    class="px-2.5 py-1 font-bold text-[11px]"
+                    label="RESERVA ATINGIDA"
+                  />
                 </div>
               </div>
 
               <!-- Card Info Body -->
-              <div class="p-space-lg flex flex-col gap-space-md">
+              <q-card-section class="p-space-lg flex flex-col gap-space-md">
                 <div>
                   <div class="flex items-center justify-between">
                     <span class="font-body-sm text-body-sm text-on-surface-variant">
@@ -93,124 +130,139 @@
                       {{ heroLot?.bid_count || 38 }} Licitações
                     </span>
                   </div>
-                  <h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">
+                  <h3 class="font-headline-sm text-headline-sm text-on-surface mt-1 font-bold">
                     {{ heroLot?.title || 'Porsche 911 GT3 RS Clubsport' }}
                   </h3>
                 </div>
 
+                <!-- Bottom Valuation Row -->
                 <div class="p-space-md rounded-xl bg-surface-container-low border border-white/[0.06] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                   <div class="flex flex-col">
-                    <span class="font-label-caps text-label-caps text-on-surface-variant">Licitação Atual Mais Alta</span>
-                    <span class="font-currency-display text-[22px] sm:text-[28px] text-on-surface">
+                    <span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">Licitação Atual Mais Alta</span>
+                    <span class="font-currency-display text-[22px] sm:text-[28px] text-on-surface font-extrabold font-display">
                       {{ formatMoneyDigits(heroLot?.current_price || 1845000000) }}
                       <span class="text-body-sm font-label-caps text-primary">MZN</span>
                     </span>
                   </div>
-                  <router-link
+                  <q-btn
                     :to="heroLot ? `/auctions/${heroLot.id}` : '/catalog'"
-                    class="px-space-lg py-space-sm rounded bg-primary hover:bg-primary-fixed-dim text-on-primary font-label-caps text-label-caps uppercase transition-all shadow-lg flex items-center justify-center gap-1.5 text-center"
-                  >
-                    <span>Licitar em Meticais</span>
-                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                  </router-link>
+                    unelevated
+                    no-caps
+                    color="primary"
+                    text-color="dark"
+                    icon-right="arrow_forward"
+                    label="Licitar em Meticais"
+                    class="px-5 py-2.5 rounded-lg font-bold text-xs uppercase shadow-lg shimmer-gold active-press"
+                  />
                 </div>
-              </div>
-            </div>
+              </q-card-section>
+            </q-card>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 2: FLOATING MULTI-PARAMETRIC SEARCH BAR -->
+    <!-- SECTION 2: FLOATING MULTI-PARAMETRIC SEARCH BAR WITH QUASAR CONTROLS -->
     <section class="relative z-20 max-w-[1440px] mx-auto px-4 sm:px-margin -mt-space-md">
-      <div class="w-full bg-surface-container rounded-2xl p-space-md sm:p-space-lg border border-white/[0.08] shadow-2xl">
-        <!-- Category Filter Tabs -->
-        <div class="flex items-center gap-space-xs overflow-x-auto pb-space-sm mb-space-md scrollbar-none border-b border-white/[0.06] -mx-2 px-2 sm:mx-0 sm:px-0">
-          <button
+      <q-card class="w-full bg-surface-container rounded-2xl p-space-md sm:p-space-lg border border-white/[0.08] shadow-2xl" flat>
+        <!-- Category Filter Tabs via Quasar Chips -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-space-sm mb-space-md scrollbar-none border-b border-white/[0.06]">
+          <q-btn
             v-for="tab in filterTabs"
             :key="tab.slug"
-            type="button"
-            class="px-3 sm:px-space-md py-1.5 rounded-full font-label-caps text-[10px] sm:text-label-caps whitespace-nowrap transition-colors"
-            :class="selectedTab === tab.slug ? 'bg-primary text-on-primary shadow-sm' : 'bg-surface-container-high text-on-surface-variant hover:text-on-surface'"
+            dense
+            unelevated
+            no-caps
+            rounded
+            :color="selectedTab === tab.slug ? 'primary' : 'surface-container-high'"
+            :text-color="selectedTab === tab.slug ? 'dark' : 'white'"
+            class="px-3.5 py-1 text-xs font-bold transition-all"
+            :label="tab.name"
             @click="selectTab(tab.slug)"
-          >
-            {{ tab.name }}
-          </button>
+          />
         </div>
 
-        <!-- Inputs Row -->
+        <!-- Inputs Row via Quasar QInput & QSelect -->
         <form @submit.prevent="executeSearch" class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center">
-          <div class="md:col-span-4 relative">
-            <span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-            <input
+          <div class="md:col-span-4">
+            <q-input
               v-model="searchQuery"
-              class="w-full bg-surface-container-low border border-white/[0.08] rounded-lg pl-12 pr-space-md py-space-sm text-on-surface placeholder:text-on-surface-variant/50 font-body-md text-body-md focus:outline-none focus:border-primary"
+              dark
+              filled
+              dense
+              color="primary"
+              class="text-white"
               placeholder="Marca, modelo, referência ou lote..."
-              type="text"
+            >
+              <template v-slot:prepend>
+                <q-icon name="search" color="primary" />
+              </template>
+            </q-input>
+          </div>
+
+          <div class="md:col-span-3">
+            <q-select
+              v-model="selectedCategory"
+              :options="categoryOptions"
+              dark
+              filled
+              dense
+              emit-value
+              map-options
+              color="primary"
             />
           </div>
 
           <div class="md:col-span-3">
-            <select
-              v-model="selectedCategory"
-              class="w-full bg-surface-container-low border border-white/[0.08] rounded-lg px-space-md py-space-sm text-on-surface font-body-md text-body-md focus:outline-none focus:border-primary"
-            >
-              <option value="all">Todas as Categorias</option>
-              <option v-for="cat in auctionStore.categories" :key="cat.id" :value="cat.slug">
-                {{ cat.name }}
-              </option>
-            </select>
-          </div>
-
-          <div class="md:col-span-3">
-            <select
+            <q-select
               v-model="selectedProvince"
-              class="w-full bg-surface-container-low border border-white/[0.08] rounded-lg px-space-md py-space-sm text-on-surface font-body-md text-body-md focus:outline-none focus:border-primary"
-            >
-              <option value="all">Todas as Províncias</option>
-              <option value="Maputo Cidade">Maputo Cidade</option>
-              <option value="Maputo Província">Matola / Maputo Prov.</option>
-              <option value="Sofala">Beira / Sofala</option>
-              <option value="Nampula">Nampula</option>
-              <option value="Tete">Tete / Moatize</option>
-              <option value="Cabo Delgado">Pemba / Cabo Delgado</option>
-            </select>
+              :options="provinceOptions"
+              dark
+              filled
+              dense
+              emit-value
+              map-options
+              color="primary"
+            />
           </div>
 
           <div class="md:col-span-2">
-            <button
-              class="w-full py-space-sm rounded-lg bg-primary hover:bg-primary-fixed-dim text-on-primary font-headline-sm text-title-md transition-all shadow-md flex items-center justify-center gap-space-xs"
+            <q-btn
               type="submit"
-            >
-              <span class="material-symbols-outlined text-[20px]">manage_search</span>
-              <span>Pesquisar</span>
-            </button>
+              unelevated
+              no-caps
+              color="primary"
+              text-color="dark"
+              icon="manage_search"
+              label="Pesquisar"
+              class="w-full py-2.5 rounded-lg font-bold text-sm shadow-md shimmer-gold active-press"
+            />
           </div>
         </form>
 
         <!-- Trust Badges Under Search -->
-        <div class="flex flex-wrap items-center justify-between gap-space-md pt-space-md mt-space-sm border-t border-white/[0.04] text-on-surface-variant font-body-sm text-body-sm">
+        <div class="flex flex-wrap items-center justify-between gap-space-md pt-space-md mt-space-sm border-t border-white/[0.04] text-on-surface-variant font-body-sm text-body-sm text-xs">
           <div class="flex items-center gap-space-xs">
-            <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+            <q-icon name="verified" color="primary" size="18px" />
             <span>Vendedores Moçambicanos Verificados com NUIT</span>
           </div>
           <div class="flex items-center gap-space-xs">
-            <span class="material-symbols-outlined text-primary text-[18px]">lock</span>
+            <q-icon name="lock" color="primary" size="18px" />
             <span>Custódia de Escrow Bancário Garantida em Meticais</span>
           </div>
           <div class="flex items-center gap-space-xs">
-            <span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+            <q-icon name="verified_user" color="primary" size="18px" />
             <span>Inspeção Física Notarial Pré-Leilão</span>
           </div>
         </div>
-      </div>
+      </q-card>
     </section>
 
     <!-- SECTION 3: ENDING SOON AUCTIONS (LOTES CRÍTICOS EM DISPUTA) -->
     <section class="max-w-[1440px] mx-auto px-4 sm:px-margin py-space-xl sm:py-space-3xl">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg sm:mb-space-xl">
         <div class="flex flex-col gap-space-xs">
-          <span class="font-label-caps text-label-caps uppercase tracking-wider text-error flex items-center gap-1.5">
+          <span class="font-label-caps text-label-caps uppercase tracking-wider text-error flex items-center gap-1.5 text-xs font-bold">
             <span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
             Lotes Críticos em Disputa
           </span>
@@ -221,13 +273,15 @@
             Segundos finais para submeter licitações fiduciárias antes do fecho irrevogável dos lotes.
           </p>
         </div>
-        <router-link
+        <q-btn
+          flat
+          no-caps
+          color="primary"
+          icon-right="arrow_forward"
+          label="Ver Todas as Disputas"
           to="/catalog?sort=ending_soon"
-          class="font-title-md text-title-md text-primary hover:underline flex items-center gap-1"
-        >
-          <span>Ver Todas as Disputas</span>
-          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-        </router-link>
+          class="font-semibold text-sm"
+        />
       </div>
 
       <!-- Grid of Ending Soon Cards -->
@@ -243,7 +297,7 @@
       <div class="max-w-[1440px] mx-auto px-4 sm:px-margin">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg sm:mb-space-xl">
           <div class="flex flex-col gap-space-xs">
-            <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary">
+            <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary text-xs font-bold">
               Registo Institucional de Moçambique
             </span>
             <h2 class="text-2xl sm:text-headline-lg font-bold text-on-surface tracking-tight font-display">
@@ -253,13 +307,15 @@
               Descubra artigos de referência selecionados das nossas sessões mais prestigiadas e concorridas.
             </p>
           </div>
-          <router-link
+          <q-btn
+            flat
+            no-caps
+            color="primary"
+            icon-right="arrow_forward"
+            label="Explorar Catálogo Completo"
             to="/catalog?status=active"
-            class="font-title-md text-title-md text-primary hover:underline flex items-center gap-1"
-          >
-            <span>Explorar Catálogo Completo</span>
-            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-          </router-link>
+            class="font-semibold text-sm"
+          />
         </div>
 
         <!-- 4-Card Refined Grid -->
@@ -274,7 +330,7 @@
     <!-- SECTION 5: CATEGORY EXPLORATION TILES -->
     <section class="w-full max-w-[1440px] mx-auto px-4 sm:px-margin py-space-xl sm:py-space-3xl">
       <div class="flex flex-col items-center text-center gap-space-xs mb-space-xl sm:mb-space-2xl">
-        <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary">Classificação de Ativos</span>
+        <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary text-xs font-bold">Classificação de Ativos</span>
         <h2 class="text-2xl sm:text-headline-lg font-bold text-on-surface font-display">Explorar por Categoria</h2>
         <p class="font-body-md text-sm sm:text-base text-on-surface-variant max-w-xl">
           De frotas corporativas a peças de alta joalharia e maquinaria pesada, explore listagens verificadas em Moçambique.
@@ -282,22 +338,23 @@
       </div>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-gutter">
-        <router-link
+        <q-card
           v-for="cat in categoryTiles"
           :key="cat.slug"
-          :to="`/catalog?category=${cat.slug}`"
-          class="group relative flex flex-col items-center justify-center p-space-md sm:p-space-lg rounded-xl bg-surface-container hover:bg-surface-container-high border border-white/[0.06] hover:border-primary/40 transition-all duration-300 shadow-md"
+          class="group relative flex flex-col items-center justify-center p-space-md sm:p-space-lg rounded-xl bg-surface-container border border-white/[0.06] hover-luxury-lift cursor-pointer transition-all duration-300 shadow-md text-white"
+          flat
+          @click="$router.push(`/catalog?category=${cat.slug}`)"
         >
-          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-surface-container-low group-hover:bg-primary flex items-center justify-center text-primary group-hover:text-on-primary transition-colors mb-space-sm shadow-inner">
-            <span class="material-symbols-outlined text-[24px] sm:text-[28px]">{{ cat.icon }}</span>
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-surface-container-low group-hover:bg-primary flex items-center justify-center text-primary group-hover:text-black transition-all duration-300 mb-space-sm shadow-inner group-hover:scale-110">
+            <q-icon :name="cat.icon" size="26px" />
           </div>
-          <span class="font-title-md text-sm sm:text-title-md text-on-surface group-hover:text-primary transition-colors text-center line-clamp-1">
+          <span class="font-title-md text-sm sm:text-title-md text-on-surface group-hover:text-primary transition-colors text-center line-clamp-1 font-semibold">
             {{ cat.name }}
           </span>
           <span class="font-body-sm text-[11px] sm:text-body-sm text-on-surface-variant/70 mt-1">
             {{ cat.count }} Lotes Ativos
           </span>
-        </router-link>
+        </q-card>
       </div>
     </section>
 
@@ -305,10 +362,10 @@
     <section class="w-full bg-surface-container-lowest py-space-xl sm:py-space-3xl relative overflow-hidden border-t border-white/[0.04]" id="how-it-works">
       <div class="max-w-[1440px] mx-auto px-4 sm:px-margin">
         <!-- Security Credential Banner -->
-        <div class="bg-gradient-to-r from-surface-container-low via-surface-container to-surface-container-low p-space-lg sm:p-space-xl rounded-2xl border border-white/[0.08] shadow-xl mb-space-2xl sm:mb-space-3xl">
+        <q-card class="bg-gradient-to-r from-surface-container-low via-surface-container to-surface-container-low p-space-lg sm:p-space-xl rounded-2xl border border-white/[0.08] shadow-xl mb-space-2xl sm:mb-space-3xl text-white" flat>
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
             <div class="lg:col-span-8 flex flex-col gap-space-sm">
-              <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary">Proteção Financeira Institucional</span>
+              <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary text-xs font-bold">Proteção Financeira Institucional</span>
               <h3 class="text-xl sm:text-headline-lg font-bold text-on-surface font-display">O Padrão de Escrow e Conformidade da MozBid</h3>
               <p class="font-body-md sm:font-body-lg text-sm sm:text-base text-on-surface-variant leading-relaxed">
                 Cada lance em Meticais na MozBid é totalmente respaldado por custódia fiduciária (escrow) em instituições bancárias comerciais autorizadas em Moçambique. Depósitos de licitações não vencedoras são libertados imediatamente após a conclusão do lote.
@@ -316,114 +373,90 @@
             </div>
             <div class="lg:col-span-4 flex flex-col sm:flex-row items-center justify-end gap-space-md">
               <div class="w-full sm:w-auto p-space-md rounded-xl bg-surface-container-high/80 border border-white/[0.06] text-center flex flex-col items-center">
-                <span class="material-symbols-outlined text-primary text-[32px] mb-1">lock</span>
-                <span class="font-title-md text-title-md text-on-surface">Depósito Sem Risco</span>
+                <q-icon name="lock" color="primary" size="32px" class="mb-1" />
+                <span class="font-title-md text-title-md text-on-surface font-bold">Depósito Sem Risco</span>
                 <span class="font-body-sm text-body-sm text-on-surface-variant">Libertação Imediata</span>
               </div>
               <div class="w-full sm:w-auto p-space-md rounded-xl bg-surface-container-high/80 border border-white/[0.06] text-center flex flex-col items-center">
-                <span class="material-symbols-outlined text-primary text-[32px] mb-1">verified_user</span>
-                <span class="font-title-md text-title-md text-on-surface">KYC e NUIT</span>
+                <q-icon name="verified_user" color="primary" size="32px" class="mb-1" />
+                <span class="font-title-md text-title-md text-on-surface font-bold">KYC e NUIT</span>
                 <span class="font-body-sm text-body-sm text-on-surface-variant">Conforme Legislação</span>
               </div>
             </div>
           </div>
-        </div>
+        </q-card>
 
         <!-- 3-Step Flow Heading -->
         <div class="text-center max-w-xl mx-auto mb-space-2xl">
-          <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary">Execução Transparente</span>
-          <h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">Como Funciona</h2>
+          <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary text-xs font-bold">Execução Transparente</span>
+          <h2 class="font-headline-lg text-headline-lg text-on-surface mt-1 font-bold">Como Funciona</h2>
           <p class="font-body-md text-body-md text-on-surface-variant mt-2">
             Processo de aquisição institucional transparente conduzido em três fases estruturadas.
           </p>
         </div>
 
-        <!-- 3-Step Cards -->
+        <!-- 3-Step Cards with Quasar Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
           <!-- Step 1 -->
-          <div class="p-space-xl rounded-2xl bg-surface-container border border-white/[0.08] flex flex-col justify-between gap-space-lg relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+          <q-card class="p-space-xl rounded-2xl bg-surface-container border border-white/[0.08] flex flex-col justify-between gap-space-lg relative overflow-hidden group hover:bg-surface-container-high transition-colors text-white" flat>
             <div class="flex items-center justify-between">
               <span class="font-headline-lg text-[48px] font-bold text-primary/30 group-hover:text-primary transition-colors">01</span>
               <div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center text-primary border border-white/[0.08]">
-                <span class="material-symbols-outlined text-[24px]">badge</span>
+                <q-icon name="badge" size="24px" />
               </div>
             </div>
             <div>
-              <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Registo e Validação de Identidade</h4>
-              <p class="font-body-md text-body-md text-on-surface-variant">
+              <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2 font-bold">Registo e Validação de Identidade</h4>
+              <p class="font-body-md text-body-md text-on-surface-variant text-sm">
                 Submeta o seu NUIT e documentação oficial para credenciação célere. O nosso departamento de conformidade valida licitadores nacionais e estrangeiros em minutos.
               </p>
             </div>
-            <span class="font-label-caps text-label-caps text-primary uppercase flex items-center gap-1">
-              Validação Instantânea de NUIT <span class="material-symbols-outlined text-[16px]">check</span>
+            <span class="font-label-caps text-label-caps text-primary uppercase flex items-center gap-1 font-bold text-xs">
+              Validação Instantânea de NUIT <q-icon name="check" size="16px" />
             </span>
-          </div>
+          </q-card>
 
           <!-- Step 2 -->
-          <div class="p-space-xl rounded-2xl bg-surface-container border border-white/[0.08] flex flex-col justify-between gap-space-lg relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+          <q-card class="p-space-xl rounded-2xl bg-surface-container border border-white/[0.08] flex flex-col justify-between gap-space-lg relative overflow-hidden group hover:bg-surface-container-high transition-colors text-white" flat>
             <div class="flex items-center justify-between">
               <span class="font-headline-lg text-[48px] font-bold text-primary/30 group-hover:text-primary transition-colors">02</span>
               <div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center text-primary border border-white/[0.08]">
-                <span class="material-symbols-outlined text-[24px]">gavel</span>
+                <q-icon name="gavel" size="24px" />
               </div>
             </div>
             <div>
-              <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Licitação com Garantia Fiduciária</h4>
-              <p class="font-body-md text-body-md text-on-surface-variant">
+              <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2 font-bold">Licitação com Garantia Fiduciária</h4>
+              <p class="font-body-md text-body-md text-on-surface-variant text-sm">
                 Participe em salas de leilão ao vivo com controlos de incremento em tempo real. Configure licitações automáticas ou licite diretamente em Meticais (MZN).
               </p>
             </div>
-            <span class="font-label-caps text-label-caps text-primary uppercase flex items-center gap-1">
-              Ligação Bancária Segura <span class="material-symbols-outlined text-[16px]">check</span>
+            <span class="font-label-caps text-label-caps text-primary uppercase flex items-center gap-1 font-bold text-xs">
+              Ligação Bancária Segura <q-icon name="check" size="16px" />
             </span>
-          </div>
+          </q-card>
 
           <!-- Step 3 -->
-          <div class="p-space-xl rounded-2xl bg-surface-container border border-white/[0.08] flex flex-col justify-between gap-space-lg relative overflow-hidden group hover:bg-surface-container-high transition-colors">
+          <q-card class="p-space-xl rounded-2xl bg-surface-container border border-white/[0.08] flex flex-col justify-between gap-space-lg relative overflow-hidden group hover:bg-surface-container-high transition-colors text-white" flat>
             <div class="flex items-center justify-between">
               <span class="font-headline-lg text-[48px] font-bold text-primary/30 group-hover:text-primary transition-colors">03</span>
               <div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center text-primary border border-white/[0.08]">
-                <span class="material-symbols-outlined text-[24px]">handshake</span>
+                <q-icon name="handshake" size="24px" />
               </div>
             </div>
             <div>
-              <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Entrega Segura e Escritura</h4>
-              <p class="font-body-md text-body-md text-on-surface-variant">
+              <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2 font-bold">Entrega Segura e Escritura</h4>
+              <p class="font-body-md text-body-md text-on-surface-variant text-sm">
                 Escritura e formalização notarial concluídas na nossa sede na Avenida Julius Nyerere, em Maputo, ou via transporte blindado porta-a-porta para Matola, Beira e Nampula.
               </p>
             </div>
-            <span class="font-label-caps text-label-caps text-primary uppercase flex items-center gap-1">
-              Transferência Oficial de Titularidade <span class="material-symbols-outlined text-[16px]">check</span>
+            <span class="font-label-caps text-label-caps text-primary uppercase flex items-center gap-1 font-bold text-xs">
+              Transferência Oficial de Titularidade <q-icon name="check" size="16px" />
             </span>
-          </div>
-        </div>
-
-        <!-- Quick Action Lead Banner -->
-        <div class="mt-space-3xl p-space-2xl rounded-2xl bg-gradient-to-r from-surface-container via-surface-container-high to-surface-container border border-white/[0.08] text-center flex flex-col items-center gap-space-md">
-          <h3 class="font-headline-lg text-headline-lg text-on-surface max-w-2xl">
-            Consigne os Seus Ativos de Alto Valor na Principal Plataforma de Leilões de Moçambique
-          </h3>
-          <p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
-            Obtenha acesso direto a colecionadores privados certificados, consórcios de mineração e compradores institucionais em Moçambique e em toda a região da SADC.
-          </p>
-          <div class="flex flex-wrap items-center justify-center gap-space-md pt-space-xs">
-            <router-link
-              to="/seller/dashboard"
-              class="px-space-xl py-space-md rounded bg-primary text-on-primary font-headline-sm text-headline-sm hover:bg-primary-fixed-dim transition-all shadow-xl"
-            >
-              Solicitar Avaliação de Lote
-            </router-link>
-            <router-link
-              to="/how-it-works"
-              class="px-space-lg py-space-md rounded bg-surface-container-low border border-white/[0.08] text-on-surface font-title-md text-title-md hover:bg-surface-container-lowest transition-all"
-            >
-              Consultar Regulamento Notarial
-            </router-link>
-          </div>
+          </q-card>
         </div>
       </div>
     </section>
-  </div>
+  </q-page>
 </template>
 
 <script setup lang="ts">
@@ -433,68 +466,83 @@ import { useAuctionStore } from '../../stores/auction';
 import { formatMoneyDigits } from '../../utils/money';
 import AuctionCard from '../../components/auction/AuctionCard.vue';
 import AuctionTimer from '../../components/auction/AuctionTimer.vue';
+import type { Auction } from '../../types';
 
 const router = useRouter();
 const auctionStore = useAuctionStore();
 
 const searchQuery = ref('');
+const selectedTab = ref('all');
 const selectedCategory = ref('all');
 const selectedProvince = ref('all');
-const selectedTab = ref('all');
 
 const filterTabs = [
-  { name: 'Todos os Leilões', slug: 'all' },
-  { name: 'Automóvel', slug: 'automoveis-motos' },
-  { name: 'Relojoaria', slug: 'relogios-joias' },
-  { name: 'Imobiliário', slug: 'imobiliario-terrenos' },
-  { name: 'Maquinaria Pesada', slug: 'maquinas-industriais' }
+  { name: 'Todos os Lotes', slug: 'all' },
+  { name: 'Supercarros & Frotas', slug: 'automoveis-motos' },
+  { name: 'Maquinaria Pesada', slug: 'maquinas-industriais' },
+  { name: 'Tecnologia & TI', slug: 'tecnologia-computadores' },
+  { name: 'Alta Relojoaria', slug: 'relogios-joias' },
+  { name: 'Imobiliário & Concessões', slug: 'imobiliario-terrenos' }
 ];
 
-const categoryTiles = [
-  { name: 'Automóveis', slug: 'automoveis-motos', icon: 'directions_car', count: 142 },
-  { name: 'Motociclos', slug: 'automoveis-motos', icon: 'two_wheeler', count: 29 },
-  { name: 'Eletrónica e TI', slug: 'tecnologia-computadores', icon: 'devices', count: 68 },
-  { name: 'Relógios e Joalharia', slug: 'relogios-joias', icon: 'watch', count: 54 },
-  { name: 'Imobiliário Prime', slug: 'imobiliario-terrenos', icon: 'domain', count: 18 },
-  { name: 'Equipamento Industrial', slug: 'maquinas-industriais', icon: 'precision_manufacturing', count: 73 },
-  { name: 'Liquidação Comercial', slug: 'outros', icon: 'storefront', count: 35 },
-  { name: 'Arte e Colecionáveis', slug: 'arte-colecionaveis', icon: 'palette', count: 21 }
+const categoryOptions = computed(() => [
+  { label: 'Todas as Categorias', value: 'all' },
+  ...auctionStore.categories.map(c => ({ label: c.name, value: c.slug }))
+]);
+
+const provinceOptions = [
+  { label: 'Todas as Províncias', value: 'all' },
+  { label: 'Maputo Cidade', value: 'Maputo Cidade' },
+  { label: 'Matola / Maputo Prov.', value: 'Maputo Província' },
+  { label: 'Beira / Sofala', value: 'Sofala' },
+  { label: 'Nampula', value: 'Nampula' },
+  { label: 'Tete / Moatize', value: 'Tete' },
+  { label: 'Pemba / Cabo Delgado', value: 'Cabo Delgado' }
 ];
+
+const categoryTiles = computed(() => {
+  return [
+    { name: 'Automóveis & Colecionáveis', slug: 'automoveis-motos', icon: 'directions_car', count: 4 },
+    { name: 'Maquinaria Pesada & Mineração', slug: 'maquinas-industriais', icon: 'precision_manufacturing', count: 2 },
+    { name: 'Tecnologia & Servidores', slug: 'tecnologia-computadores', icon: 'devices', count: 2 },
+    { name: 'Relógios & Alta Joalharia', slug: 'relogios-joias', icon: 'watch', count: 2 },
+    { name: 'Imobiliário & Concessões', slug: 'imobiliario-terrenos', icon: 'domain', count: 1 },
+    { name: 'Arte & Património Cultural', slug: 'arte-colecionaveis', icon: 'palette', count: 1 }
+  ];
+});
 
 const heroLot = computed(() => {
-  return auctionStore.featuredAuctions[0] || auctionStore.auctions[0];
+  return auctionStore.activeAuctions.find((a: Auction) => a.id === 1) || auctionStore.activeAuctions[0] || null;
 });
 
 const endingSoonList = computed(() => {
-  return auctionStore.endingSoonAuctions.slice(0, 4);
+  return [...auctionStore.activeAuctions]
+    .sort((a, b) => new Date(a.ends_at).getTime() - new Date(b.ends_at).getTime())
+    .slice(0, 4);
 });
 
 const featuredList = computed(() => {
-  return auctionStore.featuredAuctions.slice(0, 4);
+  return auctionStore.activeAuctions.slice(0, 4);
+});
+
+onMounted(async () => {
+  await Promise.all([
+    auctionStore.fetchCategories(),
+    auctionStore.fetchAuctions({ limit: 12 })
+  ]);
 });
 
 function selectTab(slug: string) {
   selectedTab.value = slug;
-  if (slug === 'all') {
-    selectedCategory.value = 'all';
-  } else {
-    selectedCategory.value = slug;
-  }
+  selectedCategory.value = slug;
 }
 
 function executeSearch() {
   const query: Record<string, string> = {};
-  if (searchQuery.value) query.q = searchQuery.value;
+  if (searchQuery.value.trim()) query.search = searchQuery.value.trim();
   if (selectedCategory.value !== 'all') query.category = selectedCategory.value;
   if (selectedProvince.value !== 'all') query.province = selectedProvince.value;
+
   router.push({ path: '/catalog', query });
 }
-
-onMounted(async () => {
-  await Promise.all([
-    auctionStore.fetchFeatured(),
-    auctionStore.fetchEndingSoon(),
-    auctionStore.fetchCategories()
-  ]);
-});
 </script>

@@ -2,7 +2,11 @@
   <q-layout view="hHh lpR fFf" class="bg-surface text-on-surface min-h-screen">
     <AppNavbar />
     <q-page-container>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <transition name="fade-slide" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </q-page-container>
     <AppFooter />
     <ToastContainer />
