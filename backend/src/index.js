@@ -35,6 +35,18 @@ const __dirname = path.dirname(__filename);
 // Ensure migrations are run on startup
 runMigrations();
 
+// Auto-seed initial data if database is empty on fresh deployment
+try {
+  const auctionCount = queryOne("SELECT count(*) as count FROM auctions");
+  if (!auctionCount || auctionCount.count === 0) {
+    console.log('[SQLite] Fresh deployment detected. Running initial database seed...');
+    const { seed } = await import('./database/seed.js');
+    seed();
+  }
+} catch (e) {
+  console.warn('[SQLite Auto-Seed Warning]:', e.message);
+}
+
 const app = express();
 const server = http.createServer(app);
 
