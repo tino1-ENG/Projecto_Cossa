@@ -5,7 +5,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-import { db, queryAll, execute, runTransaction } from './database/db.js';
+import { db, queryOne, queryAll, execute, runTransaction } from './database/db.js';
 import { runMigrations } from './database/migrate.js';
 import {
   connectMongoDB,
