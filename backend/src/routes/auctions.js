@@ -353,6 +353,24 @@ router.get('/:id', optionalAuthenticate, async (req, res) => {
   }
 });
 
+// In-memory FIFO Mutex per auctionId to guarantee sequential, thread-safe execution
+// for high-frequency concurrent bidding from multiple simultaneous users.
+const auctionQueues = new Map();
+
+async function acquireAuctionLock(auctionId) {
+  const previous = auctionQueues.get(auctionId) || Promise.resolve();
+  let release;
+  const current = new Promise(resolve => { release = resolve; });
+  auctionQueues.set(auctionId, previous.then(() => current));
+  await previous;
+  return () => {
+    release();
+    if (auctionQueues.get(auctionId) === current) {
+      auctionQueues.delete(auctionId);
+    }
+  };
+}
+
 // POST /api/v1/auctions/:id/bids — Core Transactional Bidding Engine (MongoDB + SQLite Mirror)
 router.post('/:id/bids', authenticate, async (req, res) => {
   const auctionId = parseInt(req.params.id);
@@ -363,6 +381,7 @@ router.post('/:id/bids', authenticate, async (req, res) => {
     return res.status(400).json({ message: 'Valor de licitação inválido' });
   }
 
+  const releaseLock = await acquireAuctionLock(auctionId);
   try {
     const auction = await Auction.findOne({ id: auctionId });
     if (!auction) {
@@ -592,6 +611,8 @@ router.post('/:id/bids', authenticate, async (req, res) => {
   } catch (err) {
     console.error('Error placing bid (MongoDB):', err);
     return res.status(500).json({ message: 'Erro ao processar licitação', error: err.message });
+  } finally {
+    releaseLock();
   }
 });
 

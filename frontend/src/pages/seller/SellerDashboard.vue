@@ -230,7 +230,7 @@
       </div>
 
       <!-- 5-STEP GUIDED AUCTION WIZARD MODAL (NATIVE QUASAR DIALOG) -->
-      <q-dialog v-model="showWizardModal" persistent>
+      <q-dialog v-model="showWizardModal" persistent :maximized="$q.screen.xs">
         <q-card class="wizard-modal glass-panel bg-[#141414] border border-primary/30 rounded-2xl overflow-hidden shadow-2xl text-white w-full max-w-2xl" flat>
           <!-- Wizard Header -->
           <div class="wizard-header flex items-center justify-between p-4 border-b border-white/[0.08] bg-[#0f0f0f]">
@@ -527,6 +527,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
+import { useQuasar } from 'quasar';
 import api from '../../services/api';
 import { useAuctionStore } from '../../stores/auction';
 import { useNotificationStore } from '../../stores/notification';
@@ -537,6 +538,7 @@ import {
   ShoppingBag, Truck, X, ChevronRight, ShieldCheck
 } from 'lucide-vue-next';
 
+const $q = useQuasar();
 const auctionStore = useAuctionStore();
 const notifStore = useNotificationStore();
 

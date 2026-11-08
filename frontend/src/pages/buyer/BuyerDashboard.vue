@@ -295,7 +295,7 @@
       </q-tab-panels>
 
       <!-- REAL-TIME PAYMENT CHECKOUT MODAL (QUASAR DIALOG) -->
-      <q-dialog v-model="showPaymentModal" persistent>
+      <q-dialog v-model="showPaymentModal" persistent :maximized="$q.screen.xs">
         <q-card class="bg-[#141414] border border-primary/30 rounded-2xl overflow-hidden shadow-2xl text-white w-full max-w-lg" flat>
           <div class="flex items-center justify-between p-4 border-b border-white/[0.08] bg-[#0f0f0f]">
             <div class="flex items-center gap-2">
@@ -397,7 +397,7 @@
       </q-dialog>
 
       <!-- ESCROW DEPOSIT MODAL (QUASAR DIALOG) -->
-      <q-dialog v-model="showDepositModal" persistent>
+      <q-dialog v-model="showDepositModal" persistent :maximized="$q.screen.xs">
         <q-card class="bg-[#141414] border border-primary/30 rounded-2xl overflow-hidden shadow-2xl text-white w-full max-w-lg" flat>
           <div class="flex items-center justify-between p-4 border-b border-white/[0.08] bg-[#0f0f0f]">
             <div class="flex items-center gap-2">
