@@ -154,6 +154,51 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ==========================================================================
+   MOBILE FIRST RESPONSIVE & IMAGE ADAPTATION REFINEMENTS
+   ========================================================================== */
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fluid responsive typography on extra-small mobile devices (< 640px) */
+@media (max-width: 639px) {
+  html {
+    font-size: 14.5px;
+  }
+  
+  .font-headline-lg {
+    font-size: 22px !important;
+    line-height: 28px !important;
+    letter-spacing: -0.02em;
+  }
+  
+  .font-headline-sm {
+    font-size: 18px !important;
+    line-height: 24px !important;
+  }
+  
+  .font-title-md {
+    font-size: 14px !important;
+    line-height: 20px !important;
+  }
+
+  .font-currency-display {
+    font-size: 19px !important;
+    line-height: 24px !important;
+  }
+
+  /* Compact padding for cards and dialogs on small phones */
+  .q-card {
+    border-radius: 12px;
+  }
+
+  .q-dialog__inner {
+    padding: 8px !important;
+  }
+}
+
 /* Glassmorphism helpers */
 .glass-panel {
   background: rgba(28, 27, 27, 0.85);

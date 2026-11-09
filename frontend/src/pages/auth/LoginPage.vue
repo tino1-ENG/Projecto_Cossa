@@ -1,5 +1,5 @@
 <template>
-  <q-card class="w-full max-w-md mx-auto bg-surface-container rounded-2xl p-space-xl border border-white/[0.08] shadow-2xl flex flex-col gap-space-lg text-white" flat>
+  <q-card class="w-full max-w-md mx-auto bg-surface-container rounded-xl sm:rounded-2xl p-4 sm:p-space-xl border border-white/[0.08] shadow-2xl flex flex-col gap-3 sm:gap-space-lg text-white" flat>
     <!-- Header -->
     <div class="flex flex-col gap-1">
       <span class="font-label-caps text-label-caps uppercase text-primary tracking-wider font-bold text-xs">Acesso Institucional</span>

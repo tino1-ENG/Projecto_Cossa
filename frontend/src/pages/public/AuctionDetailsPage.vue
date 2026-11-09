@@ -1,12 +1,12 @@
 <template>
-  <q-page class="w-full bg-surface text-on-surface min-h-screen py-space-md sm:py-space-xl">
-    <div v-if="auctionStore.loading && !auction" class="max-w-[1440px] mx-auto px-4 sm:px-margin py-20 flex flex-col items-center justify-center gap-space-md">
-      <q-spinner-dots color="primary" size="48px" />
-      <p class="font-body-md text-on-surface-variant">A carregar detalhes do lote em tempo real...</p>
+  <q-page class="w-full bg-surface text-on-surface min-h-screen py-3 sm:py-space-xl pb-20 sm:pb-space-xl">
+    <div v-if="auctionStore.loading && !auction" class="max-w-[1440px] mx-auto px-3 sm:px-margin py-16 flex flex-col items-center justify-center gap-space-md">
+      <q-spinner-dots color="primary" size="40px" />
+      <p class="font-body-md text-xs sm:text-sm text-on-surface-variant">A carregar detalhes do lote em tempo real...</p>
     </div>
 
-    <div v-else-if="!auction" class="max-w-[1440px] mx-auto px-4 sm:px-margin py-20 text-center">
-      <h3 class="font-headline-sm text-on-surface font-bold">Lote não encontrado</h3>
+    <div v-else-if="!auction" class="max-w-[1440px] mx-auto px-3 sm:px-margin py-16 text-center">
+      <h3 class="font-headline-sm text-base sm:text-headline-sm text-on-surface font-bold">Lote não encontrado</h3>
       <q-btn
         to="/catalog"
         unelevated
@@ -18,70 +18,70 @@
       />
     </div>
 
-    <div v-else class="max-w-[1440px] mx-auto px-4 sm:px-margin">
+    <div v-else class="max-w-[1440px] mx-auto px-3 sm:px-margin">
       <!-- Breadcrumbs via Quasar -->
-      <q-breadcrumbs class="text-xs sm:text-sm text-on-surface-variant/70 mb-space-md flex-wrap" active-color="primary">
+      <q-breadcrumbs class="text-[11px] sm:text-xs text-on-surface-variant/70 mb-2 sm:mb-space-md flex-wrap" active-color="primary">
         <q-breadcrumbs-el label="Início" to="/" icon="home" />
         <q-breadcrumbs-el label="Catálogo" to="/catalog" icon="gavel" />
         <q-breadcrumbs-el :label="auction.category_name" :to="`/catalog?category=${auction.category_slug}`" />
-        <q-breadcrumbs-el :label="`LOTE #${auction.id} — ${auction.title}`" class="truncate max-w-xs sm:max-w-md text-on-surface font-medium" />
+        <q-breadcrumbs-el :label="`LOTE #${auction.id}`" class="truncate max-w-[120px] sm:max-w-md text-on-surface font-medium" />
       </q-breadcrumbs>
 
       <!-- Lot Title Header -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg sm:mb-space-xl pb-space-md sm:pb-space-lg border-b border-white/[0.08]">
-        <div class="flex flex-col gap-space-xs">
-          <div class="flex items-center gap-space-xs flex-wrap">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-2.5 sm:gap-space-md mb-3 sm:mb-space-xl pb-3 sm:pb-space-lg border-b border-white/[0.08]">
+        <div class="flex flex-col gap-1 sm:gap-space-xs">
+          <div class="flex items-center gap-1 sm:gap-space-xs flex-wrap">
             <q-badge
               color="dark"
               text-color="primary"
-              class="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider border border-white/[0.08]"
+              class="px-2 py-0.5 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider border border-white/[0.08]"
               :label="auction.category_name"
             />
             <q-badge
               v-if="auction.status === 'active'"
               color="primary"
               text-color="dark"
-              class="px-2.5 py-0.5 text-[10px] flex items-center gap-1.5 font-bold"
+              class="px-2 py-0.5 text-[9px] sm:text-[10px] flex items-center gap-1.5 font-bold"
             >
-              <span class="w-2 h-2 rounded-full bg-dark radar-ring"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-dark radar-ring"></span>
               <span>LEILÃO AO VIVO</span>
             </q-badge>
             <q-badge
               v-else
               color="grey-9"
-              class="px-2.5 py-0.5 text-[10px]"
+              class="px-2 py-0.5 text-[9px] sm:text-[10px]"
               label="ENCERRADO"
             />
-            <span class="font-label-caps text-[10px] sm:text-[11px] text-on-surface-variant uppercase tracking-wider">
+            <span class="font-label-caps text-[9px] sm:text-[11px] text-on-surface-variant uppercase tracking-wider">
               LOTE #{{ auction.id }}
             </span>
           </div>
 
-          <h1 class="text-2xl sm:text-3xl md:text-headline-lg font-bold text-on-surface tracking-tight font-display leading-tight mt-1">
+          <h1 class="text-xl sm:text-3xl md:text-headline-lg font-bold text-on-surface tracking-tight font-display leading-tight mt-0.5">
             {{ auction.title }}
           </h1>
 
-          <div class="flex items-center gap-1.5 text-xs sm:text-body-sm text-on-surface-variant mt-0.5">
-            <q-icon name="location_on" size="16px" color="primary" />
+          <div class="flex items-center gap-1 text-[11px] sm:text-body-sm text-on-surface-variant mt-0.5">
+            <q-icon name="location_on" size="14px" color="primary" />
             <span>{{ auction.location_city }}, {{ auction.location_province }} • Moçambique</span>
           </div>
         </div>
 
-        <div class="flex items-center gap-space-sm">
+        <div class="flex items-center gap-space-sm self-start md:self-auto">
           <q-btn
             outline
             no-caps
             :color="auction.is_watchlisted ? 'primary' : 'grey-5'"
             :icon="auction.is_watchlisted ? 'bookmark_added' : 'bookmark'"
-            :label="auction.is_watchlisted ? 'Lote Marcado' : 'Guardar Lote'"
-            class="px-4 py-2 text-xs font-bold transition-all active-press"
+            :label="auction.is_watchlisted ? 'Marcado' : 'Guardar Lote'"
+            class="px-3 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold transition-all active-press"
             @click="handleToggleFav"
           />
         </div>
       </div>
 
       <!-- ASYMMETRIC 7:5 GRID LAYOUT -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:gap-space-xl items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-space-xl items-start">
         <!-- 7 COLUMNS: Gallery, Description, Specs & Provenance -->
         <div class="lg:col-span-7 flex flex-col gap-space-lg lg:gap-space-xl">
           <!-- Gallery -->

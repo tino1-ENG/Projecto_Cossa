@@ -1,5 +1,5 @@
 <template>
-  <q-page class="p-4 sm:p-6 lg:p-8 text-white">
+  <q-page class="p-3 sm:p-6 lg:p-8 pb-20 sm:pb-8 text-white">
     <div class="admin-dashboard flex flex-col gap-6">
       <!-- Admin KPI Row -->
       <div class="kpi-grid">

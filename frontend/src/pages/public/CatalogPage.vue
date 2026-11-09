@@ -1,25 +1,25 @@
 <template>
-  <q-page class="w-full bg-surface text-on-surface min-h-screen py-space-md sm:py-space-xl">
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-margin">
+  <q-page class="w-full bg-surface text-on-surface min-h-screen py-3 sm:py-space-xl pb-20 sm:pb-space-xl">
+    <div class="max-w-[1440px] mx-auto px-3 sm:px-margin">
       <!-- Breadcrumb & Header via Quasar -->
-      <div class="flex flex-col gap-space-xs mb-space-lg sm:mb-space-xl">
-        <q-breadcrumbs class="text-xs sm:text-sm text-on-surface-variant/70 mb-1" active-color="primary">
+      <div class="flex flex-col gap-1 mb-3 sm:mb-space-xl">
+        <q-breadcrumbs class="text-[11px] sm:text-xs text-on-surface-variant/70 mb-0.5" active-color="primary">
           <q-breadcrumbs-el label="Início" to="/" icon="home" />
           <q-breadcrumbs-el label="Catálogo de Leilões" icon="gavel" />
         </q-breadcrumbs>
-        <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary text-xs font-bold">Registo Oficial de Lotes</span>
-        <h1 class="text-2xl sm:text-3xl md:text-headline-lg font-bold text-on-surface tracking-tight font-display">
+        <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary text-[10px] sm:text-xs font-bold">Registo Oficial de Lotes</span>
+        <h1 class="text-xl sm:text-3xl md:text-headline-lg font-bold text-on-surface tracking-tight font-display">
           Catálogo Geral de Leilões em Moçambique
         </h1>
-        <p class="font-body-md text-sm sm:text-base text-on-surface-variant max-w-2xl">
+        <p class="font-body-md text-xs sm:text-base text-on-surface-variant max-w-2xl">
           Consulte o portfólio completo de supercarros, frotas institucionais, maquinaria industrial e equipamentos raros autenticados por escritura notarial.
         </p>
       </div>
 
       <!-- Filter Console Panel with Quasar Card -->
-      <q-card class="w-full bg-surface-container rounded-2xl p-4 sm:p-space-lg border border-white/[0.08] shadow-2xl mb-space-xl sm:mb-space-2xl flex flex-col gap-space-md text-white" flat>
+      <q-card class="w-full bg-surface-container rounded-xl sm:rounded-2xl p-3 sm:p-space-lg border border-white/[0.08] shadow-2xl mb-4 sm:mb-space-2xl flex flex-col gap-2.5 sm:gap-space-md text-white" flat>
         <!-- Top Search Row -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-space-md items-center">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-2 sm:gap-space-md items-center">
           <div class="md:col-span-8">
             <q-input
               v-model="searchQuery"
@@ -64,7 +64,7 @@
         </div>
 
         <!-- Filter Selectors Row via Quasar QSelect -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-space-md pt-space-sm border-t border-white/[0.06]">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-space-md pt-2 sm:pt-space-sm border-t border-white/[0.06]">
           <!-- Category -->
           <div class="flex flex-col gap-1">
             <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">Categoria de Ativos</label>
@@ -213,7 +213,7 @@
         />
       </div>
 
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-gutter">
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-gutter">
         <div v-for="auction in auctionStore.auctions" :key="auction.id">
           <AuctionCard :auction="auction" />
         </div>

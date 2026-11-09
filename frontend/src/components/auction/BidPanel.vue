@@ -1,21 +1,21 @@
 <template>
-  <q-card class="flex flex-col bg-surface-container rounded-2xl border border-white/[0.08] shadow-2xl p-space-md sm:p-space-lg gap-space-md amber-glow text-white" flat>
+  <q-card class="flex flex-col bg-surface-container rounded-xl sm:rounded-2xl border border-white/[0.08] shadow-2xl p-3.5 sm:p-space-lg gap-2.5 sm:gap-space-md amber-glow text-white" flat>
     <!-- Header: Status Badge & Live Clock -->
-    <div class="flex items-center justify-between pb-space-sm border-b border-white/[0.06]">
-      <div class="flex items-center gap-space-xs flex-wrap">
+    <div class="flex items-center justify-between pb-2 sm:pb-space-sm border-b border-white/[0.06]">
+      <div class="flex items-center gap-1 sm:gap-space-xs flex-wrap">
         <q-badge
           v-if="auction.status === 'active' && !isExpired"
           outline
           color="primary"
-          class="px-2.5 py-1 rounded-full text-[10px] font-bold flex items-center gap-1.5"
+          class="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-bold flex items-center gap-1.5"
         >
-          <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
-          <span>SESSÃO AO VIVO</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+          <span>AO VIVO</span>
         </q-badge>
         <q-badge
           v-else
           color="grey-9"
-          class="px-2 py-1 text-[10px]"
+          class="px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px]"
           label="ENCERRADO"
         />
 
@@ -24,48 +24,48 @@
           v-if="auction.reserve_price && auction.current_price >= auction.reserve_price"
           color="primary"
           text-color="dark"
-          class="px-2 py-1 font-bold text-[10px]"
-          label="RESERVA ATINGIDA"
+          class="px-2 py-0.5 sm:px-2.5 sm:py-1 font-bold text-[9px] sm:text-[10px]"
+          label="RESERVA OK"
         />
         <q-badge
           v-else-if="!auction.reserve_price"
           outline
           color="white"
-          class="px-2 py-1 text-[10px]"
+          class="px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px]"
           label="SEM RESERVA"
         />
         <q-badge
           v-else
           color="dark"
           text-color="grey-5"
-          class="px-2 py-1 text-[10px]"
+          class="px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px]"
           label="RESERVA CONFIDENCIAL"
         />
       </div>
 
       <!-- Countdown -->
-      <div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container-low border border-white/[0.06] text-primary">
-        <q-icon name="alarm" size="14px" />
+      <div class="flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded bg-surface-container-low border border-white/[0.06] text-primary text-xs">
+        <q-icon name="alarm" size="13px" />
         <AuctionTimer :ends-at="auction.ends_at" />
       </div>
     </div>
 
     <!-- Live Valuation Block -->
     <div 
-      class="p-space-md rounded-xl bg-surface-container-low border border-white/[0.06] flex flex-col gap-1 transition-all duration-300"
+      class="p-2.5 sm:p-space-md rounded-xl bg-surface-container-low border border-white/[0.06] flex flex-col gap-0.5 sm:gap-1 transition-all duration-300"
       :class="{ 'bid-flash-active border-primary/60': isPriceFlash }"
     >
       <div class="flex items-center justify-between text-body-sm text-on-surface-variant">
-        <span class="font-label-caps text-label-caps uppercase text-[10px]">Licitação Atual Mais Alta</span>
-        <span class="font-label-numeric text-[12px] flex items-center gap-1">
-          <q-icon name="groups" size="14px" class="text-primary" />
-          <span>{{ auction.bid_count || 0 }} {{ auction.bid_count === 1 ? 'licitação' : 'licitações' }}</span>
+        <span class="font-label-caps text-label-caps uppercase text-[9px] sm:text-[10px]">Licitação Mais Alta</span>
+        <span class="font-label-numeric text-[11px] sm:text-[12px] flex items-center gap-1">
+          <q-icon name="groups" size="13px" class="text-primary" />
+          <span>{{ auction.bid_count || 0 }} {{ auction.bid_count === 1 ? 'lance' : 'lances' }}</span>
         </span>
       </div>
 
-      <div class="font-currency-display text-2xl sm:text-[32px] md:text-[36px] text-on-surface leading-tight mt-1 break-words font-extrabold font-display">
+      <div class="font-currency-display text-xl sm:text-[28px] md:text-[34px] text-on-surface leading-tight mt-0.5 break-words font-extrabold font-display">
         {{ formatMoneyDigits(auction.current_price) }}
-        <span class="text-sm sm:text-title-md font-label-caps text-primary">MZN</span>
+        <span class="text-xs sm:text-title-md font-label-caps text-primary">MZN</span>
       </div>
 
       <!-- User Leading / Outbid Alert -->

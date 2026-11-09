@@ -1,5 +1,5 @@
 <template>
-  <footer class="w-full bg-[#0a0a0a] border-t border-white/[0.08] pt-8 sm:pt-12 pb-6 sm:pb-8 mt-12 sm:mt-16">
+  <footer class="w-full bg-[#0a0a0a] border-t border-white/[0.08] pt-8 sm:pt-12 pb-16 sm:pb-8 mt-10 sm:mt-16 mb-14 sm:mb-0">
     <div class="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Top 3 Credential Badges -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 pb-8 border-b border-white/[0.08]">

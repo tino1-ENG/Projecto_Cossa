@@ -1,5 +1,5 @@
 <template>
-  <q-page class="p-4 sm:p-6 lg:p-8 text-white">
+  <q-page class="p-3 sm:p-6 lg:p-8 pb-20 sm:pb-8 text-white">
     <div class="buyer-dashboard flex flex-col gap-6">
       <!-- Escrow Balance & Fiduciary Status Banner -->
       <q-card flat class="card-luxury p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-gold/30 bg-gradient-to-r from-surface-container via-surface-container-high to-surface-container">

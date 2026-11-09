@@ -65,57 +65,57 @@
     </div>
 
     <!-- Details Body -->
-    <q-card-section class="p-space-md flex flex-col flex-1 justify-between gap-space-md">
-      <div class="flex flex-col gap-space-xs">
+    <q-card-section class="p-3 sm:p-space-md flex flex-col flex-1 justify-between gap-2.5 sm:gap-space-md">
+      <div class="flex flex-col gap-1 sm:gap-space-xs">
         <div class="flex items-center justify-between text-on-surface-variant">
-          <span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider text-[10px]">
+          <span class="font-label-caps text-on-surface-variant uppercase tracking-wider text-[9px] sm:text-[10px]">
             LOTE #{{ auction.id }} • {{ (auction.location_city || 'MAPUTO').toUpperCase() }}
           </span>
-          <span class="font-label-numeric text-[11px] text-on-surface-variant/70">
+          <span class="font-label-numeric text-[10px] sm:text-[11px] text-on-surface-variant/70">
             {{ auction.bid_count || 0 }} Licitações
           </span>
         </div>
-        <h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors line-clamp-1 font-bold">
+        <h3 class="font-title-md text-sm sm:text-title-md text-on-surface group-hover:text-primary transition-colors line-clamp-1 font-bold">
           <router-link :to="`/auctions/${auction.id}`" class="text-white hover:text-primary transition-colors no-underline">
             {{ auction.title }}
           </router-link>
         </h3>
-        <p class="font-body-sm text-body-sm text-on-surface-variant/80 line-clamp-1">
+        <p class="font-body-sm text-[11px] sm:text-body-sm text-on-surface-variant/80 line-clamp-1">
           {{ auction.subtitle || auction.description || 'Garantia Fiduciária de Procedência Notarial' }}
         </p>
       </div>
 
       <!-- Valuation Box -->
-      <div class="p-space-sm rounded-lg bg-surface-container-low border border-white/[0.04] flex flex-col gap-1">
+      <div class="p-2 sm:p-space-sm rounded-lg bg-surface-container-low border border-white/[0.04] flex flex-col gap-0.5 sm:gap-1">
         <div class="flex justify-between items-center text-body-sm">
-          <span class="text-on-surface-variant font-label-caps text-label-caps text-[10px]">Licitação Atual</span>
-          <span class="text-on-surface-variant font-label-numeric text-[11px]">
+          <span class="text-on-surface-variant font-label-caps text-[9px] sm:text-[10px]">Licitação Atual</span>
+          <span class="text-on-surface-variant font-label-numeric text-[10px] sm:text-[11px]">
             +{{ formatMoneyCompact(auction.bid_increment) }} mín
           </span>
         </div>
-        <div class="font-currency-display text-[22px] text-on-surface font-extrabold font-display">
-          {{ formatMoneyDigits(auction.current_price) }} <span class="text-body-sm font-label-caps text-primary">MZN</span>
+        <div class="font-currency-display text-[18px] sm:text-[22px] text-on-surface font-extrabold font-display">
+          {{ formatMoneyDigits(auction.current_price) }} <span class="text-xs font-label-caps text-primary">MZN</span>
         </div>
-        <div class="flex items-center justify-between text-[11px] text-on-surface-variant/80">
+        <div class="flex items-center justify-between text-[10px] sm:text-[11px] text-on-surface-variant/80">
           <div>
             <template v-if="auction.reserve_price && auction.current_price >= auction.reserve_price">
-              <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 radar-ring"></span> Reserva Atingida
+              <span class="text-emerald-400 font-semibold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 radar-ring"></span> Reserva Atingida
               </span>
             </template>
             <template v-else-if="auction.reserve_price">
-              <span class="text-amber-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-amber-400 radar-ring"></span> Reserva Ativa
+              <span class="text-amber-300 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 radar-ring"></span> Reserva Ativa
               </span>
             </template>
             <template v-else>
-              <span class="text-primary font-semibold flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-primary radar-ring"></span> Sem Reserva
+              <span class="text-primary font-semibold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary radar-ring"></span> Sem Reserva
               </span>
             </template>
           </div>
-          <span class="font-label-caps text-[10px] text-on-surface-variant/70 uppercase">
-            {{ auction.bid_count > 0 ? 'Disputa Ativa' : 'Aguardando 1º Lance' }}
+          <span class="font-label-caps text-[9px] sm:text-[10px] text-on-surface-variant/70 uppercase">
+            {{ auction.bid_count > 0 ? 'Disputa Ativa' : 'Aguardando 1º' }}
           </span>
         </div>
       </div>
@@ -129,7 +129,7 @@
         :text-color="isEnded ? 'white' : 'dark'"
         :icon="isEnded ? 'visibility' : 'gavel'"
         :label="isEnded ? 'Consultar Resultado' : 'Licitar Agora'"
-        class="w-full font-bold text-xs py-2 shadow-md active-press"
+        class="w-full font-bold text-xs py-1.5 sm:py-2 shadow-md active-press"
         :class="{ 'shimmer-gold': !isEnded }"
       />
     </q-card-section>

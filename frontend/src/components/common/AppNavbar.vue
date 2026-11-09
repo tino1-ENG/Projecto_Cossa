@@ -1,14 +1,14 @@
 <template>
   <q-header elevated class="bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/[0.08] text-white">
-    <q-toolbar class="max-w-[1440px] mx-auto px-3 sm:px-margin h-16 sm:h-20 flex items-center justify-between">
+    <q-toolbar class="max-w-[1440px] mx-auto px-3 sm:px-margin h-14 sm:h-20 flex items-center justify-between">
       <!-- Brand / Logo -->
-      <router-link to="/" class="flex items-center gap-2 sm:gap-space-sm group shrink-0 no-underline text-white">
-        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded bg-surface-container flex items-center justify-center border border-white/[0.08] group-hover:border-primary/50 transition-colors shadow-sm">
-          <span class="material-symbols-outlined text-primary text-[20px] sm:text-[24px]">gavel</span>
+      <router-link to="/" class="flex items-center gap-2 group shrink-0 no-underline text-white">
+        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded bg-surface-container flex items-center justify-center border border-white/[0.08] group-hover:border-primary/50 transition-colors shadow-sm">
+          <span class="material-symbols-outlined text-primary text-[18px] sm:text-[24px]">gavel</span>
         </div>
         <div class="flex flex-col">
-          <span class="font-headline-sm text-base sm:text-headline-sm uppercase tracking-wider text-on-surface font-bold">MozBid</span>
-          <span class="font-label-caps text-[8px] sm:text-[9px] tracking-[0.2em] text-primary -mt-1 font-bold">MOÇAMBIQUE</span>
+          <span class="font-headline-sm text-sm sm:text-headline-sm uppercase tracking-wider text-on-surface font-bold">MozBid</span>
+          <span class="font-label-caps text-[7px] sm:text-[9px] tracking-[0.2em] text-primary -mt-1 font-bold">MOÇAMBIQUE</span>
         </div>
       </router-link>
 
