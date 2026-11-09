@@ -4,6 +4,9 @@
   "description": "MozBid — Premium Online Auction Marketplace Platform for Mozambique",
   "author": "MozBid Architecture Team",
   "private": true,
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "scripts": {
     "build": "npm --prefix frontend install && npm --prefix frontend run build && npm --prefix backend install",
     "start": "npm --prefix backend start",
