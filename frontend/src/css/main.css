@@ -410,3 +410,25 @@ input::placeholder, textarea::placeholder {
   color: #171717 !important;
 }
 
+/* ==========================================================================
+   QUASAR RESPONSIVE OVERRIDE
+   Quasar defines .hidden { display: none !important; }, which breaks Tailwind
+   responsive variants like md:flex or sm:inline-flex. This ensures proper layout.
+   ========================================================================== */
+@media (min-width: 640px) {
+  .sm\:flex { display: flex !important; }
+  .sm\:inline-flex { display: inline-flex !important; }
+  .sm\:block { display: block !important; }
+}
+@media (min-width: 768px) {
+  .md\:flex { display: flex !important; }
+  .md\:inline-flex { display: inline-flex !important; }
+  .md\:block { display: block !important; }
+}
+@media (min-width: 1024px) {
+  .lg\:flex { display: flex !important; }
+  .lg\:inline-flex { display: inline-flex !important; }
+  .lg\:block { display: block !important; }
+}
+
+
