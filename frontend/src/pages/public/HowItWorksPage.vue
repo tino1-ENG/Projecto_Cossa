@@ -20,7 +20,7 @@
           <div class="flex items-center justify-between">
             <span class="font-editorial text-4xl font-bold text-[#B69A68]">01</span>
             <div class="w-12 h-12 rounded-full bg-[#FAF8F5] flex items-center justify-center text-[#B69A68] border border-[#E7E3DC]">
-              <span class="material-symbols-outlined text-[24px]">gavel</span>
+              <Gavel :size="24" />
             </div>
           </div>
           <div>
@@ -29,8 +29,8 @@
               Cada leilão opera com incremento mínimo pré-fixado em Meticais. As licitações são processadas em tempo real através de WebSockets e transações atómicas, assegurando integridade absoluta em cada lance.
             </p>
           </div>
-          <span class="text-xs uppercase tracking-wider text-[#B69A68] font-bold flex items-center gap-1">
-            Motor de Transacções Atómicas <span class="material-symbols-outlined text-[16px]">check</span>
+          <span class="text-xs uppercase tracking-wider text-[#B69A68] font-bold flex items-center gap-1.5">
+            Motor de Transacções Atómicas <Check :size="16" />
           </span>
         </div>
 
@@ -38,7 +38,7 @@
           <div class="flex items-center justify-between">
             <span class="font-editorial text-4xl font-bold text-[#B69A68]">02</span>
             <div class="w-12 h-12 rounded-full bg-[#FAF8F5] flex items-center justify-center text-[#B69A68] border border-[#E7E3DC]">
-              <span class="material-symbols-outlined text-[24px]">alarm_on</span>
+              <Clock :size="24" />
             </div>
           </div>
           <div>
@@ -47,8 +47,8 @@
               Para assegurar disputa justa e transparente, qualquer licitação submetida nos últimos minutos de um lote estende automaticamente o prazo de encerramento em mais 3 minutos adicionais.
             </p>
           </div>
-          <span class="text-xs uppercase tracking-wider text-[#B69A68] font-bold flex items-center gap-1">
-            Extensão Automática de Prazo <span class="material-symbols-outlined text-[16px]">check</span>
+          <span class="text-xs uppercase tracking-wider text-[#B69A68] font-bold flex items-center gap-1.5">
+            Extensão Automática de Prazo <Check :size="16" />
           </span>
         </div>
 
@@ -56,7 +56,7 @@
           <div class="flex items-center justify-between">
             <span class="font-editorial text-4xl font-bold text-[#B69A68]">03</span>
             <div class="w-12 h-12 rounded-full bg-[#FAF8F5] flex items-center justify-center text-[#B69A68] border border-[#E7E3DC]">
-              <span class="material-symbols-outlined text-[24px]">verified_user</span>
+              <ShieldCheck :size="24" />
             </div>
           </div>
           <div>
@@ -65,8 +65,8 @@
               Os pagamentos de arrematação são liquidados em Meticais (MZN) através de canais bancários auditáveis, com entrega formal da documentação e escritura de transferência de titularidade.
             </p>
           </div>
-          <span class="text-xs uppercase tracking-wider text-[#B69A68] font-bold flex items-center gap-1">
-            Liquidação Auditável em MZN <span class="material-symbols-outlined text-[16px]">check</span>
+          <span class="text-xs uppercase tracking-wider text-[#B69A68] font-bold flex items-center gap-1.5">
+            Liquidação Auditável em MZN <Check :size="16" />
           </span>
         </div>
       </div>
@@ -139,4 +139,5 @@
 </template>
 
 <script setup lang="ts">
+import { Gavel, Clock, ShieldCheck, Check } from 'lucide-vue-next';
 </script>

@@ -139,16 +139,17 @@
               </div>
 
               <q-list dense>
-                <q-item clickable v-close-popup to="/buyer/dashboard" class="rounded hover:bg-[#FAF8F5]">
-                  <q-item-section class="text-xs font-medium">Painel do Comprador</q-item-section>
+                <!-- Acesso estritamente determinado pelas credenciais da conta autenticada -->
+                <q-item v-if="authStore.user?.role === 'admin'" clickable v-close-popup to="/admin/dashboard" class="rounded hover:bg-[#FAF8F5]">
+                  <q-item-section class="text-xs font-semibold text-[#171717]">Administração Central</q-item-section>
                 </q-item>
 
-                <q-item v-if="authStore.isSeller" clickable v-close-popup to="/seller/dashboard" class="rounded hover:bg-[#FAF8F5]">
-                  <q-item-section class="text-xs font-medium">Painel do Vendedor</q-item-section>
+                <q-item v-else-if="authStore.user?.role === 'seller'" clickable v-close-popup to="/seller/dashboard" class="rounded hover:bg-[#FAF8F5]">
+                  <q-item-section class="text-xs font-semibold text-[#171717]">Painel do Vendedor</q-item-section>
                 </q-item>
 
-                <q-item v-if="authStore.isAdmin" clickable v-close-popup to="/admin/dashboard" class="rounded hover:bg-[#FAF8F5]">
-                  <q-item-section class="text-xs font-medium">Administração Central</q-item-section>
+                <q-item v-else-if="authStore.user?.role === 'buyer'" clickable v-close-popup to="/buyer/dashboard" class="rounded hover:bg-[#FAF8F5]">
+                  <q-item-section class="text-xs font-semibold text-[#171717]">Painel do Comprador</q-item-section>
                 </q-item>
 
                 <q-separator class="my-1 border-[#E7E3DC]" />
@@ -242,14 +243,14 @@
           <q-separator class="my-3 border-[#E7E3DC]" />
 
           <template v-if="authStore.isAuthenticated">
-            <q-item clickable v-close-popup to="/buyer/dashboard" class="rounded-lg hover:bg-white">
-              <q-item-section class="text-sm font-medium">Painel Comprador</q-item-section>
+            <q-item v-if="authStore.user?.role === 'admin'" clickable v-close-popup to="/admin/dashboard" class="rounded-lg hover:bg-white">
+              <q-item-section class="text-sm font-semibold">Administração Central</q-item-section>
             </q-item>
-            <q-item v-if="authStore.isSeller" clickable v-close-popup to="/seller/dashboard" class="rounded-lg hover:bg-white">
-              <q-item-section class="text-sm font-medium">Painel Vendedor</q-item-section>
+            <q-item v-else-if="authStore.user?.role === 'seller'" clickable v-close-popup to="/seller/dashboard" class="rounded-lg hover:bg-white">
+              <q-item-section class="text-sm font-semibold">Painel do Vendedor</q-item-section>
             </q-item>
-            <q-item v-if="authStore.isAdmin" clickable v-close-popup to="/admin/dashboard" class="rounded-lg hover:bg-white">
-              <q-item-section class="text-sm font-medium">Administração</q-item-section>
+            <q-item v-else-if="authStore.user?.role === 'buyer'" clickable v-close-popup to="/buyer/dashboard" class="rounded-lg hover:bg-white">
+              <q-item-section class="text-sm font-semibold">Painel do Comprador</q-item-section>
             </q-item>
           </template>
           <template v-else>

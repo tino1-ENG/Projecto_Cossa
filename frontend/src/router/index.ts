@@ -105,14 +105,24 @@ router.beforeEach(async (to, _from, next) => {
     return;
   }
 
-  if (to.meta.requiresSeller && !authStore.isSeller && !authStore.isAdmin) {
-    next({ name: 'buyer-dashboard' });
-    return;
-  }
+  // Controlo Estrito por Credenciais (RBAC)
+  if (authStore.isAuthenticated && authStore.user) {
+    const role = authStore.user.role;
 
-  if (to.meta.requiresAdmin && !authStore.isAdmin) {
-    next({ name: 'buyer-dashboard' });
-    return;
+    // Acesso ao painel de administração é exclusivo do perfil 'admin'
+    if (to.path.startsWith('/admin') && role !== 'admin') {
+      return next(role === 'seller' ? '/seller/dashboard' : '/buyer/dashboard');
+    }
+
+    // Acesso ao painel do vendedor é exclusivo do perfil 'seller'
+    if (to.path.startsWith('/seller') && role !== 'seller') {
+      return next(role === 'admin' ? '/admin/dashboard' : '/buyer/dashboard');
+    }
+
+    // Acesso ao painel do comprador é exclusivo do perfil 'buyer'
+    if (to.path.startsWith('/buyer') && role !== 'buyer') {
+      return next(role === 'admin' ? '/admin/dashboard' : '/seller/dashboard');
+    }
   }
 
   next();

@@ -27,7 +27,7 @@
         <!-- Top Search Row -->
         <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
           <div class="md:col-span-8 relative">
-            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#888888] text-[20px]">search</span>
+            <Search :size="18" class="absolute left-3 top-1/2 -translate-y-1/2 text-[#888888]" />
             <input
               v-model="searchQuery"
               type="text"
@@ -38,20 +38,20 @@
             <button
               v-if="searchQuery"
               type="button"
-              class="absolute right-3 top-1/2 -translate-y-1/2 text-[#888888] hover:text-[#171717]"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[#888888] hover:text-[#171717] bg-transparent border-0 cursor-pointer"
               @click="searchQuery = ''; applyFilters()"
             >
-              <span class="material-symbols-outlined text-[18px]">close</span>
+              <X :size="16" />
             </button>
           </div>
 
           <div class="md:col-span-4 flex items-center gap-2">
             <button
               type="button"
-              class="flex-1 py-2.5 rounded-lg bg-[#171717] text-white hover:bg-[#B69A68] text-xs sm:text-sm font-semibold tracking-wide transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+              class="flex-1 py-2.5 rounded-lg bg-[#171717] text-white hover:bg-[#B69A68] text-xs sm:text-sm font-semibold tracking-wide transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs border-0"
               @click="applyFilters"
             >
-              <span class="material-symbols-outlined text-[18px]">filter_alt</span>
+              <Filter :size="16" />
               <span>Aplicar Filtros</span>
             </button>
             <button
@@ -177,7 +177,7 @@
       </div>
 
       <div v-else-if="auctionStore.auctions.length === 0" class="py-16 text-center flex flex-col items-center justify-center gap-3 bg-white rounded-2xl border border-[#E7E3DC] p-8 shadow-xs">
-        <span class="material-symbols-outlined text-[48px] text-[#AAAAAA]">search_off</span>
+        <SearchX :size="48" class="text-[#AAAAAA]" />
         <h3 class="font-editorial text-lg text-[#171717] font-semibold">Nenhum leilão corresponde aos critérios</h3>
         <p class="text-xs text-[#666666] max-w-md">
           Tente ajustar os filtros de pesquisa, remover palavras-chave ou escolher outra categoria de activos.
@@ -220,6 +220,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { Search, X, Filter, SearchX } from 'lucide-vue-next';
 import { useAuctionStore } from '../../stores/auction';
 import AuctionCard from '../../components/auction/AuctionCard.vue';
 

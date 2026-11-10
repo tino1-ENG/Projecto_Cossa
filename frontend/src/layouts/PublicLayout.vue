@@ -46,12 +46,12 @@
         </router-link>
 
         <router-link
-          :to="authStore.isAuthenticated ? '/buyer/dashboard' : '/auth/login'"
+          :to="authStore.isAuthenticated ? userDashboardRoute : '/auth/login'"
           class="flex flex-col items-center justify-center gap-0.5 no-underline transition-colors"
-          :class="$route.path.startsWith('/buyer') || $route.path.startsWith('/auth') ? 'text-[#B69A68] font-semibold' : 'text-[#777777]'"
+          :class="($route.path.startsWith('/buyer') || $route.path.startsWith('/seller') || $route.path.startsWith('/admin') || $route.path.startsWith('/auth')) ? 'text-[#B69A68] font-semibold' : 'text-[#777777]'"
         >
           <q-icon :name="authStore.isAuthenticated ? 'dashboard' : 'person'" size="20px" />
-          <span class="text-[10px] leading-tight">{{ authStore.isAuthenticated ? 'Conta' : 'Entrar' }}</span>
+          <span class="text-[10px] leading-tight">{{ authStore.isAuthenticated ? (authStore.user?.role === 'admin' ? 'Admin' : (authStore.user?.role === 'seller' ? 'Vendas' : 'Conta')) : 'Entrar' }}</span>
         </router-link>
       </div>
     </q-footer>
@@ -59,6 +59,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import AppNavbar from '../components/common/AppNavbar.vue';
 import AppFooter from '../components/common/AppFooter.vue';
@@ -66,6 +67,12 @@ import ToastContainer from '../components/common/ToastContainer.vue';
 import PwaInstallPrompt from '../components/common/PwaInstallPrompt.vue';
 
 const authStore = useAuthStore();
+
+const userDashboardRoute = computed(() => {
+  if (authStore.user?.role === 'admin') return '/admin/dashboard';
+  if (authStore.user?.role === 'seller') return '/seller/dashboard';
+  return '/buyer/dashboard';
+});
 </script>
 
 <style scoped>

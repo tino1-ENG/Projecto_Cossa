@@ -69,12 +69,6 @@
 
       <!-- Sidebar Footer -->
       <div class="border-t border-white/[0.08] pt-4 flex flex-col gap-2">
-        <router-link
-          to="/buyer/dashboard"
-          class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/[0.05] transition-colors"
-        >
-          <User :size="16" /> Modo Comprador
-        </router-link>
         <button
           type="button"
           class="w-full text-left flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-error hover:bg-error/10 transition-colors"

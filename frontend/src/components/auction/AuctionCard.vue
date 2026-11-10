@@ -1,10 +1,10 @@
 <template>
   <div
-    class="flex flex-col bg-white rounded-xl overflow-hidden border border-[#E7E3DC] shadow-sm hover:shadow-xl transition-all duration-300 h-full relative group"
-    :class="{ 'ring-1 ring-amber-500/30': isUrgent, 'opacity-75': isEnded }"
+    class="flex flex-col bg-white rounded-2xl overflow-hidden border border-[#E7E3DC] shadow-xs hover:shadow-xl transition-all duration-300 h-full relative group"
+    :class="{ 'ring-1 ring-amber-500/40': isUrgent, 'opacity-85': isEnded }"
   >
     <!-- Media Aspect Container -->
-    <div class="relative w-full aspect-[16/10] overflow-hidden bg-[#FAF8F5]">
+    <div class="relative w-full aspect-[16/10.5] overflow-hidden bg-[#171717]">
       <img
         :src="auction.primary_image || fallbackImage"
         :alt="auction.title"
@@ -13,112 +13,122 @@
         @error="onImgError"
       />
 
-      <!-- Top Left Category Badge -->
-      <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 z-10">
-        <span class="px-2 py-0.5 rounded bg-white/95 backdrop-blur-md text-[10px] font-semibold uppercase tracking-wider text-[#171717] border border-[#E7E3DC] shadow-xs">
-          {{ auction.category_name || 'LEILÃO' }}
+      <!-- Top Gradient for HUD contrast -->
+      <div class="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/80 via-black/30 to-transparent pointer-events-none"></div>
+
+      <!-- Bottom Gradient for Timer/Reserve contrast -->
+      <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-none"></div>
+
+      <!-- Top Badges (Left: Lot & Status, Right: Location) -->
+      <div class="absolute top-3 inset-x-3 flex items-center justify-between gap-2 z-10 pointer-events-none">
+        <span class="px-2.5 sm:px-3 py-1 rounded bg-black/75 backdrop-blur-md text-[9px] sm:text-[10px] font-semibold text-white tracking-wider uppercase border border-white/10 flex items-center gap-1.5 shadow-sm">
+          <span class="w-1.5 h-1.5 rounded-full" :class="isEnded ? 'bg-zinc-400' : 'bg-[#B69A68] animate-pulse'"></span>
+          <span>LOTE #{{ auction.id }} • {{ isEnded ? 'ENCERRADO' : 'AO VIVO' }}</span>
+        </span>
+
+        <span class="px-2.5 sm:px-3 py-1 rounded bg-black/75 backdrop-blur-md text-[9px] sm:text-[10px] font-medium text-white/90 border border-white/10 truncate max-w-[190px] shadow-sm">
+          {{ (auction.location_city || 'ENTREPOSTO ADUANEIRO DO PORTO DE MAPUTO').toUpperCase() }}
         </span>
       </div>
 
-      <!-- Top Right Favourite Button -->
+      <!-- Favourite Bookmark Button (Hover or Tap) -->
       <button
         type="button"
-        class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md text-[#666666] hover:text-[#B69A68] flex items-center justify-center transition-all z-10 border border-[#E7E3DC] shadow-xs cursor-pointer"
+        class="absolute top-12 right-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white/80 hover:text-[#B69A68] flex items-center justify-center transition-all z-10 border border-white/10 shadow-xs cursor-pointer opacity-0 group-hover:opacity-100"
         @click.stop.prevent="handleToggleFav"
         title="Guardar Lote"
       >
-        <span class="material-symbols-outlined text-[18px]" :class="{ 'text-[#B69A68]': isFav }">
-          {{ isFav ? 'bookmark_added' : 'bookmark' }}
-        </span>
+        <Bookmark :size="14" :class="{ 'fill-[#B69A68] text-[#B69A68]': isFav }" />
       </button>
 
-      <!-- Bottom Right Countdown Pill -->
-      <div
-        class="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-white text-[11px] font-medium flex items-center gap-1.5 shadow-sm z-10"
-        :class="{ 'bg-red-900/90 text-red-100': isUrgent }"
-      >
-        <span class="w-1.5 h-1.5 rounded-full" :class="isUrgent ? 'bg-red-400 animate-ping' : 'bg-[#B69A68]'"></span>
-        <AuctionTimer :ends-at="auction.ends_at" />
+      <!-- Bottom Overlay HUD (Countdown on Left, Reserve Badge on Right) -->
+      <div class="absolute bottom-3 inset-x-3 flex items-end justify-between z-10 gap-2">
+        <div class="flex flex-col">
+          <span class="text-[9px] uppercase tracking-wider font-semibold text-[#D6C4A3] leading-none mb-1">
+            {{ isEnded ? 'RESULTADO:' : 'TERMINA EM:' }}
+          </span>
+          <div class="font-mono text-xs sm:text-sm font-bold text-white tracking-wide leading-none">
+            <AuctionTimer v-if="!isEnded" :ends-at="auction.ends_at" />
+            <span v-else class="text-white/70">Encerrado</span>
+          </div>
+        </div>
+
+        <div>
+          <span
+            v-if="auction.reserve_price && auction.current_price >= auction.reserve_price"
+            class="px-2.5 py-1 rounded bg-[#C4A97D] text-[#171717] text-[9px] sm:text-[10px] font-bold uppercase tracking-wider shadow-sm inline-block"
+          >
+            RESERVA ATINGIDA
+          </span>
+          <span
+            v-else-if="auction.reserve_price"
+            class="px-2.5 py-1 rounded bg-white/20 backdrop-blur-md text-white text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider border border-white/20 inline-block"
+          >
+            RESERVA ACTIVA
+          </span>
+          <span
+            v-else
+            class="px-2.5 py-1 rounded bg-[#B69A68]/80 backdrop-blur-md text-white text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider inline-block"
+          >
+            SEM RESERVA
+          </span>
+        </div>
       </div>
     </div>
 
     <!-- Details Body -->
-    <div class="p-4 flex flex-col flex-1 justify-between gap-3">
-      <div class="flex flex-col gap-1">
-        <div class="flex items-center justify-between text-[#777777] text-[11px]">
-          <span class="font-medium uppercase tracking-wider">
-            {{ (auction.location_city || 'MAPUTO').toUpperCase() }}
+    <div class="p-4 sm:p-5 flex flex-col flex-1 justify-between gap-3 bg-white">
+      <div class="flex flex-col gap-1.5">
+        <!-- Category & Bid Count Row -->
+        <div class="flex items-center justify-between text-xs text-[#777777]">
+          <span class="font-medium text-[#777777] truncate">
+            {{ auction.category_name || 'Automóveis & Coleccionáveis' }}
           </span>
-          <span class="font-mono text-[11px] text-[#888888]">
-            {{ auction.bid_count || 0 }} {{ auction.bid_count === 1 ? 'licitação' : 'licitações' }}
+          <span class="font-mono text-[11px] text-[#777777] shrink-0">
+            {{ auction.bid_count || 0 }} {{ auction.bid_count === 1 ? 'Licitação' : 'Licitações' }}
           </span>
         </div>
 
-        <h3 class="font-display font-semibold text-sm sm:text-base text-[#171717] group-hover:text-[#B69A68] transition-colors line-clamp-1 pt-0.5">
+        <!-- Title -->
+        <h3 class="font-sans font-bold text-sm sm:text-base text-[#171717] group-hover:text-[#B69A68] transition-colors line-clamp-1">
           <router-link :to="`/auctions/${auction.id}`" class="text-[#171717] hover:text-[#B69A68] transition-colors no-underline">
             {{ auction.title }}
           </router-link>
         </h3>
-
-        <p class="text-xs text-[#777777] line-clamp-1 leading-relaxed">
-          {{ auction.subtitle || auction.description || 'Activo verificado e pronto para transferência.' }}
-        </p>
       </div>
 
-      <!-- Valuation Box -->
-      <div class="p-3 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] flex flex-col gap-1">
-        <div class="flex justify-between items-center text-[10px] uppercase tracking-wider text-[#777777] font-semibold">
-          <span>Licitação Atual</span>
-          <span class="normal-case font-medium text-[#888888]">
-            +{{ formatMoneyCompact(auction.bid_increment) }} mín
+      <!-- Divider -->
+      <div class="border-t border-[#EAE6DF] my-1"></div>
+
+      <!-- Footer Valuation & CTA Button -->
+      <div class="flex items-center justify-between gap-3 pt-0.5">
+        <div>
+          <span class="text-[10px] uppercase font-semibold text-[#888888] tracking-wider block leading-none mb-1">
+            LICITAÇÃO ATUAL
           </span>
+          <div class="font-editorial text-xl sm:text-2xl font-bold text-[#171717] leading-none">
+            {{ formatMoneyDigits(auction.current_price) }}
+            <span class="text-xs font-sans font-bold text-[#B69A68] ml-0.5">MZN</span>
+          </div>
         </div>
 
-        <div class="font-editorial text-xl sm:text-2xl font-bold text-[#171717] leading-none pt-0.5">
-          {{ formatMoneyDigits(auction.current_price) }}
-          <span class="text-xs font-sans font-bold text-[#B69A68] ml-1">MZN</span>
-        </div>
-
-        <div class="flex items-center justify-between text-[11px] pt-1 text-[#666666]">
-          <template v-if="auction.reserve_price && auction.current_price >= auction.reserve_price">
-            <span class="text-emerald-700 font-medium flex items-center gap-1 text-[11px]">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Reserva Atingida
-            </span>
-          </template>
-          <template v-else-if="auction.reserve_price">
-            <span class="text-amber-700 flex items-center gap-1 text-[11px]">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Reserva Ativa
-            </span>
-          </template>
-          <template v-else>
-            <span class="text-[#B69A68] font-medium flex items-center gap-1 text-[11px]">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#B69A68]"></span> Sem Reserva
-            </span>
-          </template>
-
-          <span class="text-[10px] text-[#888888]">
-            Lote #{{ auction.id }}
-          </span>
-        </div>
+        <router-link
+          :to="`/auctions/${auction.id}`"
+          class="px-4 py-2.5 rounded-lg bg-[#171717] hover:bg-[#B69A68] text-white text-xs font-semibold tracking-wide transition-all shadow-xs flex items-center gap-1.5 no-underline shrink-0"
+        >
+          <span>Ver Lote</span>
+          <ArrowRight :size="14" />
+        </router-link>
       </div>
-
-      <!-- Action Button -->
-      <router-link
-        :to="`/auctions/${auction.id}`"
-        class="w-full py-2.5 rounded text-xs font-semibold tracking-wide transition-all text-center no-underline shadow-xs flex items-center justify-center gap-1.5"
-        :class="isEnded ? 'bg-[#FAF8F5] text-[#777777] border border-[#E7E3DC] hover:bg-[#EFECE5]' : 'bg-[#171717] text-white hover:bg-[#B69A68]'"
-      >
-        <span>{{ isEnded ? 'Consultar Resultado' : 'Ver Leilão' }}</span>
-        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-      </router-link>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { Bookmark, ArrowRight } from 'lucide-vue-next';
 import { useAuctionStore } from '../../stores/auction';
-import { formatMoneyDigits, formatMoneyCompact } from '../../utils/money';
+import { formatMoneyDigits } from '../../utils/money';
 import { getTimeRemaining } from '../../utils/date';
 import AuctionTimer from './AuctionTimer.vue';
 import type { Auction } from '../../types';
