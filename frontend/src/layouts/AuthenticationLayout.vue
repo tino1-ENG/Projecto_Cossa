@@ -210,7 +210,7 @@ import ToastContainer from '../components/common/ToastContainer.vue';
 }
 
 .auth-form-container {
-  max-width: 480px;
+  max-width: 560px;
   width: 100%;
   margin: 0 auto;
 }
