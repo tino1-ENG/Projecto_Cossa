@@ -154,7 +154,7 @@
                       :key="key"
                       class="flex items-center justify-between p-2.5 rounded bg-[#FAF8F5] border border-[#E7E3DC]"
                     >
-                      <span class="text-[#777777] capitalize">{{ key }}</span>
+                      <span class="text-[#777777] capitalize">{{ formatSpecKey(key) }}</span>
                       <span class="text-[#171717] font-semibold">{{ val }}</span>
                     </div>
                   </div>
@@ -301,13 +301,45 @@ const auction = computed(() => auctionStore.currentAuction);
 function conditionLabel(cond?: string) {
   switch (cond) {
     case 'new': return 'Novo de Fábrica';
-    case 'like_new': return 'Como Novo / Impecável';
+    case 'like_new':
+    case 'used_like_new': return 'Usado — Como Novo';
     case 'excellent': return 'Excelente Estado';
-    case 'good': return 'Bom Estado Operacional';
-    case 'fair': return 'Razoável';
+    case 'good':
+    case 'used_good': return 'Bom Estado Operacional';
+    case 'fair':
+    case 'used_fair': return 'Estado Razoável';
+    case 'refurbished': return 'Recondicionado Certificado';
     case 'salvage': return 'Sinistrado / Peças';
-    default: return cond || 'Excelente';
+    default: return 'Excelente Estado';
   }
+}
+
+function formatSpecKey(key: string): string {
+  const map: Record<string, string> = {
+    engine: 'Motorização',
+    power: 'Potência',
+    transmission: 'Transmissão',
+    drivetrain: 'Tracção',
+    fuel_type: 'Combustível',
+    mileage: 'Quilometragem',
+    exterior_color: 'Cor Exterior',
+    interior_color: 'Cor Interior',
+    vin: 'Número de Chassis (VIN)',
+    doors: 'Portas',
+    capacity: 'Capacidade',
+    weight: 'Peso Bruto',
+    model: 'Modelo',
+    year: 'Ano',
+    brand: 'Marca',
+    operating_hours: 'Horas de Operação',
+    serial_number: 'Número de Série',
+    movement: 'Movimento / Mecanismo',
+    case_material: 'Material da Caixa',
+    dial_color: 'Cor do Mostrador',
+    water_resistance: 'Resistência à Água',
+    condition_rating: 'Classificação de Estado'
+  };
+  return map[key.toLowerCase()] || key.replace(/_/g, ' ');
 }
 
 function handleToggleFav() {

@@ -145,7 +145,7 @@
                         :text-color="u.role === 'seller' ? 'dark' : 'white'"
                         class="font-bold text-xs uppercase px-2 py-0.5"
                       >
-                        {{ u.role.toUpperCase() }}
+                        {{ formatUserRole(u.role) }}
                       </q-badge>
                     </td>
                     <td>
@@ -231,7 +231,7 @@
                         Pendente
                       </q-badge>
                       <q-badge v-else color="grey-8" class="font-bold text-xs px-2 py-0.5">
-                        {{ seller.verified_status }}
+                        {{ formatSellerStatus(seller.verified_status) }}
                       </q-badge>
                     </td>
                     <td class="font-bold text-sm">{{ seller.auction_count || 0 }}</td>
@@ -297,7 +297,7 @@
                         :text-color="auc.status === 'active' ? 'dark' : 'white'"
                         class="font-bold text-xs px-2 py-0.5"
                       >
-                        {{ auc.status === 'active' ? 'Activo' : auc.status }}
+                        {{ formatAuctionStatus(auc.status) }}
                       </q-badge>
                     </td>
                     <td>
@@ -366,6 +366,32 @@ const dashboardData = ref<any>(null);
 const usersList = ref<any[]>([]);
 const sellersList = ref<any[]>([]);
 const auctionsList = ref<any[]>([]);
+
+function formatUserRole(role: string): string {
+  if (role === 'admin') return 'Administrador';
+  if (role === 'seller') return 'Vendedor';
+  return 'Comprador';
+}
+
+function formatAuctionStatus(status: string): string {
+  switch (status) {
+    case 'active': return 'Activo';
+    case 'ended': return 'Encerrado';
+    case 'awaiting_payment': return 'Aguardando Pagamento';
+    case 'paid': return 'Liquidado';
+    case 'cancelled': return 'Cancelado';
+    default: return status || 'Encerrado';
+  }
+}
+
+function formatSellerStatus(st: string): string {
+  switch (st) {
+    case 'verified': return 'Verificado';
+    case 'pending': return 'Pendente';
+    case 'rejected': return 'Rejeitado';
+    default: return st || 'Pendente';
+  }
+}
 
 async function fetchAdminData() {
   try {

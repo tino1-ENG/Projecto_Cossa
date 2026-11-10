@@ -109,7 +109,7 @@
             color="white"
             to="/"
             class="text-xs px-3 py-1.5 rounded-lg"
-            label="Marketplace"
+            label="Página Inicial"
           />
         </div>
       </q-toolbar>

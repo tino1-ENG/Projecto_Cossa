@@ -64,7 +64,7 @@
           to="/"
           class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-white hover:bg-white/[0.05] transition-colors"
         >
-          <Home :size="16" /> Ir ao Marketplace
+          <Home :size="16" /> Ir à Página Inicial
         </router-link>
         <button
           type="button"

@@ -156,7 +156,7 @@
                   </div>
                 </td>
                 <td>{{ prod.category_name }}</td>
-                <td>{{ prod.year || 'N/A' }} ({{ prod.condition }})</td>
+                <td>{{ prod.year || 'N/A' }} • {{ formatCondition(prod.condition) }}</td>
                 <td>{{ prod.location_city }}, {{ prod.location_province }}</td>
                 <td>
                   <q-badge color="emerald-9" text-color="emerald-3" class="px-2 py-0.5 font-bold" label="Aprovado" />
@@ -572,6 +572,14 @@ const presetImages = [
 const categoryOptions = computed(() => [
   ...auctionStore.categories.map(c => ({ label: c.name, value: c.id }))
 ]);
+
+function formatCondition(c?: string): string {
+  if (c === 'new') return 'Novo';
+  if (c === 'used_like_new' || c === 'like_new') return 'Como Novo';
+  if (c === 'used_good' || c === 'good') return 'Bom Estado';
+  if (c === 'refurbished') return 'Recondicionado';
+  return c || 'Bom Estado';
+}
 
 const conditionOptions = [
   { label: 'Novo em Caixa (0 km/h)', value: 'new' },

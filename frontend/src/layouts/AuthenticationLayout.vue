@@ -6,7 +6,7 @@
         <div class="visual-overlay"></div>
         <img
           src="/images/products/porsche-911-gt3rs.jpg"
-          alt="MozBid Automotive Showcase"
+          alt="Apresentação de Activos MozBid"
           class="auth-bg-img"
         />
         <div class="auth-visual-content">
@@ -43,7 +43,7 @@
         <div class="auth-top-nav flex items-center justify-between">
           <router-link to="/" class="back-link group flex items-center gap-2 text-xs font-semibold text-[#666666] hover:text-[#171717] transition-colors">
             <ArrowLeft :size="16" class="transition-transform group-hover:-translate-x-1" />
-            <span class="hidden sm:inline">Voltar ao Marketplace</span>
+            <span class="hidden sm:inline">Voltar à Página Inicial</span>
             <span class="sm:hidden">Início</span>
           </router-link>
 
