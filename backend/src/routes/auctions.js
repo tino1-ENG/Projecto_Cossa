@@ -55,33 +55,46 @@ router.get('/', optionalAuthenticate, async (req, res) => {
     const skip = (pageNum - 1) * limitNum;
 
     // 1. Build product query if category, province, or search is provided
-    const productFilter = {};
+    const andConditions = [];
+
     if (search && search.trim()) {
-      const regex = new RegExp(search.trim(), 'i');
-      productFilter.$or = [
-        { title: regex },
-        { description: regex },
-        { brand: regex },
-        { model: regex }
-      ];
+      const searchRegex = new RegExp(search.trim(), 'i');
+      andConditions.push({
+        $or: [
+          { title: searchRegex },
+          { description: searchRegex },
+          { brand: searchRegex },
+          { model: searchRegex },
+          { location_city: searchRegex },
+          { location_province: searchRegex }
+        ]
+      });
     }
 
-    if (province && province !== 'all') {
-      productFilter.location_province = province;
+    if (province && province !== 'all' && province.trim()) {
+      const provRegex = new RegExp(province.trim(), 'i');
+      andConditions.push({
+        $or: [
+          { location_province: provRegex },
+          { location_city: provRegex }
+        ]
+      });
     }
 
     if (category && category !== 'all') {
       if (isNaN(category)) {
         const catDoc = await Category.findOne({ slug: category }).lean();
         if (catDoc) {
-          productFilter.category_id = catDoc.id;
+          andConditions.push({ category_id: catDoc.id });
         } else {
-          productFilter.category_id = -1; // No match
+          andConditions.push({ category_id: -1 }); // No match
         }
       } else {
-        productFilter.category_id = parseInt(category);
+        andConditions.push({ category_id: parseInt(category) });
       }
     }
+
+    const productFilter = andConditions.length > 0 ? { $and: andConditions } : {};
 
     // 2. Build auction query
     const auctionFilter = {};

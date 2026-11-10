@@ -283,8 +283,8 @@ export async function seedMongoDatabase() {
       mileage_or_hours: '48 Horas (Testes de Arranque)',
       fuel_type: 'Diesel Industrial',
       transmission: 'Acoplamento Direto SAE 0/18',
-      location_province: 'Maputo Província',
-      location_city: 'Parque Industrial de Beluluane (Matola)',
+      location_province: 'Nampula',
+      location_city: 'Nampula (Zona Industrial de Marrere)',
       vin: 'CUM-GEN-2023-QSK1000',
       specifications: {
         'Potência Nominal': '1000 kVA (Standby) / 900 kVA (Prime)',
@@ -334,8 +334,8 @@ export async function seedMongoDatabase() {
       mileage_or_hours: 'Sem Marcas de Uso',
       fuel_type: 'Mecânico Automático (Calibre 3235)',
       transmission: 'Bracelete Oysterlock Ouro Branco com Glidelock',
-      location_province: 'Maputo Cidade',
-      location_city: 'Avenida Julius Nyerere, Polana, Maputo',
+      location_province: 'Cabo Delgado',
+      location_city: 'Pemba (Baía de Pemba)',
       vin: 'ROL-SUB-126619LB-9182',
       specifications: {
         'Referência Oficial': '126619LB',
@@ -386,8 +386,8 @@ export async function seedMongoDatabase() {
       mileage_or_hours: '3,420 Horas',
       fuel_type: 'Diesel 50ppm',
       transmission: 'TORQFLOW Planetária de 3 Velocidades',
-      location_province: 'Tete',
-      location_city: 'Bacia Carbonífera de Moatize, Tete',
+      location_province: 'Manica',
+      location_city: 'Chimoio',
       vin: 'KOM-D65EX18-91823',
       specifications: {
         'Peso Operacional': '21.500 kg',
@@ -438,8 +438,8 @@ export async function seedMongoDatabase() {
       mileage_or_hours: 'Novos em Caixa Lacrada',
       fuel_type: 'Bateria 100 Wh com Carregador MagSafe 140W',
       transmission: 'Teclado Magic Keyboard com Touch ID',
-      location_province: 'Maputo Cidade',
-      location_city: 'Centro Empresarial de Maputo (Polana)',
+      location_province: 'Inhambane',
+      location_city: 'Inhambane Cidade',
       vin: 'APP-MBP16-M3MAX-LOT10',
       specifications: {
         'Quantidade no Lote': '10 Portáteis Homogéneos',
@@ -465,8 +465,8 @@ export async function seedMongoDatabase() {
       mileage_or_hours: 'Sem Marcas de Uso / Baterias a 100%',
       fuel_type: 'Bateria HP Long Life 3 Células 51Wh',
       transmission: 'Teclado Resistente a Salpicos com Retroiluminação',
-      location_province: 'Maputo Cidade',
-      location_city: 'Maputo Cidade',
+      location_province: 'Gaza',
+      location_city: 'Xai-Xai',
       vin: 'HP-EB840G10-LOT25',
       specifications: {
         'Quantidade': '25 Computadores Portáteis',
@@ -500,7 +500,7 @@ export async function seedMongoDatabase() {
       bid_increment: 10000000,   // 100.000 MT
       bid_count: 39,
       starts_at: new Date(now - 2 * day),
-      ends_at: new Date(now + 4 * hour),
+      ends_at: new Date(now + 2 * day),
       winner_id: 5, // Eng. Carlos Tembe
       auto_extend_count: 0
     },
@@ -515,7 +515,7 @@ export async function seedMongoDatabase() {
       bid_increment: 5000000,
       bid_count: 14,
       starts_at: new Date(now - day),
-      ends_at: new Date(now + 18 * 60 * 1000), // Termina em 18 minutos!
+      ends_at: new Date(now + 3 * day),
       winner_id: 4, // Dra. Mariamo
       auto_extend_count: 0
     },
@@ -530,7 +530,7 @@ export async function seedMongoDatabase() {
       bid_increment: 10000000,
       bid_count: 22,
       starts_at: new Date(now - 3 * day),
-      ends_at: new Date(now + 28 * 60 * 1000), // Termina em 28 minutos!
+      ends_at: new Date(now + 4 * day),
       winner_id: 5,
       auto_extend_count: 0
     },
@@ -545,7 +545,7 @@ export async function seedMongoDatabase() {
       bid_increment: 5000000,
       bid_count: 18,
       starts_at: new Date(now - day),
-      ends_at: new Date(now + 48 * 60 * 1000), // Termina em 48 minutos!
+      ends_at: new Date(now + 5 * day),
       winner_id: 6, // Dr. Rui
       auto_extend_count: 0
     },
@@ -560,7 +560,7 @@ export async function seedMongoDatabase() {
       bid_increment: 5000000,
       bid_count: 9,
       starts_at: new Date(now - 2 * day),
-      ends_at: new Date(now + 3 * day),
+      ends_at: new Date(now + 6 * day),
       winner_id: 5,
       auto_extend_count: 0
     },
@@ -575,7 +575,7 @@ export async function seedMongoDatabase() {
       bid_increment: 10000000,
       bid_count: 42,
       starts_at: new Date(now - 4 * day),
-      ends_at: new Date(now + 2 * day),
+      ends_at: new Date(now + 7 * day),
       winner_id: 4,
       auto_extend_count: 0
     },
@@ -590,7 +590,7 @@ export async function seedMongoDatabase() {
       bid_increment: 2500000,
       bid_count: 27,
       starts_at: new Date(now - day),
-      ends_at: new Date(now + 5 * hour),
+      ends_at: new Date(now + 8 * day),
       winner_id: 6,
       auto_extend_count: 0
     },
@@ -605,7 +605,7 @@ export async function seedMongoDatabase() {
       bid_increment: 5000000,
       bid_count: 31,
       starts_at: new Date(now - 2 * day),
-      ends_at: new Date(now + 1 * day),
+      ends_at: new Date(now + 9 * day),
       winner_id: 4,
       auto_extend_count: 0
     },
@@ -620,7 +620,7 @@ export async function seedMongoDatabase() {
       bid_increment: 5000000,
       bid_count: 12,
       starts_at: new Date(now - 3 * day),
-      ends_at: new Date(now + 4 * day),
+      ends_at: new Date(now + 10 * day),
       winner_id: 5,
       auto_extend_count: 0
     },
@@ -635,7 +635,7 @@ export async function seedMongoDatabase() {
       bid_increment: 2500000,
       bid_count: 15,
       starts_at: new Date(now - day),
-      ends_at: new Date(now + 6 * hour),
+      ends_at: new Date(now + 11 * day),
       winner_id: 4,
       auto_extend_count: 0
     },
@@ -650,7 +650,7 @@ export async function seedMongoDatabase() {
       bid_increment: 2500000,
       bid_count: 19,
       starts_at: new Date(now - 2 * day),
-      ends_at: new Date(now + 3 * day),
+      ends_at: new Date(now + 12 * day),
       winner_id: 6,
       auto_extend_count: 0
     },
@@ -665,7 +665,7 @@ export async function seedMongoDatabase() {
       bid_increment: 2000000,
       bid_count: 11,
       starts_at: new Date(now - day),
-      ends_at: new Date(now + 5 * day),
+      ends_at: new Date(now + 14 * day),
       winner_id: 4,
       auto_extend_count: 0
     }

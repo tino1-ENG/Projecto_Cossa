@@ -243,10 +243,15 @@ const provinceOptions = [
   { label: 'Todas as Províncias', value: 'all' },
   { label: 'Maputo Cidade', value: 'Maputo Cidade' },
   { label: 'Maputo Província', value: 'Maputo Província' },
-  { label: 'Sofala', value: 'Sofala' },
+  { label: 'Gaza', value: 'Gaza' },
+  { label: 'Inhambane', value: 'Inhambane' },
+  { label: 'Sofala (Beira)', value: 'Sofala' },
+  { label: 'Manica (Chimoio)', value: 'Manica' },
+  { label: 'Tete (Moatize)', value: 'Tete' },
+  { label: 'Zambézia', value: 'Zambézia' },
   { label: 'Nampula', value: 'Nampula' },
-  { label: 'Tete', value: 'Tete' },
-  { label: 'Cabo Delgado', value: 'Cabo Delgado' }
+  { label: 'Cabo Delgado (Pemba)', value: 'Cabo Delgado' },
+  { label: 'Niassa', value: 'Niassa' }
 ];
 
 const statusOptions = [

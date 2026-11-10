@@ -1,114 +1,109 @@
 <template>
   <div class="w-full bg-[#F4F1EB] text-[#171717] min-h-screen">
-    <!-- SECTION A/B: HERO SECTION -->
-    <section class="relative w-full pt-6 sm:pt-12 pb-10 sm:pb-16 overflow-hidden">
-      <div class="max-w-[1440px] mx-auto px-4 sm:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          <!-- Left Column: Editorial Headline & Value Proposition -->
-          <div class="lg:col-span-7 flex flex-col gap-4 sm:gap-6">
-            <!-- Subtle Mozambique identification badge -->
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E7E3DC] w-fit shadow-xs">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#B69A68]"></span>
-              <span class="text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] text-[#B69A68] uppercase">
-                MOÇAMBIQUE • LEILÕES SELECCIONADOS
-              </span>
-            </div>
-
-            <!-- Main Headline (Editorial Luxury Serif) -->
-            <h1 class="font-editorial text-3xl sm:text-5xl lg:text-[58px] text-[#171717] font-semibold leading-[1.14] tracking-tight">
-              Activos extraordinários.<br />
-              <span class="italic font-normal text-[#B69A68]">Oportunidades exclusivas.</span>
-            </h1>
-
-            <!-- Supporting Subtitle -->
-            <p class="font-sans text-sm sm:text-base text-[#666666] max-w-xl leading-relaxed">
-              Descubra e participe em leilões de activos seleccionados em Moçambique. Veículos executivos, alta relojoaria, maquinaria industrial e activos corporativos liquidados em Meticais (MZN).
-            </p>
-
-            <!-- Action CTAs -->
-            <div class="flex flex-wrap items-center gap-3 pt-2">
-              <router-link
-                to="/catalog"
-                class="px-6 py-3 rounded-lg bg-[#171717] text-white hover:bg-[#B69A68] text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-sm flex items-center gap-2 no-underline"
-              >
-                <span>Explorar Leilões</span>
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </router-link>
-
-              <router-link
-                to="/how-it-works"
-                class="px-6 py-3 rounded-lg bg-white text-[#171717] border border-[#E7E3DC] hover:border-[#B69A68] hover:text-[#B69A68] text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-xs flex items-center gap-2 no-underline"
-              >
-                <span>Como Funciona</span>
-                <span class="material-symbols-outlined text-[18px]">help_outline</span>
-              </router-link>
-            </div>
+    <!-- SECTION A/B: HERO SECTION (FLUSH LUXURY SHOWCASE - SEM BORDA, COLADO COM A TELA) -->
+    <section class="relative w-full border-b border-[#E7E3DC] overflow-hidden bg-[#F4F1EB]">
+      <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[560px] lg:min-h-[640px]">
+        <!-- Left Column: Editorial Headline & Value Proposition -->
+        <div class="lg:col-span-6 xl:col-span-6 flex flex-col justify-center py-10 sm:py-16 px-4 sm:px-8 lg:pl-12 lg:pr-10 xl:pl-20 xl:pr-14">
+          <!-- Subtle Mozambique identification badge -->
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E7E3DC] w-fit shadow-xs mb-4 sm:mb-6">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#B69A68]"></span>
+            <span class="text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] text-[#B69A68] uppercase">
+              MOÇAMBIQUE • LEILÕES SELECCIONADOS
+            </span>
           </div>
 
-          <!-- Right Column: Featured Live Car HUD Card -->
-          <div class="lg:col-span-5 relative mt-4 lg:mt-0">
-            <div class="relative rounded-2xl overflow-hidden bg-white border border-[#E7E3DC] shadow-lg group">
-              <!-- Hero Vehicle Image -->
-              <div class="relative w-full aspect-[16/10] sm:aspect-[4/3] bg-[#FAF8F5] overflow-hidden">
-                <img
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  :src="heroLot?.primary_image || '/images/products/porsche-911-gt3rs.jpg'"
-                  :alt="heroLot?.title || 'Porsche 911 GT3 RS Clubsport'"
-                  @error="onHeroImgError"
-                />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none"></div>
+          <!-- Main Headline (Editorial Luxury Serif) -->
+          <h1 class="font-editorial text-3xl sm:text-5xl lg:text-[54px] text-[#171717] font-semibold leading-[1.12] tracking-tight">
+            Activos extraordinários.<br />
+            <span class="italic font-normal text-[#B69A68]">Oportunidades exclusivas.</span>
+          </h1>
 
-                <!-- Header Badge on Image -->
-                <div class="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-                  <span class="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md text-[10px] font-semibold text-white tracking-wider uppercase border border-white/[0.1] flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#B69A68] animate-pulse"></span>
-                    <span>LOTE #{{ heroLot?.id || '1' }} • AO VIVO</span>
-                  </span>
-                  <span class="px-2.5 py-1 rounded bg-black/80 backdrop-blur-md text-[10px] font-medium text-white/90 border border-white/[0.1]">
-                    {{ (heroLot?.location_city || 'MAPUTO').toUpperCase() }}
-                  </span>
-                </div>
+          <!-- Supporting Subtitle -->
+          <p class="font-sans text-sm sm:text-base text-[#666666] max-w-lg leading-relaxed pt-3 sm:pt-4">
+            Descubra e participe em leilões de activos seleccionados em Moçambique. Veículos executivos, alta relojoaria, maquinaria industrial e activos corporativos liquidados em Meticais (MZN).
+          </p>
 
-                <!-- Bottom Countdown Ribbon on Image -->
-                <div class="absolute bottom-3 left-3 right-3 flex items-end justify-between z-10 text-white">
-                  <div>
-                    <span class="text-[10px] uppercase tracking-wider text-white/70 block">Termina em:</span>
-                    <div class="font-mono text-sm sm:text-base font-bold text-[#D6C4A3]">
-                      <AuctionTimer v-if="heroLot" :ends-at="heroLot.ends_at" />
-                      <span v-else>04h 12m 30s</span>
-                    </div>
-                  </div>
-                  <span class="px-2.5 py-1 rounded bg-[#B69A68] text-white text-[10px] font-semibold tracking-wider uppercase">
-                    RESERVA ATINGIDA
-                  </span>
+          <!-- Action CTAs -->
+          <div class="flex flex-wrap items-center gap-3 pt-6 sm:pt-8">
+            <router-link
+              to="/catalog"
+              class="px-6 py-3.5 rounded-lg bg-[#171717] text-white hover:bg-[#B69A68] text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-sm flex items-center gap-2 no-underline"
+            >
+              <span>Explorar Leilões</span>
+              <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </router-link>
+
+            <router-link
+              to="/how-it-works"
+              class="px-6 py-3.5 rounded-lg bg-white text-[#171717] border border-[#E7E3DC] hover:border-[#B69A68] hover:text-[#B69A68] text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-xs flex items-center gap-2 no-underline"
+            >
+              <span>Como Funciona</span>
+              <span class="material-symbols-outlined text-[18px]">help_outline</span>
+            </router-link>
+          </div>
+        </div>
+
+        <!-- Right Column: Flush Hero Showcase (Colado com a Tela, Sem Borda, Não Flutuante) -->
+        <div class="lg:col-span-6 xl:col-span-6 relative w-full h-[440px] sm:h-[500px] lg:h-auto min-h-[440px] lg:min-h-full overflow-hidden bg-[#171717] group">
+          <!-- Vehicle Photograph flush to edges -->
+          <img
+            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000 ease-out"
+            :src="heroLot?.primary_image || '/images/products/porsche-911-gt3rs.jpg'"
+            :alt="heroLot?.title || 'Porsche 911 GT3 RS Clubsport'"
+            @error="onHeroImgError"
+          />
+
+          <!-- Gradient overlay -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/40 pointer-events-none"></div>
+
+          <!-- Top HUD directly on photo -->
+          <div class="absolute top-4 sm:top-6 left-4 sm:left-6 right-4 sm:right-6 flex items-center justify-between z-10 gap-2">
+            <span class="px-3 py-1 rounded bg-black/75 backdrop-blur-md text-[10px] sm:text-[11px] font-semibold text-white tracking-wider uppercase border border-white/10 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#B69A68] animate-pulse"></span>
+              <span>LOTE #{{ heroLot?.id || '1' }} • AO VIVO</span>
+            </span>
+            <span class="px-3 py-1 rounded bg-black/75 backdrop-blur-md text-[10px] sm:text-[11px] font-medium text-white/90 border border-white/10 truncate max-w-[220px]">
+              {{ (heroLot?.location_city || 'ENTREPOSTO DO PORTO DE MAPUTO').toUpperCase() }}
+            </span>
+          </div>
+
+          <!-- Bottom Ribbon Flush inside photo -->
+          <div class="absolute bottom-0 inset-x-0 p-4 sm:p-6 lg:p-8 z-10 bg-gradient-to-t from-black/95 via-black/70 to-transparent flex flex-col gap-2 sm:gap-3 text-white">
+            <div class="flex items-center justify-between text-xs text-white/75">
+              <span>{{ heroLot?.category_name || 'Automóveis & Coleccionáveis' }}</span>
+              <span class="font-mono text-[#D6C4A3]">{{ heroLot?.bid_count || 39 }} Licitações</span>
+            </div>
+
+            <h3 class="font-display font-semibold text-base sm:text-xl text-white line-clamp-1">
+              {{ heroLot?.title || 'Porsche 911 GT3 RS Clubsport 2023 — Pacote Weissach' }}
+            </h3>
+
+            <div class="flex items-center justify-between pt-2 border-t border-white/15">
+              <div>
+                <span class="text-[10px] uppercase tracking-wider text-white/70 block">Licitação Atual</span>
+                <div class="font-editorial text-2xl sm:text-3xl font-bold text-white">
+                  {{ formatMoneyDigits(heroLot?.current_price || 18550000) }}
+                  <span class="text-xs font-sans font-bold text-[#B69A68]">MZN</span>
                 </div>
               </div>
 
-              <!-- Hero Card Footer Content -->
-              <div class="p-4 sm:p-5 flex flex-col gap-3">
-                <div class="flex items-center justify-between text-xs text-[#777777]">
-                  <span>{{ heroLot?.category_name || 'Automóveis & Coleccionáveis' }}</span>
-                  <span class="font-mono">{{ heroLot?.bid_count || 39 }} Licitações</span>
-                </div>
-                <h3 class="font-display font-semibold text-base sm:text-lg text-[#171717] line-clamp-1">
-                  {{ heroLot?.title || 'Porsche 911 GT3 RS Clubsport 2023 — Pacote Weissach' }}
-                </h3>
-                <div class="flex items-center justify-between pt-1 border-t border-[#E7E3DC]">
-                  <div>
-                    <span class="text-[10px] uppercase tracking-wider text-[#777777] block font-semibold">Licitação Atual</span>
-                    <div class="font-editorial text-xl sm:text-2xl font-bold text-[#171717]">
-                      {{ formatMoneyDigits(heroLot?.current_price || 18550000) }}
-                      <span class="text-xs font-sans font-bold text-[#B69A68]">MZN</span>
-                    </div>
+              <div class="flex items-center gap-3">
+                <div class="hidden sm:flex flex-col items-end">
+                  <span class="text-[9px] uppercase tracking-wider text-white/60">Termina em:</span>
+                  <div class="font-mono text-xs font-bold text-[#D6C4A3]">
+                    <AuctionTimer v-if="heroLot" :ends-at="heroLot.ends_at" />
+                    <span v-else>02d 14h 20s</span>
                   </div>
-                  <router-link
-                    :to="heroLot ? `/auctions/${heroLot.id}` : '/catalog'"
-                    class="px-4 py-2 rounded bg-[#171717] text-white hover:bg-[#B69A68] text-xs font-semibold tracking-wide transition-colors flex items-center gap-1.5 no-underline"
-                  >
-                    <span>Ver Lote</span>
-                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                  </router-link>
                 </div>
+
+                <router-link
+                  :to="heroLot ? `/auctions/${heroLot.id}` : '/catalog'"
+                  class="px-5 py-2.5 rounded bg-white text-[#171717] hover:bg-[#B69A68] hover:text-white text-xs font-semibold tracking-wide transition-all shadow-md flex items-center gap-1.5 no-underline"
+                >
+                  <span>Ver Lote</span>
+                  <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </router-link>
               </div>
             </div>
           </div>
@@ -117,7 +112,7 @@
     </section>
 
     <!-- SECTION D: SEARCH AND FILTERS (Compact & Intuitive) -->
-    <section class="w-full max-w-[1440px] mx-auto px-4 sm:px-8 -mt-2 sm:-mt-4 mb-10 sm:mb-16">
+    <section class="w-full max-w-[1440px] mx-auto px-4 sm:px-8 py-8 sm:py-10">
       <div class="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-[#E7E3DC] shadow-sm">
         <form @submit.prevent="executeSearch" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-4 items-center">
           <!-- Text Search (Col 1-5) -->
@@ -398,17 +393,26 @@ const selectedCategory = ref('all');
 const selectedProvince = ref('all');
 
 const categoryOptions = computed(() => {
-  return auctionStore.categories.map(c => ({ label: c.name, value: c.slug }));
+  return [
+    { label: 'Todas as Categorias', value: 'all' },
+    ...auctionStore.categories.map(c => ({ label: c.name, value: c.slug }))
+  ];
 });
 
+// All official provinces of Mozambique
 const provinceOptions = [
   { label: 'Todas as Províncias', value: 'all' },
   { label: 'Maputo Cidade', value: 'Maputo Cidade' },
   { label: 'Maputo Província', value: 'Maputo Província' },
-  { label: 'Sofala', value: 'Sofala' },
+  { label: 'Gaza', value: 'Gaza' },
+  { label: 'Inhambane', value: 'Inhambane' },
+  { label: 'Sofala (Beira)', value: 'Sofala' },
+  { label: 'Manica (Chimoio)', value: 'Manica' },
+  { label: 'Tete (Moatize)', value: 'Tete' },
+  { label: 'Zambézia', value: 'Zambézia' },
   { label: 'Nampula', value: 'Nampula' },
-  { label: 'Tete', value: 'Tete' },
-  { label: 'Cabo Delgado', value: 'Cabo Delgado' }
+  { label: 'Cabo Delgado (Pemba)', value: 'Cabo Delgado' },
+  { label: 'Niassa', value: 'Niassa' }
 ];
 
 const curatedCategories = [
@@ -438,8 +442,8 @@ onMounted(async () => {
 function executeSearch() {
   const query: Record<string, string> = {};
   if (searchQuery.value.trim()) query.search = searchQuery.value.trim();
-  if (selectedCategory.value !== 'all') query.category = selectedCategory.value;
-  if (selectedProvince.value !== 'all') query.province = selectedProvince.value;
+  if (selectedCategory.value && selectedCategory.value !== 'all') query.category = selectedCategory.value;
+  if (selectedProvince.value && selectedProvince.value !== 'all') query.province = selectedProvince.value;
 
   router.push({ path: '/catalog', query });
 }
