@@ -1,89 +1,88 @@
 <template>
-  <q-card class="w-full max-w-md mx-auto bg-surface-container rounded-xl sm:rounded-2xl p-4 sm:p-space-xl border border-white/[0.08] shadow-2xl flex flex-col gap-3 sm:gap-space-lg text-white" flat>
+  <div class="w-full max-w-md mx-auto bg-white rounded-2xl p-6 sm:p-10 border border-[#E7E3DC] shadow-lg flex flex-col gap-5 text-[#171717]">
     <!-- Header -->
-    <div class="flex flex-col gap-1">
-      <span class="font-label-caps text-label-caps uppercase text-primary tracking-wider font-bold text-xs">Acesso Institucional</span>
-      <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold text-xl">Iniciar Sessão</h2>
-      <p class="font-body-md text-body-sm text-on-surface-variant text-xs">
-        Aceda ao seu terminal de licitação fiduciária e gestão de lotes.
+    <div class="flex flex-col gap-1.5">
+      <span class="text-[10px] tracking-[0.25em] text-[#B69A68] uppercase font-bold">
+        ACESSO INSTITUCIONAL
+      </span>
+      <h2 class="font-editorial text-2xl sm:text-3xl font-semibold text-[#171717] tracking-tight">
+        Iniciar Sessão
+      </h2>
+      <p class="text-xs sm:text-sm text-[#666666] leading-relaxed">
+        Aceda ao seu terminal de licitação fiduciária e gestão de lotes no MozBid.
       </p>
     </div>
 
-    <form class="flex flex-col gap-space-md" @submit.prevent="handleLogin">
-      <!-- Email Field via Quasar QInput -->
-      <div class="flex flex-col gap-1">
-        <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">Email Institucional</label>
-        <q-input
-          v-model="email"
-          dark
-          filled
-          dense
-          color="primary"
-          type="email"
-          required
-          placeholder="exemplo@mozbid.co.mz"
-          class="text-white font-mono"
-        >
-          <template v-slot:prepend>
-            <q-icon name="mail" color="primary" />
-          </template>
-        </q-input>
+    <form class="flex flex-col gap-4" @submit.prevent="handleLogin">
+      <!-- Email Field -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[11px] font-semibold text-[#171717] uppercase tracking-wider">
+          Email de Acesso
+        </label>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[#888888] text-[20px]">mail</span>
+          <input
+            v-model="email"
+            type="email"
+            required
+            placeholder="exemplo@mozbid.co.mz"
+            class="w-full pl-11 pr-4 py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-sm font-mono text-[#171717] placeholder:text-[#999999] focus:outline-none focus:border-[#B69A68] focus:bg-white transition-colors"
+          />
+        </div>
       </div>
 
-      <!-- Password Field via Quasar QInput -->
-      <div class="flex flex-col gap-1">
-        <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">Palavra-passe</label>
-        <q-input
-          v-model="password"
-          dark
-          filled
-          dense
-          color="primary"
-          :type="showPassword ? 'text' : 'password'"
-          required
-          placeholder="••••••••"
-          class="text-white"
-        >
-          <template v-slot:prepend>
-            <q-icon name="lock" color="primary" />
-          </template>
-          <template v-slot:append>
-            <q-icon
-              :name="showPassword ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="showPassword = !showPassword"
-            />
-          </template>
-        </q-input>
+      <!-- Password Field -->
+      <div class="flex flex-col gap-1.5">
+        <div class="flex items-center justify-between">
+          <label class="text-[11px] font-semibold text-[#171717] uppercase tracking-wider">
+            Palavra-passe
+          </label>
+        </div>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[#888888] text-[20px]">lock</span>
+          <input
+            v-model="password"
+            :type="showPassword ? 'text' : 'password'"
+            required
+            placeholder="••••••••"
+            class="w-full pl-11 pr-11 py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-sm text-[#171717] placeholder:text-[#999999] focus:outline-none focus:border-[#B69A68] focus:bg-white transition-colors"
+          />
+          <button
+            type="button"
+            class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#888888] hover:text-[#171717] transition-colors cursor-pointer"
+            @click="showPassword = !showPassword"
+          >
+            <span class="material-symbols-outlined text-[20px]">
+              {{ showPassword ? 'visibility_off' : 'visibility' }}
+            </span>
+          </button>
+        </div>
       </div>
 
-      <div v-if="errorMessage" class="p-3 rounded-lg bg-error/10 border border-error/20 text-error font-body-sm text-xs">
+      <!-- Error Message -->
+      <div v-if="errorMessage" class="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs leading-relaxed">
         {{ errorMessage }}
       </div>
 
-      <!-- Submit Button via Quasar QBtn -->
-      <q-btn
+      <!-- Submit Button -->
+      <button
         type="submit"
-        unelevated
-        no-caps
-        color="primary"
-        text-color="dark"
-        icon="login"
-        :loading="authStore.loading"
         :disabled="authStore.loading"
-        label="Entrar no MozBid"
-        class="w-full py-2.5 rounded-lg font-bold text-xs uppercase shadow-xl mt-2 shimmer-gold active-press"
-      />
+        class="w-full py-3 rounded-lg bg-[#171717] text-white hover:bg-[#B69A68] disabled:opacity-50 text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer mt-1"
+      >
+        <span class="material-symbols-outlined text-[18px]">login</span>
+        <span>{{ authStore.loading ? 'A autenticar...' : 'Entrar no MozBid' }}</span>
+      </button>
 
       <!-- Footer Links -->
-      <div class="text-center font-body-sm text-xs text-on-surface-variant pt-space-xs">
+      <div class="text-center text-xs text-[#666666] pt-1">
         <span>Não tem uma conta credenciada?</span>
-        <router-link to="/auth/register" class="text-primary hover:underline font-bold ml-1 no-underline">
+        <router-link to="/auth/register" class="text-[#171717] font-semibold underline hover:text-[#B69A68] ml-1 no-underline">
           Registar Agora
         </router-link>
       </div>
     </form>
-  </q-card>
+  </div>
 </template>
 
 <script setup lang="ts">

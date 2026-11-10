@@ -14,25 +14,25 @@
             <div class="logo-box">
               <Gavel :size="20" />
             </div>
-            <span class="auth-brand-text">MOZ<span class="text-gold">BID</span></span>
+            <span class="auth-brand-text font-editorial tracking-wider">MOZ<span class="text-[#B69A68]">BID</span></span>
           </router-link>
 
           <div class="auth-hero-quote">
-            <h2 class="quote-title">O Mercado de Leilões Exclusivo de Moçambique.</h2>
-            <p class="quote-desc">
-              Participe em disputas em tempo real por automóveis de alta gama, frotas corporativas,
-              maquinaria pesada e activos tecnológicos com liquidação 100% segura.
+            <h2 class="quote-title font-editorial text-white">Activos extraordinários. Oportunidades exclusivas.</h2>
+            <p class="quote-desc text-white/70">
+              Participe em leilões em tempo real de frotas executivas, supercarros,
+              alta relojoaria e maquinaria pesada com liquidação garantida em Meticais (MZN).
             </p>
           </div>
 
           <div class="auth-trust-badges">
             <div class="trust-pill">
-              <ShieldCheck :size="14" class="text-gold" />
-              <span>Vendedores Verificados</span>
+              <ShieldCheck :size="15" class="text-[#B69A68]" />
+              <span class="text-xs">Vendedores Verificados (NUIT)</span>
             </div>
             <div class="trust-pill">
-              <Lock :size="14" class="text-gold" />
-              <span>Transacções M-Pesa & Bancárias</span>
+              <Lock :size="15" class="text-[#B69A68]" />
+              <span class="text-xs">Liquidação Segura M-Pesa & Bancária</span>
             </div>
           </div>
         </div>
@@ -41,16 +41,18 @@
       <!-- Right Form Side -->
       <div class="auth-form-side">
         <div class="auth-top-nav flex items-center justify-between">
-          <router-link to="/" class="back-link">
-            <ArrowLeft :size="16" /> <span class="hidden sm:inline">Voltar ao Marketplace</span><span class="sm:hidden">Marketplace</span>
+          <router-link to="/" class="back-link group flex items-center gap-2 text-xs font-semibold text-[#666666] hover:text-[#171717] transition-colors">
+            <ArrowLeft :size="16" class="transition-transform group-hover:-translate-x-1" />
+            <span class="hidden sm:inline">Voltar ao Marketplace</span>
+            <span class="sm:hidden">Início</span>
           </router-link>
 
           <!-- Mobile Only Brand Header -->
-          <router-link to="/" class="flex sm:hidden items-center gap-2">
-            <div class="w-8 h-8 rounded bg-primary text-black flex items-center justify-center font-bold">
+          <router-link to="/" class="flex sm:hidden items-center gap-2 no-underline">
+            <div class="w-8 h-8 rounded-lg bg-[#171717] text-[#B69A68] flex items-center justify-center font-bold shadow-xs">
               <Gavel :size="16" />
             </div>
-            <span class="font-display font-bold text-white text-base">MOZ<span class="text-gold">BID</span></span>
+            <span class="font-editorial font-bold text-[#171717] text-lg tracking-wider">MOZ<span class="text-[#B69A68]">BID</span></span>
           </router-link>
         </div>
 
@@ -58,8 +60,8 @@
           <router-view />
         </div>
 
-        <div class="auth-form-footer">
-          &copy; {{ new Date().getFullYear() }} MozBid Auction Marketplace Lda.
+        <div class="auth-form-footer text-xs text-[#888888] text-center pt-4">
+          &copy; {{ new Date().getFullYear() }} MozBid Leilões de Moçambique. Todos os direitos reservados.
         </div>
       </div>
     </div>
@@ -75,7 +77,7 @@ import ToastContainer from '../components/common/ToastContainer.vue';
 <style scoped>
 .auth-layout {
   min-height: 100vh;
-  background-color: var(--color-background);
+  background-color: #F4F1EB;
 }
 
 .auth-grid {
@@ -100,6 +102,7 @@ import ToastContainer from '../components/common/ToastContainer.vue';
   flex-direction: column;
   justify-content: space-between;
   padding: 48px;
+  background-color: #171717;
 }
 
 .auth-bg-img {
@@ -108,6 +111,7 @@ import ToastContainer from '../components/common/ToastContainer.vue';
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0.65;
 }
 
 .visual-overlay {
@@ -115,9 +119,9 @@ import ToastContainer from '../components/common/ToastContainer.vue';
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(8, 8, 8, 0.88) 0%,
-    rgba(8, 8, 8, 0.5) 50%,
-    rgba(8, 8, 8, 0.95) 100%
+    rgba(15, 15, 15, 0.92) 0%,
+    rgba(23, 23, 23, 0.65) 50%,
+    rgba(15, 15, 15, 0.95) 100%
   );
   z-index: 1;
 }
@@ -141,24 +145,19 @@ import ToastContainer from '../components/common/ToastContainer.vue';
 .logo-box {
   width: 40px;
   height: 40px;
-  border-radius: var(--radius-md);
-  background: var(--color-primary);
+  border-radius: 10px;
+  background: #171717;
+  border: 1px solid #B69A68;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #080808;
+  color: #B69A68;
 }
 
 .auth-brand-text {
-  font-family: var(--font-family-display);
   font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
+  font-weight: 700;
   color: #ffffff;
-}
-
-.text-gold {
-  color: var(--color-primary);
 }
 
 .quote-title {
@@ -170,14 +169,13 @@ import ToastContainer from '../components/common/ToastContainer.vue';
 
 .quote-desc {
   font-size: 0.95rem;
-  color: #d1d5db;
   line-height: 1.6;
   max-width: 480px;
 }
 
 .auth-trust-badges {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -185,13 +183,12 @@ import ToastContainer from '../components/common/ToastContainer.vue';
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(15, 15, 15, 0.7);
+  background: rgba(23, 23, 23, 0.8);
   backdrop-filter: blur(8px);
   padding: 8px 16px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--color-border);
-  font-size: 0.82rem;
-  color: #e5e5e5;
+  border-radius: 9999px;
+  border: 1px solid rgba(182, 154, 104, 0.3);
+  color: #f3f3f3;
 }
 
 .auth-form-side {
@@ -199,12 +196,12 @@ import ToastContainer from '../components/common/ToastContainer.vue';
   flex-direction: column;
   justify-content: space-between;
   padding: 32px 48px;
-  background: #0d0d0d;
+  background: #F4F1EB;
 }
 
 @media (max-width: 640px) {
   .auth-form-side {
-    padding: 24px 20px;
+    padding: 24px 16px;
   }
 }
 
@@ -212,29 +209,9 @@ import ToastContainer from '../components/common/ToastContainer.vue';
   margin-bottom: 24px;
 }
 
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.85rem;
-  color: var(--color-text-secondary);
-  transition: color 0.2s ease;
-}
-
-.back-link:hover {
-  color: var(--color-primary);
-}
-
 .auth-form-container {
-  max-width: 440px;
+  max-width: 480px;
   width: 100%;
   margin: 0 auto;
-}
-
-.auth-form-footer {
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  margin-top: 24px;
 }
 </style>

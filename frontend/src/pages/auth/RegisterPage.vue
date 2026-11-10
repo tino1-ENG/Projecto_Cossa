@@ -1,199 +1,204 @@
 <template>
-  <q-card class="w-full max-w-lg mx-auto bg-surface-container rounded-xl sm:rounded-2xl p-4 sm:p-space-xl border border-white/[0.08] shadow-2xl flex flex-col gap-3 sm:gap-space-lg text-white" flat>
+  <div class="w-full max-w-lg mx-auto bg-white rounded-2xl p-6 sm:p-10 border border-[#E7E3DC] shadow-lg flex flex-col gap-5 text-[#171717]">
     <!-- Header -->
-    <div class="flex flex-col gap-1">
-      <span class="font-label-caps text-label-caps uppercase text-primary tracking-wider font-bold text-xs">Credenciação de Conta</span>
-      <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold text-xl">Criar Conta Oficial</h2>
-      <p class="font-body-md text-body-sm text-on-surface-variant text-xs">
-        Registe-se para participar nos leilões exclusivos do MozBid com garantia fiduciária.
+    <div class="flex flex-col gap-1.5">
+      <span class="text-[10px] tracking-[0.25em] text-[#B69A68] uppercase font-bold">
+        CREDENCIAÇÃO DE CONTA
+      </span>
+      <h2 class="font-editorial text-2xl sm:text-3xl font-semibold text-[#171717] tracking-tight">
+        Criar Conta Oficial
+      </h2>
+      <p class="text-xs sm:text-sm text-[#666666] leading-relaxed">
+        Registe-se para participar nos leilões exclusivos do MozBid com garantia fiduciária e liquidação em Meticais (MZN).
       </p>
     </div>
 
-    <!-- Account Role Toggle via Quasar QBtnToggle -->
-    <q-btn-toggle
-      v-model="roleSelection"
-      spread
-      no-caps
-      rounded
-      unelevated
-      toggle-color="primary"
-      toggle-text-color="dark"
-      color="surface-container-low"
-      text-color="grey-5"
-      class="border border-white/[0.08] p-1 font-bold text-xs"
-      :options="[
-        { label: 'Comprador', value: 'buyer', icon: 'person' },
-        { label: 'Vendedor', value: 'seller_ind', icon: 'storefront' },
-        { label: 'Empresa', value: 'seller_corp', icon: 'domain' }
-      ]"
-    />
+    <!-- Account Role Toggle -->
+    <div class="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-[#FAF8F5] border border-[#E7E3DC]">
+      <button
+        type="button"
+        class="py-2 px-1 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+        :class="roleSelection === 'buyer' ? 'bg-[#171717] text-white shadow-xs' : 'text-[#666666] hover:text-[#171717]'"
+        @click="roleSelection = 'buyer'"
+      >
+        <span class="material-symbols-outlined text-[16px]">person</span>
+        <span>Comprador</span>
+      </button>
 
-    <form class="flex flex-col gap-space-md" @submit.prevent="handleRegister">
-      <!-- Full Name via Quasar QInput -->
-      <div class="flex flex-col gap-1">
-        <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">
+      <button
+        type="button"
+        class="py-2 px-1 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+        :class="roleSelection === 'seller_ind' ? 'bg-[#171717] text-white shadow-xs' : 'text-[#666666] hover:text-[#171717]'"
+        @click="roleSelection = 'seller_ind'"
+      >
+        <span class="material-symbols-outlined text-[16px]">storefront</span>
+        <span>Vendedor</span>
+      </button>
+
+      <button
+        type="button"
+        class="py-2 px-1 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+        :class="roleSelection === 'seller_corp' ? 'bg-[#171717] text-white shadow-xs' : 'text-[#666666] hover:text-[#171717]'"
+        @click="roleSelection = 'seller_corp'"
+      >
+        <span class="material-symbols-outlined text-[16px]">domain</span>
+        <span>Empresa</span>
+      </button>
+    </div>
+
+    <form class="flex flex-col gap-4" @submit.prevent="handleRegister">
+      <!-- Full Name -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[11px] font-semibold text-[#171717] uppercase tracking-wider">
           {{ roleSelection === 'seller_corp' ? 'Nome do Representante Legal' : 'Nome Completo' }}
         </label>
-        <q-input
-          v-model="name"
-          dark
-          filled
-          dense
-          color="primary"
-          required
-          placeholder="Ex: Carlos Alberto Tembe"
-          class="text-white"
-        >
-          <template v-slot:prepend>
-            <q-icon name="person" color="primary" />
-          </template>
-        </q-input>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[#888888] text-[20px]">person</span>
+          <input
+            v-model="name"
+            type="text"
+            required
+            placeholder="Ex: Carlos Alberto Tembe"
+            class="w-full pl-11 pr-4 py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-sm text-[#171717] placeholder:text-[#999999] focus:outline-none focus:border-[#B69A68] focus:bg-white transition-colors"
+          />
+        </div>
       </div>
 
       <!-- Company Name (if corporate) -->
-      <div v-if="roleSelection === 'seller_corp'" class="flex flex-col gap-1">
-        <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">Denominação Comercial da Empresa</label>
-        <q-input
-          v-model="companyName"
-          dark
-          filled
-          dense
-          color="primary"
-          required
-          placeholder="Ex: MozEquipamentos & Logística Lda"
-          class="text-white"
-        >
-          <template v-slot:prepend>
-            <q-icon name="domain" color="primary" />
-          </template>
-        </q-input>
+      <div v-if="roleSelection === 'seller_corp'" class="flex flex-col gap-1.5">
+        <label class="text-[11px] font-semibold text-[#171717] uppercase tracking-wider">
+          Denominação Comercial da Empresa
+        </label>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[#888888] text-[20px]">domain</span>
+          <input
+            v-model="companyName"
+            type="text"
+            required
+            placeholder="Ex: MozEquipamentos & Logística Lda"
+            class="w-full pl-11 pr-4 py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-sm text-[#171717] placeholder:text-[#999999] focus:outline-none focus:border-[#B69A68] focus:bg-white transition-colors"
+          />
+        </div>
       </div>
 
-      <!-- NUIT -->
-      <div v-if="roleSelection !== 'buyer'" class="flex flex-col gap-1">
-        <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">NUIT (Número de Identificação Tributária)</label>
-        <q-input
-          v-model="nuit"
-          dark
-          filled
-          dense
-          color="primary"
-          required
-          placeholder="Ex: 400192837"
-          class="text-white font-mono"
-        >
-          <template v-slot:prepend>
-            <q-icon name="badge" color="primary" />
-          </template>
-        </q-input>
+      <!-- NUIT (if seller) -->
+      <div v-if="roleSelection !== 'buyer'" class="flex flex-col gap-1.5">
+        <label class="text-[11px] font-semibold text-[#171717] uppercase tracking-wider">
+          NUIT (Número de Identificação Tributária)
+        </label>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[#888888] text-[20px]">badge</span>
+          <input
+            v-model="nuit"
+            type="text"
+            required
+            placeholder="Ex: 400192837"
+            class="w-full pl-11 pr-4 py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-sm font-mono text-[#171717] placeholder:text-[#999999] focus:outline-none focus:border-[#B69A68] focus:bg-white transition-colors"
+          />
+        </div>
       </div>
 
-      <!-- Email -->
-      <div class="flex flex-col gap-1">
-        <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">Endereço de Email</label>
-        <q-input
-          v-model="email"
-          dark
-          filled
-          dense
-          color="primary"
-          type="email"
-          required
-          placeholder="seuemail@exemplo.co.mz"
-          class="text-white font-mono"
-        >
-          <template v-slot:prepend>
-            <q-icon name="mail" color="primary" />
-          </template>
-        </q-input>
+      <!-- Email Address -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[11px] font-semibold text-[#171717] uppercase tracking-wider">
+          Endereço de Email
+        </label>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[#888888] text-[20px]">mail</span>
+          <input
+            v-model="email"
+            type="email"
+            required
+            placeholder="seuemail@exemplo.co.mz"
+            class="w-full pl-11 pr-4 py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-sm font-mono text-[#171717] placeholder:text-[#999999] focus:outline-none focus:border-[#B69A68] focus:bg-white transition-colors"
+          />
+        </div>
       </div>
 
-      <!-- Phone -->
-      <div class="flex flex-col gap-1">
-        <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">Telefone de Contacto / M-Pesa (+258)</label>
-        <q-input
-          v-model="phone"
-          dark
-          filled
-          dense
-          color="primary"
-          type="tel"
-          required
-          placeholder="+258 84 123 4567"
-          class="text-white font-mono"
-        >
-          <template v-slot:prepend>
-            <q-icon name="phone" color="primary" />
-          </template>
-        </q-input>
+      <!-- Phone Number -->
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[11px] font-semibold text-[#171717] uppercase tracking-wider">
+          Telefone de Contacto / M-Pesa (+258)
+        </label>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[#888888] text-[20px]">phone</span>
+          <input
+            v-model="phone"
+            type="tel"
+            required
+            placeholder="+258 84 123 4567"
+            class="w-full pl-11 pr-4 py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-sm font-mono text-[#171717] placeholder:text-[#999999] focus:outline-none focus:border-[#B69A68] focus:bg-white transition-colors"
+          />
+        </div>
       </div>
 
       <!-- Password -->
-      <div class="flex flex-col gap-1">
-        <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">Palavra-passe Segura</label>
-        <q-input
-          v-model="password"
-          dark
-          filled
-          dense
-          color="primary"
-          :type="showPassword ? 'text' : 'password'"
-          required
-          placeholder="Mínimo 8 caracteres"
-          class="text-white"
-        >
-          <template v-slot:prepend>
-            <q-icon name="lock" color="primary" />
-          </template>
-          <template v-slot:append>
-            <q-icon
-              :name="showPassword ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="showPassword = !showPassword"
-            />
-          </template>
-        </q-input>
+      <div class="flex flex-col gap-1.5">
+        <label class="text-[11px] font-semibold text-[#171717] uppercase tracking-wider">
+          Palavra-passe Segura
+        </label>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[#888888] text-[20px]">lock</span>
+          <input
+            v-model="password"
+            :type="showPassword ? 'text' : 'password'"
+            required
+            placeholder="Mínimo 8 caracteres"
+            class="w-full pl-11 pr-11 py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-sm text-[#171717] placeholder:text-[#999999] focus:outline-none focus:border-[#B69A68] focus:bg-white transition-colors"
+          />
+          <button
+            type="button"
+            class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#888888] hover:text-[#171717] transition-colors cursor-pointer"
+            @click="showPassword = !showPassword"
+          >
+            <span class="material-symbols-outlined text-[20px]">
+              {{ showPassword ? 'visibility_off' : 'visibility' }}
+            </span>
+          </button>
+        </div>
       </div>
 
-      <!-- Terms Checkbox via Quasar QCheckbox -->
-      <q-checkbox
-        v-model="agreedTerms"
-        dark
-        color="primary"
-        class="text-xs text-on-surface-variant pt-1"
-      >
-        <span>
-          Declaro que li e aceito os <router-link to="/how-it-works" class="text-primary hover:underline">Regulamentos de Leilão</router-link>, Termos de Custódia em Escrow e Políticas AML.
-        </span>
-      </q-checkbox>
+      <!-- Terms Checkbox -->
+      <div class="flex items-start gap-2 pt-1">
+        <input
+          id="terms"
+          v-model="agreedTerms"
+          type="checkbox"
+          class="mt-1 w-4 h-4 rounded border-[#E7E3DC] text-[#B69A68] focus:ring-[#B69A68] cursor-pointer"
+        />
+        <label for="terms" class="text-xs text-[#666666] leading-relaxed cursor-pointer select-none">
+          Declaro que li e aceito o
+          <router-link to="/how-it-works" class="text-[#171717] font-semibold underline hover:text-[#B69A68]">
+            Regulamento de Leilões
+          </router-link>,
+          as Políticas de Verificação de Identidade e os Procedimentos de Liquidação em Meticais.
+        </label>
+      </div>
 
-      <div v-if="errorMessage" class="p-3 rounded-lg bg-error/10 border border-error/20 text-error font-body-sm text-xs">
+      <!-- Error Message -->
+      <div v-if="errorMessage" class="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs leading-relaxed">
         {{ errorMessage }}
       </div>
 
-      <!-- Submit Button via Quasar QBtn -->
-      <q-btn
+      <!-- Submit Button -->
+      <button
         type="submit"
-        unelevated
-        no-caps
-        color="primary"
-        text-color="dark"
-        icon="how_to_reg"
-        :loading="authStore.loading"
         :disabled="authStore.loading"
-        label="Concluir Credenciação"
-        class="w-full py-2.5 rounded-lg font-bold text-xs uppercase shadow-xl mt-2 shimmer-gold active-press"
-      />
+        class="w-full py-3 rounded-lg bg-[#171717] text-white hover:bg-[#B69A68] disabled:opacity-50 text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer mt-1"
+      >
+        <span class="material-symbols-outlined text-[18px]">how_to_reg</span>
+        <span>{{ authStore.loading ? 'A credenciar conta...' : 'Concluir Credenciação' }}</span>
+      </button>
 
-      <!-- Footer Links -->
-      <div class="text-center font-body-sm text-xs text-on-surface-variant pt-space-xs">
+      <!-- Footer Link -->
+      <div class="text-center text-xs text-[#666666] pt-1">
         <span>Já possui uma conta oficial?</span>
-        <router-link to="/auth/login" class="text-primary hover:underline font-bold ml-1 no-underline">
+        <router-link to="/auth/login" class="text-[#171717] font-semibold underline hover:text-[#B69A68] ml-1 no-underline">
           Iniciar Sessão
         </router-link>
       </div>
     </form>
-  </q-card>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -217,7 +222,7 @@ const errorMessage = ref('');
 
 async function handleRegister() {
   if (!agreedTerms.value) {
-    errorMessage.value = 'Por favor, aceite os termos e regulamentos de leilão para prosseguir.';
+    errorMessage.value = 'Por favor, confirme a aceitação do regulamento de leilões para prosseguir.';
     return;
   }
 

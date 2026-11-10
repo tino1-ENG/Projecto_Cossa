@@ -381,3 +381,32 @@ img, video, canvas, svg {
   gap: 12px;
   background-color: #FAF8F5;
 }
+
+/* ==========================================================================
+   GLOBAL FORM INPUTS - GUARANTEED TEXT VISIBILITY & CONTRAST
+   Ensures letters never disappear or clash with white/light backgrounds
+   ========================================================================== */
+input, select, textarea {
+  color: #171717;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #888888;
+}
+
+/* Quasar input overrides */
+.q-field__native, .q-field__input {
+  color: #171717;
+}
+
+.q-field--dark .q-field__native, .q-field--dark .q-field__input {
+  color: #ffffff;
+}
+
+.bg-white .q-field--dark .q-field__native,
+.bg-white .q-field--dark .q-field__input,
+.bg-white .q-field__native,
+.bg-white .q-field__input {
+  color: #171717 !important;
+}
+
