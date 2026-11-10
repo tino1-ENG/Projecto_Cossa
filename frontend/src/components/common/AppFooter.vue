@@ -1,121 +1,86 @@
 <template>
-  <footer class="w-full bg-[#0a0a0a] border-t border-white/[0.08] pt-8 sm:pt-12 pb-16 sm:pb-8 mt-10 sm:mt-16 mb-14 sm:mb-0">
-    <div class="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Top 3 Credential Badges -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 pb-8 border-b border-white/[0.08]">
-        <div class="flex items-center gap-4">
-          <div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center border border-white/[0.08] text-primary shrink-0">
-            <span class="material-symbols-outlined">verified_user</span>
+  <footer class="w-full bg-[#141413] text-[#FAF8F5] border-t border-white/[0.08] pt-14 pb-20 sm:pb-12 mt-16 sm:mt-24">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-8">
+      <!-- Main Footer Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-white/[0.08]">
+        <!-- Brand & Description (Col 1-5) -->
+        <div class="lg:col-span-5 flex flex-col gap-4">
+          <div class="flex flex-col">
+            <span class="font-editorial text-2xl font-bold tracking-wider text-white">MOZBID</span>
+            <span class="text-[9px] tracking-[0.3em] text-[#B69A68] uppercase font-semibold">MOÇAMBIQUE</span>
           </div>
-          <div>
-            <p class="font-bold text-sm text-white">Vendedores Moçambicanos Verificados</p>
-            <p class="text-xs text-on-surface-variant">Rigorosa triagem e proveniência notarial de activos</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-4">
-          <div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center border border-white/[0.08] text-primary shrink-0">
-            <span class="material-symbols-outlined">account_balance</span>
-          </div>
-          <div>
-            <p class="font-bold text-sm text-white">Protecção de Licitação em Escrow</p>
-            <p class="text-xs text-on-surface-variant">Custódia institucional de depósitos garantida em Meticais</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-4">
-          <div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center border border-white/[0.08] text-primary shrink-0">
-            <span class="material-symbols-outlined">handshake</span>
-          </div>
-          <div>
-            <p class="font-bold text-sm text-white">Parceiro Industrial CCM</p>
-            <p class="text-xs text-on-surface-variant">Afiliado à Câmara de Comércio de Moçambique</p>
-          </div>
-        </div>
-      </div>
 
-      <!-- 5-Column Navigation Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 py-8">
-        <!-- Col 1: MozBid Bolsa Privada + VIP newsletter -->
-        <div class="lg:col-span-2 flex flex-col gap-4">
-          <div class="flex items-center gap-2">
-            <span class="text-xl uppercase tracking-wider text-primary font-bold font-display">MozBid</span>
-            <span class="text-xs uppercase text-on-surface-variant/70 font-mono">Bolsa Privada</span>
-          </div>
-          <p class="text-xs text-on-surface-variant max-w-sm leading-relaxed">
-            A principal plataforma institucional de leilões para veículos de luxo, maquinaria pesada e activos raros na África Austral.
+          <p class="text-xs text-[#999999] leading-relaxed max-w-sm">
+            A plataforma de leilões seleccionados para activos extraordinários em Moçambique. Transparência financeira, procedimentos rigorosos e liquidação em Meticais (MZN).
           </p>
-          <div class="flex flex-col gap-2 mt-2">
-            <span class="text-xs uppercase font-bold text-on-surface-variant">Lançamento de Catálogo VIP</span>
+
+          <!-- Newsletter -->
+          <div class="flex flex-col gap-2 pt-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-white">Subscrever Actualizações de Leilões</span>
             <form @submit.prevent="subscribeNewsletter" class="flex gap-2 max-w-sm">
-              <q-input
+              <input
                 v-model="emailInput"
-                dark
-                filled
-                dense
-                color="primary"
-                placeholder="Email institucional..."
                 type="email"
-                class="flex-1"
+                required
+                placeholder="O seu email institucional ou pessoal..."
+                class="flex-1 bg-white/[0.06] border border-white/[0.12] rounded px-3 py-2 text-xs text-white placeholder:text-[#777777] focus:outline-none focus:border-[#B69A68] transition-colors"
               />
-              <q-btn
-                unelevated
-                no-caps
-                color="primary"
-                text-color="dark"
+              <button
                 type="submit"
-                :label="subscribed ? 'Subscrito!' : 'Subscrever'"
-                class="font-bold text-xs px-4 rounded-lg"
-              />
+                class="px-4 py-2 rounded bg-[#B69A68] text-white hover:bg-[#967B48] text-xs font-semibold tracking-wide transition-colors cursor-pointer"
+              >
+                {{ subscribed ? 'Subscrito!' : 'Subscrever' }}
+              </button>
             </form>
           </div>
         </div>
 
-        <!-- Col 2: Diretório de Ativos -->
-        <div class="flex flex-col gap-2">
-          <span class="text-xs uppercase font-bold text-primary">Directório de Activos</span>
-          <ul class="flex flex-col gap-1.5 text-xs text-on-surface-variant">
-            <li class="hover:text-primary transition-colors"><router-link to="/catalog?category=automoveis-motos">Automóveis & Coleccionáveis</router-link></li>
-            <li class="hover:text-primary transition-colors"><router-link to="/catalog?category=imobiliario-terrenos">Imobiliário & Lotes Comerciais</router-link></li>
-            <li class="hover:text-primary transition-colors"><router-link to="/catalog?category=relogios-joias">Relojoaria & Alta Joalharia</router-link></li>
-            <li class="hover:text-primary transition-colors"><router-link to="/catalog?category=maquinas-industriais">Equipamento Industrial Pesado</router-link></li>
-            <li class="hover:text-primary transition-colors"><router-link to="/catalog?category=tecnologia-computadores">Tecnologia & Servidores</router-link></li>
+        <!-- Categorias (Col 6-8) -->
+        <div class="lg:col-span-3 flex flex-col gap-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#B69A68]">Categorias</span>
+          <ul class="flex flex-col gap-2 text-xs text-[#AAAAAA]">
+            <li><router-link to="/catalog?category=automoveis-motos" class="hover:text-white transition-colors no-underline text-[#AAAAAA]">Automóveis & Coleccionáveis</router-link></li>
+            <li><router-link to="/catalog?category=relogios-joias" class="hover:text-white transition-colors no-underline text-[#AAAAAA]">Relógios & Alta Joalharia</router-link></li>
+            <li><router-link to="/catalog?category=maquinas-industriais" class="hover:text-white transition-colors no-underline text-[#AAAAAA]">Maquinaria Pesada</router-link></li>
+            <li><router-link to="/catalog?category=tecnologia-computadores" class="hover:text-white transition-colors no-underline text-[#AAAAAA]">Tecnologia & Servidores</router-link></li>
+            <li><router-link to="/catalog?category=imobiliario-terrenos" class="hover:text-white transition-colors no-underline text-[#AAAAAA]">Imobiliário Comercial</router-link></li>
+            <li><router-link to="/catalog?category=arte-antiguidades" class="hover:text-white transition-colors no-underline text-[#AAAAAA]">Arte & Património</router-link></li>
           </ul>
         </div>
 
-        <!-- Col 3: Institucional -->
-        <div class="flex flex-col gap-2">
-          <span class="text-xs uppercase font-bold text-primary">Institucional</span>
-          <ul class="flex flex-col gap-1.5 text-xs text-on-surface-variant">
-            <li class="hover:text-primary transition-colors"><router-link to="/how-it-works">Mesa de Gestão de Património</router-link></li>
-            <li class="hover:text-primary transition-colors"><router-link to="/seller/dashboard">Avaliação de Consignação</router-link></li>
-            <li class="hover:text-primary transition-colors"><router-link to="/how-it-works">Escrow & Conformidade</router-link></li>
-            <li class="hover:text-primary transition-colors"><router-link to="/how-it-works">Regulamentos de Leilão</router-link></li>
-            <li class="hover:text-primary transition-colors"><router-link to="/how-it-works">Tabela de Comissões</router-link></li>
+        <!-- Institucional & Legal (Col 9-10) -->
+        <div class="lg:col-span-2 flex flex-col gap-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#B69A68]">Institucional</span>
+          <ul class="flex flex-col gap-2 text-xs text-[#AAAAAA]">
+            <li><router-link to="/how-it-works" class="hover:text-white transition-colors no-underline text-[#AAAAAA]">Como Funciona</router-link></li>
+            <li><a href="/#seguranca" class="hover:text-white transition-colors no-underline text-[#AAAAAA]">Verificação & Segurança</a></li>
+            <li><router-link to="/how-it-works" class="hover:text-white transition-colors no-underline text-[#AAAAAA]">Regulamento de Leilões</router-link></li>
+            <li><router-link to="/how-it-works" class="hover:text-white transition-colors no-underline text-[#AAAAAA]">Política de Privacidade</router-link></li>
+            <li><router-link to="/how-it-works" class="hover:text-white transition-colors no-underline text-[#AAAAAA]">Termos de Serviço</router-link></li>
           </ul>
         </div>
 
-        <!-- Col 4: Escritório de Maputo -->
-        <div class="flex flex-col gap-2">
-          <span class="text-xs uppercase font-bold text-primary">Escritório de Maputo</span>
-          <p class="text-xs text-on-surface-variant leading-relaxed">
-            Avenida Julius Nyerere, Polana Cimento<br/>Maputo, Moçambique
+        <!-- Contacto (Col 11-12) -->
+        <div class="lg:col-span-2 flex flex-col gap-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#B69A68]">Localização</span>
+          <p class="text-xs text-[#AAAAAA] leading-relaxed">
+            Maputo, Moçambique<br />
+            Moeda Oficial: Metical (MZN)<br />
+            Suporte: contacto@mozbid.co.mz
           </p>
-          <p class="text-xs text-on-surface-variant mt-1">
-            desk@mozbid.co.mz<br/>+258 (21) 490-000
-          </p>
-          <div class="flex items-center gap-1.5 mt-2 flex-wrap">
-            <q-badge color="positive" text-color="dark" class="font-mono text-[10px] font-bold px-2 py-0.5">M-PESA / E-MOLA</q-badge>
-            <q-badge color="primary" text-color="dark" class="font-mono text-[10px] font-bold px-2 py-0.5">BCI / BIM / SB</q-badge>
+          <div class="flex items-center gap-3 pt-2">
+            <span class="text-xs text-[#777777]">Atendimento: Seg – Sex, 8h às 17h</span>
           </div>
         </div>
       </div>
 
-      <!-- Bottom Line -->
-      <div class="pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant">
-        <p>© {{ new Date().getFullYear() }} MozBid Leilões Lda. Licenciado pelo Ministério da Economia e Finanças de Moçambique.</p>
+      <!-- Bottom Copyright & Compliance -->
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#777777]">
+        <p>© 2026 MozBid. Todos os direitos reservados. República de Moçambique.</p>
         <div class="flex items-center gap-4">
-          <router-link to="/how-it-works" class="hover:text-primary transition-colors">Termos do Leilão</router-link>
-          <router-link to="/how-it-works" class="hover:text-primary transition-colors">Política de Privacidade</router-link>
-          <router-link to="/how-it-works" class="hover:text-primary transition-colors">Prevenção de Branqueamento de Capitais</router-link>
+          <span>Transparência Financeira</span>
+          <span>•</span>
+          <span>Activos Seleccionados</span>
         </div>
       </div>
     </div>
@@ -129,11 +94,12 @@ const emailInput = ref('');
 const subscribed = ref(false);
 
 function subscribeNewsletter() {
-  if (!emailInput.value) return;
-  subscribed.value = true;
-  setTimeout(() => {
-    emailInput.value = '';
-    subscribed.value = false;
-  }, 3500);
+  if (emailInput.value) {
+    subscribed.value = true;
+    setTimeout(() => {
+      emailInput.value = '';
+      subscribed.value = false;
+    }, 4000);
+  }
 }
 </script>

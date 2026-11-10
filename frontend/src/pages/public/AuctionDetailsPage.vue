@@ -1,280 +1,268 @@
 <template>
-  <q-page class="w-full bg-surface text-on-surface min-h-screen py-3 sm:py-space-xl pb-20 sm:pb-space-xl">
-    <div v-if="auctionStore.loading && !auction" class="max-w-[1440px] mx-auto px-3 sm:px-margin py-16 flex flex-col items-center justify-center gap-space-md">
-      <q-spinner-dots color="primary" size="40px" />
-      <p class="font-body-md text-xs sm:text-sm text-on-surface-variant">A carregar detalhes do lote em tempo real...</p>
+  <div class="w-full bg-[#F4F1EB] text-[#171717] min-h-screen py-6 sm:py-10 pb-20 sm:pb-16">
+    <div v-if="auctionStore.loading && !auction" class="max-w-[1440px] mx-auto px-4 sm:px-8 py-20 flex flex-col items-center justify-center gap-3">
+      <q-spinner-dots color="primary" size="44px" />
+      <p class="text-xs text-[#777777]">A carregar detalhes do lote em tempo real...</p>
     </div>
 
-    <div v-else-if="!auction" class="max-w-[1440px] mx-auto px-3 sm:px-margin py-16 text-center">
-      <h3 class="font-headline-sm text-base sm:text-headline-sm text-on-surface font-bold">Lote não encontrado</h3>
-      <q-btn
+    <div v-else-if="!auction" class="max-w-[1440px] mx-auto px-4 sm:px-8 py-20 text-center">
+      <h3 class="font-editorial text-xl font-semibold text-[#171717]">Lote não encontrado</h3>
+      <router-link
         to="/catalog"
-        unelevated
-        no-caps
-        color="primary"
-        text-color="dark"
-        label="Voltar ao Catálogo"
-        class="mt-4 font-bold text-xs"
-      />
+        class="inline-flex mt-4 px-5 py-2.5 rounded-lg bg-[#171717] text-white hover:bg-[#B69A68] text-xs font-semibold tracking-wide transition-colors no-underline"
+      >
+        Voltar ao Catálogo
+      </router-link>
     </div>
 
-    <div v-else class="max-w-[1440px] mx-auto px-3 sm:px-margin">
-      <!-- Breadcrumbs via Quasar -->
-      <q-breadcrumbs class="text-[11px] sm:text-xs text-on-surface-variant/70 mb-2 sm:mb-space-md flex-wrap" active-color="primary">
-        <q-breadcrumbs-el label="Início" to="/" icon="home" />
-        <q-breadcrumbs-el label="Catálogo" to="/catalog" icon="gavel" />
-        <q-breadcrumbs-el :label="auction.category_name" :to="`/catalog?category=${auction.category_slug}`" />
-        <q-breadcrumbs-el :label="`LOTE #${auction.id}`" class="truncate max-w-[120px] sm:max-w-md text-on-surface font-medium" />
-      </q-breadcrumbs>
+    <div v-else class="max-w-[1440px] mx-auto px-4 sm:px-8">
+      <!-- Breadcrumbs -->
+      <div class="flex items-center gap-2 text-xs text-[#777777] mb-4 flex-wrap">
+        <router-link to="/" class="hover:text-[#171717] transition-colors no-underline text-[#777777]">Início</router-link>
+        <span>/</span>
+        <router-link to="/catalog" class="hover:text-[#171717] transition-colors no-underline text-[#777777]">Catálogo</router-link>
+        <span>/</span>
+        <router-link :to="`/catalog?category=${auction.category_slug}`" class="hover:text-[#171717] transition-colors no-underline text-[#777777]">{{ auction.category_name }}</router-link>
+        <span>/</span>
+        <span class="text-[#171717] font-semibold">Lote #{{ auction.id }}</span>
+      </div>
 
       <!-- Lot Title Header -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-2.5 sm:gap-space-md mb-3 sm:mb-space-xl pb-3 sm:pb-space-lg border-b border-white/[0.08]">
-        <div class="flex flex-col gap-1 sm:gap-space-xs">
-          <div class="flex items-center gap-1 sm:gap-space-xs flex-wrap">
-            <q-badge
-              color="dark"
-              text-color="primary"
-              class="px-2 py-0.5 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider border border-white/[0.08]"
-              :label="auction.category_name"
-            />
-            <q-badge
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 pb-6 border-b border-[#E7E3DC]">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-2.5 py-0.5 rounded-full bg-white border border-[#E7E3DC] text-[10px] font-semibold uppercase tracking-wider text-[#171717]">
+              {{ auction.category_name }}
+            </span>
+            <span
               v-if="auction.status === 'active'"
-              color="primary"
-              text-color="dark"
-              class="px-2 py-0.5 text-[9px] sm:text-[10px] flex items-center gap-1.5 font-bold"
+              class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-semibold flex items-center gap-1.5"
             >
-              <span class="w-1.5 h-1.5 rounded-full bg-dark radar-ring"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
               <span>LEILÃO AO VIVO</span>
-            </q-badge>
-            <q-badge
+            </span>
+            <span
               v-else
-              color="grey-9"
-              class="px-2 py-0.5 text-[9px] sm:text-[10px]"
-              label="ENCERRADO"
-            />
-            <span class="font-label-caps text-[9px] sm:text-[11px] text-on-surface-variant uppercase tracking-wider">
+              class="px-2.5 py-0.5 rounded-full bg-[#FAF8F5] text-[#777777] border border-[#E7E3DC] text-[10px] font-semibold uppercase"
+            >
+              ENCERRADO
+            </span>
+            <span class="text-xs text-[#777777] uppercase tracking-wider font-mono">
               LOTE #{{ auction.id }}
             </span>
           </div>
 
-          <h1 class="text-xl sm:text-3xl md:text-headline-lg font-bold text-on-surface tracking-tight font-display leading-tight mt-0.5">
+          <h1 class="font-editorial text-2xl sm:text-4xl lg:text-[40px] font-semibold text-[#171717] tracking-tight leading-tight">
             {{ auction.title }}
           </h1>
 
-          <div class="flex items-center gap-1 text-[11px] sm:text-body-sm text-on-surface-variant mt-0.5">
-            <q-icon name="location_on" size="14px" color="primary" />
+          <div class="flex items-center gap-1.5 text-xs text-[#777777]">
+            <span class="material-symbols-outlined text-[16px] text-[#B69A68]">location_on</span>
             <span>{{ auction.location_city }}, {{ auction.location_province }} • Moçambique</span>
           </div>
         </div>
 
-        <div class="flex items-center gap-space-sm self-start md:self-auto">
-          <q-btn
-            outline
-            no-caps
-            :color="auction.is_watchlisted ? 'primary' : 'grey-5'"
-            :icon="auction.is_watchlisted ? 'bookmark_added' : 'bookmark'"
-            :label="auction.is_watchlisted ? 'Marcado' : 'Guardar Lote'"
-            class="px-3 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs font-bold transition-all active-press"
+        <div class="flex items-center gap-2 self-start md:self-auto">
+          <button
+            type="button"
+            class="px-4 py-2 rounded-lg bg-white border border-[#E7E3DC] hover:border-[#B69A68] hover:text-[#B69A68] text-xs font-semibold tracking-wide transition-all shadow-xs flex items-center gap-1.5 cursor-pointer text-[#171717]"
             @click="handleToggleFav"
-          />
+          >
+            <span class="material-symbols-outlined text-[16px]" :class="{ 'text-[#B69A68]': auction.is_watchlisted }">
+              {{ auction.is_watchlisted ? 'bookmark_added' : 'bookmark' }}
+            </span>
+            <span>{{ auction.is_watchlisted ? 'Marcado' : 'Guardar Lote' }}</span>
+          </button>
         </div>
       </div>
 
       <!-- ASYMMETRIC 7:5 GRID LAYOUT -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-space-xl items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
         <!-- 7 COLUMNS: Gallery, Description, Specs & Provenance -->
-        <div class="lg:col-span-7 flex flex-col gap-space-lg lg:gap-space-xl">
+        <div class="lg:col-span-7 flex flex-col gap-6">
           <!-- Gallery -->
           <ProductGallery :images="auction.images" :title="auction.title" />
 
-          <!-- Quick Specs Ribbon via Quasar Card -->
-          <q-card class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-space-sm p-3 sm:p-space-md rounded-xl bg-surface-container border border-white/[0.08] shadow-md text-white" flat>
+          <!-- Quick Specs Ribbon -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl sm:rounded-2xl bg-white border border-[#E7E3DC] shadow-xs text-[#171717]">
             <div class="flex flex-col">
-              <span class="font-label-caps text-[9px] sm:text-[10px] text-on-surface-variant/70 uppercase font-bold">Marca</span>
-              <span class="font-title-md text-[13px] sm:text-[14px] text-on-surface font-semibold truncate">{{ auction.brand || 'Original' }}</span>
+              <span class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Marca</span>
+              <span class="font-semibold text-xs sm:text-sm text-[#171717] truncate mt-0.5">{{ auction.brand || 'Original' }}</span>
             </div>
-            <div class="flex flex-col border-l border-white/[0.06] pl-2 sm:pl-space-sm">
-              <span class="font-label-caps text-[9px] sm:text-[10px] text-on-surface-variant/70 uppercase font-bold">Ano</span>
-              <span class="font-title-md text-[13px] sm:text-[14px] text-on-surface font-semibold">{{ auction.year || '2023' }}</span>
+            <div class="flex flex-col border-l border-[#E7E3DC] pl-3">
+              <span class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Ano</span>
+              <span class="font-semibold text-xs sm:text-sm text-[#171717] mt-0.5">{{ auction.year || '2023' }}</span>
             </div>
-            <div class="flex flex-col border-t sm:border-t-0 sm:border-l border-white/[0.06] pt-2 sm:pt-0 sm:pl-space-sm">
-              <span class="font-label-caps text-[9px] sm:text-[10px] text-on-surface-variant/70 uppercase font-bold">Condição</span>
-              <span class="font-title-md text-[13px] sm:text-[14px] text-primary font-semibold truncate">{{ conditionLabel(auction.condition) }}</span>
+            <div class="flex flex-col border-t sm:border-t-0 sm:border-l border-[#E7E3DC] pt-3 sm:pt-0 sm:pl-3">
+              <span class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Condição</span>
+              <span class="font-semibold text-xs sm:text-sm text-[#B69A68] truncate mt-0.5">{{ conditionLabel(auction.condition) }}</span>
             </div>
-            <div class="flex flex-col border-t sm:border-t-0 border-l border-white/[0.06] pt-2 sm:pt-0 pl-2 sm:pl-space-sm">
-              <span class="font-label-caps text-[9px] sm:text-[10px] text-on-surface-variant/70 uppercase font-bold">Uso / Km</span>
-              <span class="font-title-md text-[13px] sm:text-[14px] text-on-surface font-semibold truncate">{{ auction.mileage_or_hours || 'Certificado' }}</span>
+            <div class="flex flex-col border-t sm:border-t-0 border-l border-[#E7E3DC] pt-3 sm:pt-0 pl-3">
+              <span class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Uso / Km</span>
+              <span class="font-semibold text-xs sm:text-sm text-[#171717] truncate mt-0.5">{{ auction.mileage_or_hours || 'Certificado' }}</span>
             </div>
-          </q-card>
+          </div>
 
-          <!-- Description Section with Quasar Tabs -->
-          <q-card class="rounded-xl bg-surface-container border border-white/[0.08] shadow-md overflow-hidden text-white" flat>
-            <q-tabs
-              v-model="activeTab"
-              dark
-              dense
-              active-color="primary"
-              indicator-color="primary"
-              align="justify"
-              class="border-b border-white/[0.08] bg-surface-container-low"
-            >
-              <q-tab name="specs" icon="tune" label="Especificações" no-caps class="text-xs font-bold" />
-              <q-tab name="inspection" icon="fact_check" label="Relatório de Inspeção" no-caps class="text-xs font-bold" />
-              <q-tab name="legal" icon="security" label="Garantias & Escrow" no-caps class="text-xs font-bold" />
-            </q-tabs>
+          <!-- Description Section with Tabs -->
+          <div class="rounded-xl sm:rounded-2xl bg-white border border-[#E7E3DC] shadow-xs overflow-hidden text-[#171717]">
+            <div class="flex border-b border-[#E7E3DC] bg-[#FAF8F5]">
+              <button
+                type="button"
+                class="flex-1 py-3 text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                :class="activeTab === 'specs' ? 'border-b-2 border-[#171717] text-[#171717] bg-white' : 'text-[#777777] hover:text-[#171717]'"
+                @click="activeTab = 'specs'"
+              >
+                <span class="material-symbols-outlined text-[16px]">tune</span>
+                <span>Especificações</span>
+              </button>
+              <button
+                type="button"
+                class="flex-1 py-3 text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                :class="activeTab === 'inspection' ? 'border-b-2 border-[#171717] text-[#171717] bg-white' : 'text-[#777777] hover:text-[#171717]'"
+                @click="activeTab = 'inspection'"
+              >
+                <span class="material-symbols-outlined text-[16px]">fact_check</span>
+                <span>Relatório Pericial</span>
+              </button>
+              <button
+                type="button"
+                class="flex-1 py-3 text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                :class="activeTab === 'legal' ? 'border-b-2 border-[#171717] text-[#171717] bg-white' : 'text-[#777777] hover:text-[#171717]'"
+                @click="activeTab = 'legal'"
+              >
+                <span class="material-symbols-outlined text-[16px]">security</span>
+                <span>Garantias & Conformidade</span>
+              </button>
+            </div>
 
-            <q-tab-panels v-model="activeTab" animated dark class="bg-transparent">
+            <!-- Tab Content -->
+            <div class="p-5 sm:p-6 flex flex-col gap-4">
               <!-- Tab 1: Specs -->
-              <q-tab-panel name="specs" class="p-space-lg flex flex-col gap-space-md">
+              <div v-if="activeTab === 'specs'" class="flex flex-col gap-4">
                 <div>
-                  <h4 class="font-title-md text-on-surface font-semibold mb-2">Descrição Editorial</h4>
-                  <p class="font-body-md text-sm text-on-surface-variant leading-relaxed whitespace-pre-line">
+                  <h4 class="font-display font-semibold text-sm text-[#171717] mb-2">Descrição Editorial</h4>
+                  <p class="text-xs sm:text-sm text-[#666666] leading-relaxed whitespace-pre-line">
                     {{ auction.description || 'Lote verificado presencialmente pela equipa pericial MozBid. Apresenta documentação completa em dia, comprovativos alfandegários regularizados e histórico de manutenção fidedigno.' }}
                   </p>
                 </div>
 
                 <div v-if="auction.specifications && Object.keys(auction.specifications).length > 0">
-                  <h4 class="font-title-md text-on-surface font-semibold mb-3">Ficha Técnica Homologada</h4>
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                  <h4 class="font-display font-semibold text-sm text-[#171717] mb-3">Ficha Técnica Homologada</h4>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                     <div
                       v-for="(val, key) in auction.specifications"
                       :key="key"
-                      class="flex items-center justify-between p-2.5 rounded bg-surface-container-low border border-white/[0.04]"
+                      class="flex items-center justify-between p-2.5 rounded bg-[#FAF8F5] border border-[#E7E3DC]"
                     >
-                      <span class="text-on-surface-variant text-xs capitalize">{{ key }}</span>
-                      <span class="text-on-surface font-semibold text-xs">{{ val }}</span>
+                      <span class="text-[#777777] capitalize">{{ key }}</span>
+                      <span class="text-[#171717] font-semibold">{{ val }}</span>
                     </div>
                   </div>
                 </div>
-              </q-tab-panel>
+              </div>
 
-              <!-- Tab 2: Inspection Report -->
-              <q-tab-panel name="inspection" class="p-space-lg flex flex-col gap-space-md">
-                <div class="flex items-center justify-between pb-space-sm border-b border-white/[0.06]">
+              <!-- Tab 2: Inspection -->
+              <div v-else-if="activeTab === 'inspection'" class="flex flex-col gap-4">
+                <div class="flex items-center justify-between pb-3 border-b border-[#E7E3DC]">
                   <div>
-                    <h4 class="font-title-md text-on-surface font-semibold">Certificado de Vistoria Pericial</h4>
-                    <p class="font-body-sm text-xs text-on-surface-variant">Inspeção presencial de 120 pontos executada em Maputo.</p>
+                    <h4 class="font-display font-semibold text-sm text-[#171717]">Certificado de Vistoria Pericial</h4>
+                    <p class="text-xs text-[#777777]">Inspeção de 120 pontos executada em Maputo.</p>
                   </div>
-                  <q-badge color="emerald-9" text-color="emerald-3" class="px-2 py-1 font-bold text-xs" label="ÍNDICE 98.4% APTO" />
+                  <span class="px-2.5 py-1 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold">
+                    ÍNDICE 98.4% APTO
+                  </span>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-                  <div class="p-space-md rounded-lg bg-surface-container-low border border-white/[0.04] flex flex-col gap-2">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="p-3.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] flex flex-col gap-1.5">
                     <div class="flex items-center justify-between">
-                      <span class="font-title-md text-[13px] text-on-surface font-medium">1. Grupo Motopropulsor</span>
-                      <span class="text-emerald-400 font-bold text-xs">5.0 / 5.0</span>
+                      <span class="text-xs font-semibold text-[#171717]">1. Grupo Motopropulsor</span>
+                      <span class="text-emerald-700 font-bold text-xs">5.0 / 5.0</span>
                     </div>
-                    <div class="w-full bg-white/[0.06] rounded-full h-1.5 overflow-hidden">
-                      <div class="bg-emerald-400 h-full rounded-full" style="width: 100%"></div>
+                    <div class="w-full bg-[#E7E3DC] rounded-full h-1.5 overflow-hidden">
+                      <div class="bg-emerald-600 h-full rounded-full" style="width: 100%"></div>
                     </div>
-                    <p class="font-body-sm text-[11px] text-on-surface-variant/80">Sem fugas de fluídos, compressão uniforme em todos os cilindros, transição de mudanças sem folgas.</p>
+                    <p class="text-[11px] text-[#666666] leading-snug">Sem fugas de fluídos, compressão uniforme em todos os cilindros, transição de mudanças sem folgas.</p>
                   </div>
 
-                  <div class="p-space-md rounded-lg bg-surface-container-low border border-white/[0.04] flex flex-col gap-2">
+                  <div class="p-3.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] flex flex-col gap-1.5">
                     <div class="flex items-center justify-between">
-                      <span class="font-title-md text-[13px] text-on-surface font-medium">2. Integridade Estrutural</span>
-                      <span class="text-emerald-400 font-bold text-xs">5.0 / 5.0</span>
+                      <span class="text-xs font-semibold text-[#171717]">2. Integridade Estrutural</span>
+                      <span class="text-emerald-700 font-bold text-xs">5.0 / 5.0</span>
                     </div>
-                    <div class="w-full bg-white/[0.06] rounded-full h-1.5 overflow-hidden">
-                      <div class="bg-emerald-400 h-full rounded-full" style="width: 100%"></div>
+                    <div class="w-full bg-[#E7E3DC] rounded-full h-1.5 overflow-hidden">
+                      <div class="bg-emerald-600 h-full rounded-full" style="width: 100%"></div>
                     </div>
-                    <p class="font-body-sm text-[11px] text-on-surface-variant/80">Medição milimétrica a laser. Sem deformações prévias, soldaduras não-originais ou corrosão salina.</p>
-                  </div>
-
-                  <div class="p-space-md rounded-lg bg-surface-container-low border border-white/[0.04] flex flex-col gap-2">
-                    <div class="flex items-center justify-between">
-                      <span class="font-title-md text-[13px] text-on-surface font-medium">3. Sistemas Eletrónicos</span>
-                      <span class="text-emerald-400 font-bold text-xs">4.9 / 5.0</span>
-                    </div>
-                    <div class="w-full bg-white/[0.06] rounded-full h-1.5 overflow-hidden">
-                      <div class="bg-emerald-400 h-full rounded-full" style="width: 98%"></div>
-                    </div>
-                    <p class="font-body-sm text-[11px] text-on-surface-variant/80">Varredura OBD-II completa: 0 códigos de erro ativos. Módulos ECU, ABS e ESP em conformidade.</p>
-                  </div>
-
-                  <div class="p-space-md rounded-lg bg-surface-container-low border border-white/[0.04] flex flex-col gap-2">
-                    <div class="flex items-center justify-between">
-                      <span class="font-title-md text-[13px] text-on-surface font-medium">4. Habitáculo & Interior</span>
-                      <span class="text-emerald-400 font-bold text-xs">4.8 / 5.0</span>
-                    </div>
-                    <div class="w-full bg-white/[0.06] rounded-full h-1.5 overflow-hidden">
-                      <div class="bg-emerald-400 h-full rounded-full" style="width: 96%"></div>
-                    </div>
-                    <p class="font-body-sm text-[11px] text-on-surface-variant/80">Estofos e painéis originais preservados. Todos os comandos elétricos e ar condicionado operacionais.</p>
+                    <p class="text-[11px] text-[#666666] leading-snug">Sem indícios de colisão prévia, alinhamento de chassis em conformidade com tolerâncias do fabricante.</p>
                   </div>
                 </div>
-              </q-tab-panel>
+              </div>
 
-              <!-- Tab 3: Legal & Escrow Terms -->
-              <q-tab-panel name="legal" class="p-space-lg flex flex-col gap-space-md">
-                <div class="flex items-center justify-between pb-space-sm border-b border-white/[0.06]">
+              <!-- Tab 3: Legal -->
+              <div v-else class="flex flex-col gap-4">
+                <div class="flex items-center justify-between pb-3 border-b border-[#E7E3DC]">
                   <div>
-                    <h4 class="font-title-md text-on-surface font-semibold">Garantia Notarial e Custódia Escrow</h4>
-                    <p class="font-body-sm text-xs text-on-surface-variant">Procedimento em conformidade com a legislação de Moçambique.</p>
+                    <h4 class="font-display font-semibold text-sm text-[#171717]">Garantia Notarial e Custódia Fiduciária</h4>
+                    <p class="text-xs text-[#777777]">Procedimento em conformidade com a legislação de Moçambique.</p>
                   </div>
-                  <q-badge outline color="primary" class="px-2.5 py-1 text-xs font-bold" label="BCI / MILLENNIUM BIM" />
+                  <span class="px-2.5 py-1 rounded bg-[#FAF8F5] border border-[#E7E3DC] text-xs font-semibold text-[#171717]">
+                    REGULAMENTO MOZBID
+                  </span>
                 </div>
 
-                <div class="flex flex-col gap-space-sm font-body-sm text-body-sm">
-                  <div class="p-space-sm rounded bg-surface-container-low border border-white/[0.04] flex items-start gap-space-sm">
-                    <q-icon name="verified_user" size="20px" color="primary" class="mt-0.5" />
+                <div class="flex flex-col gap-3 text-xs">
+                  <div class="p-3 rounded bg-[#FAF8F5] border border-[#E7E3DC] flex items-start gap-3">
+                    <span class="material-symbols-outlined text-[#B69A68] text-[20px]">verified_user</span>
                     <div class="flex flex-col">
-                      <span class="font-title-md text-[13px] text-on-surface font-semibold">1. Depósito de Caução em Escrow</span>
-                      <span class="text-on-surface-variant text-xs mt-0.5">
-                        Fundos salvaguardados em conta fiduciária do MOZBID no Banco Comercial e de Investimentos (BCI) ou Millennium BIM.
-                      </span>
+                      <span class="font-semibold text-[#171717]">1. Depósito de Caução em Custódia</span>
+                      <span class="text-[#666666] mt-0.5">Fundos salvaguardados em conta fiduciária com registo do lance em Meticais (MZN).</span>
                     </div>
                   </div>
 
-                  <div class="p-space-sm rounded bg-surface-container-low border border-white/[0.04] flex items-start gap-space-sm">
-                    <q-icon name="real_estate_agent" size="20px" color="primary" class="mt-0.5" />
+                  <div class="p-3 rounded bg-[#FAF8F5] border border-[#E7E3DC] flex items-start gap-3">
+                    <span class="material-symbols-outlined text-[#B69A68] text-[20px]">real_estate_agent</span>
                     <div class="flex flex-col">
-                      <span class="font-title-md text-[13px] text-on-surface font-semibold">2. Celebração de Escritura Pública / CREL</span>
-                      <span class="text-on-surface-variant text-xs mt-0.5">
-                        A titularidade do bem é outorgada em Cartório Notarial da Cidade de Maputo com emissão do Título Definitivo.
-                      </span>
+                      <span class="font-semibold text-[#171717]">2. Celebração de Escritura / Transferência</span>
+                      <span class="text-[#666666] mt-0.5">A titularidade do bem é formalizada com documentação definitiva em Cartório competente.</span>
                     </div>
                   </div>
 
-                  <div class="p-space-sm rounded bg-surface-container-low border border-white/[0.04] flex items-start gap-space-sm">
-                    <q-icon name="lock_clock" size="20px" color="primary" class="mt-0.5" />
+                  <div class="p-3 rounded bg-[#FAF8F5] border border-[#E7E3DC] flex items-start gap-3">
+                    <span class="material-symbols-outlined text-[#B69A68] text-[20px]">lock_clock</span>
                     <div class="flex flex-col">
-                      <span class="font-title-md text-[13px] text-on-surface font-semibold">3. Prazo de Inspeção de 48 Horas</span>
-                      <span class="text-on-surface-variant text-xs mt-0.5">
-                        O comprador dispõe de 48 horas úteis após a entrega para validar conformidade com o relatório de inspeção.
-                      </span>
+                      <span class="font-semibold text-[#171717]">3. Prazo de Validação Pós-Arrematação</span>
+                      <span class="text-[#666666] mt-0.5">O comprador dispõe de 48 horas úteis após a entrega para validar conformidade com o relatório.</span>
                     </div>
                   </div>
                 </div>
-              </q-tab-panel>
-            </q-tab-panels>
-          </q-card>
+              </div>
+            </div>
+          </div>
 
-          <!-- Seller Profile Card with Quasar Card & Avatar -->
-          <q-card class="p-space-lg rounded-xl bg-surface-container border border-white/[0.08] shadow-md flex flex-col gap-space-sm text-white" flat>
-            <div class="flex items-center gap-2 pb-space-xs border-b border-white/[0.06]">
-              <q-icon name="storefront" size="20px" color="primary" />
-              <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Vendedor Credenciado</h3>
+          <!-- Seller Profile Card -->
+          <div class="p-5 rounded-xl sm:rounded-2xl bg-white border border-[#E7E3DC] shadow-xs flex flex-col gap-3 text-[#171717]">
+            <div class="flex items-center gap-2 pb-2 border-b border-[#E7E3DC]">
+              <span class="material-symbols-outlined text-[#B69A68] text-[20px]">storefront</span>
+              <h3 class="font-display font-semibold text-sm text-[#171717]">Vendedor Credenciado</h3>
             </div>
 
-            <div class="flex items-center gap-space-md pt-space-xs">
-              <q-avatar size="56px" color="primary" text-color="dark" class="font-bold text-xl shadow-md">
+            <div class="flex items-center gap-4 pt-1">
+              <div class="w-12 h-12 rounded-full bg-[#171717] text-white flex items-center justify-center font-bold text-lg">
                 {{ auction.seller_display_name?.charAt(0) || 'V' }}
-              </q-avatar>
-              <div class="flex flex-col gap-1">
+              </div>
+              <div class="flex flex-col gap-0.5">
                 <div class="flex items-center gap-2 flex-wrap">
-                  <h4 class="font-title-md text-on-surface font-bold">{{ auction.seller_display_name || 'Consórcio Moçambique' }}</h4>
-                  <q-badge
+                  <h4 class="font-display font-semibold text-sm text-[#171717]">{{ auction.seller_display_name || 'Consórcio Moçambique' }}</h4>
+                  <span
                     v-if="auction.seller_verified_status === 'verified'"
-                    color="primary"
-                    text-color="dark"
-                    class="px-2 py-0.5 font-bold text-[10px]"
-                    label="Verificado"
-                  />
+                    class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold text-[10px]"
+                  >
+                    Verificado
+                  </span>
                 </div>
-                <div class="flex items-center gap-space-md text-body-sm text-on-surface-variant/80 text-xs">
+                <div class="flex items-center gap-2 text-xs text-[#777777]">
                   <span class="flex items-center gap-1">
-                    <q-icon name="star" color="primary" size="14px" />
+                    <span class="material-symbols-outlined text-[#B69A68] text-[14px]">star</span>
                     <strong>{{ auction.seller_rating || '4.98' }}</strong> / 5.0
                   </span>
                   <span>•</span>
@@ -284,35 +272,16 @@
                 </div>
               </div>
             </div>
-          </q-card>
-
-          <!-- Delivery & Legal Assurance with Quasar Card -->
-          <q-card class="p-space-lg rounded-xl bg-surface-container border border-white/[0.08] shadow-md grid grid-cols-1 sm:grid-cols-3 gap-space-md text-white" flat>
-            <div class="flex flex-col gap-1">
-              <q-icon name="verified_user" size="24px" color="primary" />
-              <span class="font-title-md text-[13px] text-on-surface font-bold">Inspeção 120 Pontos</span>
-              <p class="font-body-sm text-xs text-on-surface-variant">Relatório técnico exaustivo realizado por peritos independentes.</p>
-            </div>
-            <div class="flex flex-col gap-1 border-t sm:border-t-0 sm:border-l border-white/[0.06] pt-space-sm sm:pt-0 sm:pl-space-md">
-              <q-icon name="account_balance" size="24px" color="primary" />
-              <span class="font-title-md text-[13px] text-on-surface font-bold">Custódia Fiduciária</span>
-              <p class="font-body-sm text-xs text-on-surface-variant">Valor mantido em escrow até receção formal e validação pelo comprador.</p>
-            </div>
-            <div class="flex flex-col gap-1 border-t sm:border-t-0 sm:border-l border-white/[0.06] pt-space-sm sm:pt-0 sm:pl-space-md">
-              <q-icon name="local_shipping" size="24px" color="primary" />
-              <span class="font-title-md text-[13px] text-on-surface font-bold">Transporte Blindado</span>
-              <p class="font-body-sm text-xs text-on-surface-variant">Logística com escolta para Maputo, Matola, Beira, Nampula e Tete.</p>
-            </div>
-          </q-card>
+          </div>
         </div>
 
-        <!-- 5 COLUMNS: Live Bid Execution Terminal with Quasar -->
+        <!-- 5 COLUMNS: Live Bid Execution Terminal -->
         <div class="lg:col-span-5 lg:sticky lg:top-24">
           <BidPanel :auction="auction" />
         </div>
       </div>
     </div>
-  </q-page>
+  </div>
 </template>
 
 <script setup lang="ts">

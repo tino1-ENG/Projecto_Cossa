@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-2 sm:gap-3 w-full">
     <!-- Active Large Image Showcase with Quasar q-img -->
-    <div class="relative w-full aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden bg-surface-container-lowest border border-white/[0.08] shadow-2xl group">
+    <div class="relative w-full aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden bg-[#FAF8F5] border border-[#E7E3DC] shadow-sm group">
       <q-img
         :src="activeImage"
         :alt="title"
@@ -41,7 +41,7 @@
         :key="img.id || idx"
         type="button"
         class="relative aspect-[16/10] rounded-lg sm:rounded-xl overflow-hidden border transition-all duration-200 cursor-pointer"
-        :class="activeImage === img.image_url ? 'border-primary ring-2 ring-primary/50 scale-[1.02]' : 'border-white/[0.08] opacity-60 hover:opacity-100'"
+        :class="activeImage === img.image_url ? 'border-[#B69A68] ring-2 ring-[#B69A68]/30 scale-[1.02]' : 'border-[#E7E3DC] opacity-75 hover:opacity-100'"
         @click="selectImage(img.image_url, idx)"
       >
         <img

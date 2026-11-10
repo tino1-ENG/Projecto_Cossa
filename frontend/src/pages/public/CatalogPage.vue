@@ -1,226 +1,204 @@
 <template>
-  <q-page class="w-full bg-surface text-on-surface min-h-screen py-3 sm:py-space-xl pb-20 sm:pb-space-xl">
-    <div class="max-w-[1440px] mx-auto px-3 sm:px-margin">
-      <!-- Breadcrumb & Header via Quasar -->
-      <div class="flex flex-col gap-1 mb-3 sm:mb-space-xl">
-        <q-breadcrumbs class="text-[11px] sm:text-xs text-on-surface-variant/70 mb-0.5" active-color="primary">
-          <q-breadcrumbs-el label="Início" to="/" icon="home" />
-          <q-breadcrumbs-el label="Catálogo de Leilões" icon="gavel" />
-        </q-breadcrumbs>
-        <span class="font-label-caps text-label-caps uppercase tracking-wider text-primary text-[10px] sm:text-xs font-bold">Registo Oficial de Lotes</span>
-        <h1 class="text-xl sm:text-3xl md:text-headline-lg font-bold text-on-surface tracking-tight font-display">
-          Catálogo Geral de Leilões em Moçambique
+  <div class="w-full bg-[#F4F1EB] text-[#171717] min-h-screen py-6 sm:py-10 pb-20 sm:pb-16">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-8">
+      <!-- Breadcrumb & Header -->
+      <div class="flex flex-col gap-2 mb-6 sm:mb-8">
+        <div class="flex items-center gap-2 text-xs text-[#777777]">
+          <router-link to="/" class="hover:text-[#171717] transition-colors no-underline text-[#777777]">Início</router-link>
+          <span>/</span>
+          <span class="text-[#171717] font-medium">Catálogo de Leilões</span>
+        </div>
+
+        <span class="text-[10px] tracking-[0.25em] text-[#B69A68] uppercase font-bold">
+          REGISTO OFICIAL DE LOTES
+        </span>
+
+        <h1 class="font-editorial text-2xl sm:text-4xl lg:text-[40px] font-semibold text-[#171717] tracking-tight">
+          Catálogo Geral de Leilões
         </h1>
-        <p class="font-body-md text-xs sm:text-base text-on-surface-variant max-w-2xl">
-          Consulte o portfólio completo de supercarros, frotas institucionais, maquinaria industrial e equipamentos raros autenticados por escritura notarial.
+
+        <p class="text-xs sm:text-sm text-[#666666] max-w-2xl leading-relaxed">
+          Consulte o portfólio completo de supercarros, frotas institucionais, maquinaria industrial, alta relojoaria e equipamentos seleccionados em Moçambique.
         </p>
       </div>
 
-      <!-- Filter Console Panel with Quasar Card -->
-      <q-card class="w-full bg-surface-container rounded-xl sm:rounded-2xl p-3 sm:p-space-lg border border-white/[0.08] shadow-2xl mb-4 sm:mb-space-2xl flex flex-col gap-2.5 sm:gap-space-md text-white" flat>
+      <!-- Filter Console Panel -->
+      <div class="w-full bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-[#E7E3DC] shadow-sm mb-6 sm:mb-10 flex flex-col gap-4 text-[#171717]">
         <!-- Top Search Row -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-2 sm:gap-space-md items-center">
-          <div class="md:col-span-8">
-            <q-input
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+          <div class="md:col-span-8 relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#888888] text-[20px]">search</span>
+            <input
               v-model="searchQuery"
-              dark
-              filled
-              dense
-              color="primary"
-              class="text-white"
-              placeholder="Pesquisar por título, marca, modelo ou lote..."
+              type="text"
+              placeholder="Pesquisar por título, marca, modelo ou nº de lote..."
+              class="w-full pl-10 pr-10 py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-xs sm:text-sm text-[#171717] placeholder:text-[#888888] focus:outline-none focus:border-[#B69A68] transition-colors"
               @keyup.enter="applyFilters"
+            />
+            <button
+              v-if="searchQuery"
+              type="button"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-[#888888] hover:text-[#171717]"
+              @click="searchQuery = ''; applyFilters()"
             >
-              <template v-slot:prepend>
-                <q-icon name="search" color="primary" />
-              </template>
-              <template v-if="searchQuery" v-slot:append>
-                <q-icon name="close" @click="searchQuery = ''; applyFilters()" class="cursor-pointer" />
-              </template>
-            </q-input>
+              <span class="material-symbols-outlined text-[18px]">close</span>
+            </button>
           </div>
 
-          <div class="md:col-span-4 flex items-center gap-2 sm:gap-space-sm">
-            <q-btn
-              unelevated
-              no-caps
-              color="primary"
-              text-color="dark"
-              icon="filter_alt"
-              label="Aplicar Filtros"
-              class="flex-1 py-2 font-bold text-xs uppercase shadow-md shimmer-gold active-press"
+          <div class="md:col-span-4 flex items-center gap-2">
+            <button
+              type="button"
+              class="flex-1 py-2.5 rounded-lg bg-[#171717] text-white hover:bg-[#B69A68] text-xs sm:text-sm font-semibold tracking-wide transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
               @click="applyFilters"
-            />
-            <q-btn
+            >
+              <span class="material-symbols-outlined text-[18px]">filter_alt</span>
+              <span>Aplicar Filtros</span>
+            </button>
+            <button
               v-if="hasActiveFilters"
-              outline
-              no-caps
-              color="grey-5"
-              label="Limpar"
-              class="px-3 py-2 text-xs"
+              type="button"
+              class="px-4 py-2.5 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] hover:bg-[#EFECE5] text-[#171717] text-xs font-semibold tracking-wide transition-colors cursor-pointer"
               @click="clearAllFilters"
-            />
+            >
+              Limpar
+            </button>
           </div>
         </div>
 
-        <!-- Filter Selectors Row via Quasar QSelect -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-space-md pt-2 sm:pt-space-sm border-t border-white/[0.06]">
+        <!-- Filter Selectors Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-3 border-t border-[#E7E3DC]">
           <!-- Category -->
           <div class="flex flex-col gap-1">
-            <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">Categoria de Ativos</label>
-            <q-select
+            <label class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Categoria</label>
+            <select
               v-model="selectedCategory"
-              :options="categoryOptions"
-              dark
-              filled
-              dense
-              emit-value
-              map-options
-              color="primary"
-              @update:model-value="applyFilters"
-            />
+              class="w-full px-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors"
+              @change="applyFilters"
+            >
+              <option v-for="cat in categoryOptions" :key="cat.value" :value="cat.value">
+                {{ cat.label }}
+              </option>
+            </select>
           </div>
 
           <!-- Province -->
           <div class="flex flex-col gap-1">
-            <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">Localização / Província</label>
-            <q-select
+            <label class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Província</label>
+            <select
               v-model="selectedProvince"
-              :options="provinceOptions"
-              dark
-              filled
-              dense
-              emit-value
-              map-options
-              color="primary"
-              @update:model-value="applyFilters"
-            />
+              class="w-full px-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors"
+              @change="applyFilters"
+            >
+              <option v-for="prov in provinceOptions" :key="prov.value" :value="prov.value">
+                {{ prov.label }}
+              </option>
+            </select>
           </div>
 
           <!-- Status -->
           <div class="flex flex-col gap-1">
-            <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">Estado do Leilão</label>
-            <q-select
+            <label class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Estado do Leilão</label>
+            <select
               v-model="selectedStatus"
-              :options="statusOptions"
-              dark
-              filled
-              dense
-              emit-value
-              map-options
-              color="primary"
-              @update:model-value="applyFilters"
-            />
+              class="w-full px-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors"
+              @change="applyFilters"
+            >
+              <option v-for="st in statusOptions" :key="st.value" :value="st.value">
+                {{ st.label }}
+              </option>
+            </select>
           </div>
 
           <!-- Sorting -->
           <div class="flex flex-col gap-1">
-            <label class="font-label-caps text-[10px] text-on-surface-variant uppercase font-bold">Critério de Ordenação</label>
-            <q-select
+            <label class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Ordenação</label>
+            <select
               v-model="selectedSort"
-              :options="sortOptions"
-              dark
-              filled
-              dense
-              emit-value
-              map-options
-              color="primary"
-              @update:model-value="applyFilters"
-            />
+              class="w-full px-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors"
+              @change="applyFilters"
+            >
+              <option v-for="so in sortOptions" :key="so.value" :value="so.value">
+                {{ so.label }}
+              </option>
+            </select>
           </div>
         </div>
-      </q-card>
+      </div>
 
       <!-- Active Filters Chips Bar -->
-      <div v-if="hasActiveFilters" class="flex items-center gap-2 mb-space-md flex-wrap">
-        <span class="font-label-caps text-[11px] text-on-surface-variant/80 uppercase">Filtros Ativos:</span>
-        <q-chip
+      <div v-if="hasActiveFilters" class="flex items-center gap-2 mb-4 flex-wrap">
+        <span class="text-[11px] text-[#777777] uppercase tracking-wider font-semibold">Filtros Activos:</span>
+        <span
           v-if="searchQuery"
-          removable
-          dark
-          color="primary"
-          text-color="dark"
-          dense
-          @remove="searchQuery = ''; applyFilters()"
+          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E3DC] text-xs text-[#171717]"
         >
           Pesquisa: "{{ searchQuery }}"
-        </q-chip>
-        <q-chip
+          <button @click="searchQuery = ''; applyFilters()" class="text-[#888888] hover:text-[#171717]">✕</button>
+        </span>
+        <span
           v-if="selectedCategory !== 'all'"
-          removable
-          dark
-          color="primary"
-          text-color="dark"
-          dense
-          @remove="selectedCategory = 'all'; applyFilters()"
+          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E3DC] text-xs text-[#171717]"
         >
           Categoria: {{ categoryLabel(selectedCategory) }}
-        </q-chip>
-        <q-chip
+          <button @click="selectedCategory = 'all'; applyFilters()" class="text-[#888888] hover:text-[#171717]">✕</button>
+        </span>
+        <span
           v-if="selectedProvince !== 'all'"
-          removable
-          dark
-          color="primary"
-          text-color="dark"
-          dense
-          @remove="selectedProvince = 'all'; applyFilters()"
+          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E3DC] text-xs text-[#171717]"
         >
           Província: {{ selectedProvince }}
-        </q-chip>
-        <q-chip
+          <button @click="selectedProvince = 'all'; applyFilters()" class="text-[#888888] hover:text-[#171717]">✕</button>
+        </span>
+        <span
           v-if="selectedStatus"
-          removable
-          dark
-          color="primary"
-          text-color="dark"
-          dense
-          @remove="selectedStatus = ''; applyFilters()"
+          class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E7E3DC] text-xs text-[#171717]"
         >
           Estado: {{ statusLabel(selectedStatus) }}
-        </q-chip>
+          <button @click="selectedStatus = ''; applyFilters()" class="text-[#888888] hover:text-[#171717]">✕</button>
+        </span>
       </div>
 
       <!-- Results Stats Bar -->
-      <div class="flex items-center justify-between pb-space-sm mb-space-md border-b border-white/[0.04]">
+      <div class="flex items-center justify-between pb-3 mb-6 border-b border-[#E7E3DC]">
         <div class="flex items-center gap-2">
-          <q-badge color="primary" text-color="dark" class="font-bold text-xs" :label="`${auctionStore.total} Lotes Encontrados`" />
-          <span class="font-body-sm text-xs text-on-surface-variant/70">
-            A exibir página {{ auctionStore.filters.page }} de {{ auctionStore.totalPages || 1 }}
+          <span class="px-2.5 py-0.5 rounded-full bg-white border border-[#E7E3DC] text-xs font-semibold text-[#171717]">
+            {{ auctionStore.total }} Lotes Encontrados
+          </span>
+          <span class="text-xs text-[#777777]">
+            Página {{ auctionStore.filters.page }} de {{ auctionStore.totalPages || 1 }}
           </span>
         </div>
       </div>
 
       <!-- Auction Lots Grid -->
-      <div v-if="auctionStore.loading" class="py-20 flex flex-col items-center justify-center gap-space-md">
-        <q-spinner-dots color="primary" size="48px" />
-        <p class="font-body-md text-on-surface-variant">A sincronizar lotes em direto...</p>
+      <div v-if="auctionStore.loading" class="py-20 flex flex-col items-center justify-center gap-3">
+        <q-spinner-dots color="primary" size="44px" />
+        <p class="text-xs text-[#777777]">A sincronizar lotes em tempo real...</p>
       </div>
 
-      <div v-else-if="auctionStore.auctions.length === 0" class="py-20 text-center flex flex-col items-center justify-center gap-space-md bg-surface-container rounded-2xl border border-white/[0.08] p-8">
-        <q-icon name="search_off" size="56px" class="text-on-surface-variant/50" />
-        <h3 class="font-headline-sm text-on-surface font-bold">Nenhum leilão corresponde aos critérios</h3>
-        <p class="font-body-md text-on-surface-variant max-w-md">
-          Tente ajustar os filtros de pesquisa, remover palavras-chave ou escolher outra categoria de ativos.
+      <div v-else-if="auctionStore.auctions.length === 0" class="py-16 text-center flex flex-col items-center justify-center gap-3 bg-white rounded-2xl border border-[#E7E3DC] p-8 shadow-xs">
+        <span class="material-symbols-outlined text-[48px] text-[#AAAAAA]">search_off</span>
+        <h3 class="font-editorial text-lg text-[#171717] font-semibold">Nenhum leilão corresponde aos critérios</h3>
+        <p class="text-xs text-[#666666] max-w-md">
+          Tente ajustar os filtros de pesquisa, remover palavras-chave ou escolher outra categoria de activos.
         </p>
-        <q-btn
-          unelevated
-          no-caps
-          color="primary"
-          text-color="dark"
-          label="Limpar Todos os Filtros"
-          class="font-bold text-xs"
+        <button
+          type="button"
+          class="mt-2 px-5 py-2.5 rounded-lg bg-[#171717] text-white hover:bg-[#B69A68] text-xs font-semibold tracking-wide transition-colors cursor-pointer"
           @click="clearAllFilters"
-        />
+        >
+          Limpar Todos os Filtros
+        </button>
       </div>
 
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-gutter">
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
         <div v-for="auction in auctionStore.auctions" :key="auction.id">
           <AuctionCard :auction="auction" />
         </div>
       </div>
 
-      <!-- Pagination via Quasar QPagination -->
-      <div v-if="auctionStore.totalPages > 1" class="flex justify-center mt-space-2xl pt-space-md border-t border-white/[0.06]">
+      <!-- Pagination -->
+      <div v-if="auctionStore.totalPages > 1" class="flex justify-center mt-12 pt-6 border-t border-[#E7E3DC]">
         <q-pagination
           v-model="currentPage"
           :max="auctionStore.totalPages"
@@ -229,15 +207,14 @@
           direction-links
           color="primary"
           active-color="primary"
-          active-text-color="dark"
-          text-color="grey-4"
-          dark
+          active-text-color="white"
+          text-color="dark"
           class="font-mono text-sm"
           @update:model-value="onPageChange"
         />
       </div>
     </div>
-  </q-page>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -250,12 +227,12 @@ const route = useRoute();
 const router = useRouter();
 const auctionStore = useAuctionStore();
 
-const searchQuery = ref((route.query.search as string) || '');
-const selectedCategory = ref((route.query.category as string) || 'all');
-const selectedProvince = ref((route.query.province as string) || 'all');
-const selectedStatus = ref((route.query.status as string) || '');
-const selectedSort = ref((route.query.sort as string) || 'ending_soon');
-const currentPage = ref(parseInt((route.query.page as string) || '1', 10));
+const searchQuery = ref('');
+const selectedCategory = ref('all');
+const selectedProvince = ref('all');
+const selectedStatus = ref('');
+const selectedSort = ref('ending_soon');
+const currentPage = ref(1);
 
 const categoryOptions = computed(() => [
   { label: 'Todas as Categorias', value: 'all' },
@@ -263,73 +240,79 @@ const categoryOptions = computed(() => [
 ]);
 
 const provinceOptions = [
-  { label: 'Todo o Território Nacional', value: 'all' },
+  { label: 'Todas as Províncias', value: 'all' },
   { label: 'Maputo Cidade', value: 'Maputo Cidade' },
-  { label: 'Matola / Maputo Província', value: 'Maputo Província' },
-  { label: 'Beira / Sofala', value: 'Sofala' },
+  { label: 'Maputo Província', value: 'Maputo Província' },
+  { label: 'Sofala', value: 'Sofala' },
   { label: 'Nampula', value: 'Nampula' },
-  { label: 'Tete / Moatize', value: 'Tete' },
-  { label: 'Pemba / Cabo Delgado', value: 'Cabo Delgado' },
-  { label: 'Quelimane / Zambézia', value: 'Zambézia' },
-  { label: 'Inhambane', value: 'Inhambane' },
-  { label: 'Xai-Xai / Gaza', value: 'Gaza' }
+  { label: 'Tete', value: 'Tete' },
+  { label: 'Cabo Delgado', value: 'Cabo Delgado' }
 ];
 
 const statusOptions = [
-  { label: 'Todos os Lotes Disponíveis', value: '' },
-  { label: 'Sessões Ao Vivo Ativas', value: 'active' },
-  { label: 'Pregões Agendados / Brevemente', value: 'upcoming' },
-  { label: 'Leilões Encerrados', value: 'ended' }
+  { label: 'Todos os Estados', value: '' },
+  { label: 'Activos / Ao Vivo', value: 'active' },
+  { label: 'Próximos Pregões', value: 'upcoming' },
+  { label: 'Encerrados', value: 'ended' }
 ];
 
 const sortOptions = [
-  { label: 'A Terminar Mais Cedo (Crítico)', value: 'ending_soon' },
-  { label: 'Valor Mais Elevado (Decrescente)', value: 'price_desc' },
-  { label: 'Valor Mais Acessível (Crescente)', value: 'price_asc' },
-  { label: 'Maior Número de Licitações', value: 'bids_desc' },
-  { label: 'Mais Recentes no Registo', value: 'newest' }
+  { label: 'A Terminar em Breve', value: 'ending_soon' },
+  { label: 'Menor Preço Atual', value: 'price_asc' },
+  { label: 'Maior Preço Atual', value: 'price_desc' },
+  { label: 'Mais Recentes', value: 'newest' },
+  { label: 'Mais Concorridos', value: 'most_bids' }
 ];
 
 const hasActiveFilters = computed(() => {
   return Boolean(
-    searchQuery.value.trim() ||
+    searchQuery.value ||
     selectedCategory.value !== 'all' ||
     selectedProvince.value !== 'all' ||
     selectedStatus.value
   );
 });
 
-function categoryLabel(slug: string) {
-  const found = auctionStore.categories.find(c => c.slug === slug);
-  return found ? found.name : slug;
-}
+onMounted(async () => {
+  await auctionStore.fetchCategories();
+  syncFiltersFromQuery();
+  await auctionStore.fetchAuctions();
+});
 
-function statusLabel(status: string) {
-  if (status === 'active') return 'Ao Vivo';
-  if (status === 'upcoming') return 'Em Breve';
-  if (status === 'ended') return 'Encerrado';
-  return status;
-}
+watch(() => route.query, () => {
+  syncFiltersFromQuery();
+  auctionStore.fetchAuctions();
+});
 
-async function fetchFiltered() {
-  const params: any = {
-    page: currentPage.value,
-    limit: 12,
-    sort: selectedSort.value
+function syncFiltersFromQuery() {
+  searchQuery.value = (route.query.search as string) || '';
+  selectedCategory.value = (route.query.category as string) || 'all';
+  selectedProvince.value = (route.query.province as string) || 'all';
+  selectedStatus.value = (route.query.status as string) || '';
+  selectedSort.value = (route.query.sort as string) || 'ending_soon';
+  currentPage.value = Number(route.query.page) || 1;
+
+  auctionStore.filters = {
+    ...auctionStore.filters,
+    search: searchQuery.value,
+    category: selectedCategory.value === 'all' ? '' : selectedCategory.value,
+    province: selectedProvince.value === 'all' ? '' : selectedProvince.value,
+    status: selectedStatus.value,
+    sort: selectedSort.value,
+    page: currentPage.value
   };
-
-  if (searchQuery.value.trim()) params.search = searchQuery.value.trim();
-  if (selectedCategory.value !== 'all') params.category = selectedCategory.value;
-  if (selectedProvince.value !== 'all') params.province = selectedProvince.value;
-  if (selectedStatus.value) params.status = selectedStatus.value;
-
-  await auctionStore.fetchAuctions(params);
 }
 
 function applyFilters() {
-  currentPage.value = 1;
-  syncUrlQuery();
-  fetchFiltered();
+  const query: Record<string, string | number> = {};
+  if (searchQuery.value) query.search = searchQuery.value;
+  if (selectedCategory.value !== 'all') query.category = selectedCategory.value;
+  if (selectedProvince.value !== 'all') query.province = selectedProvince.value;
+  if (selectedStatus.value) query.status = selectedStatus.value;
+  if (selectedSort.value) query.sort = selectedSort.value;
+  query.page = 1;
+
+  router.push({ path: '/catalog', query });
 }
 
 function clearAllFilters() {
@@ -339,41 +322,23 @@ function clearAllFilters() {
   selectedStatus.value = '';
   selectedSort.value = 'ending_soon';
   currentPage.value = 1;
-  syncUrlQuery();
-  fetchFiltered();
+
+  router.push({ path: '/catalog' });
 }
 
-function onPageChange(newPage: number) {
-  currentPage.value = newPage;
-  syncUrlQuery();
-  fetchFiltered();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function onPageChange(page: number) {
+  currentPage.value = page;
+  const query = { ...route.query, page };
+  router.push({ path: '/catalog', query });
 }
 
-function syncUrlQuery() {
-  const query: Record<string, string> = {};
-  if (searchQuery.value.trim()) query.search = searchQuery.value.trim();
-  if (selectedCategory.value !== 'all') query.category = selectedCategory.value;
-  if (selectedProvince.value !== 'all') query.province = selectedProvince.value;
-  if (selectedStatus.value) query.status = selectedStatus.value;
-  if (selectedSort.value !== 'ending_soon') query.sort = selectedSort.value;
-  if (currentPage.value > 1) query.page = String(currentPage.value);
-
-  router.replace({ path: '/catalog', query });
+function categoryLabel(slug: string) {
+  const cat = auctionStore.categories.find(c => c.slug === slug);
+  return cat ? cat.name : slug;
 }
 
-onMounted(async () => {
-  await auctionStore.fetchCategories();
-  await fetchFiltered();
-});
-
-watch(() => route.query, () => {
-  searchQuery.value = (route.query.search as string) || '';
-  selectedCategory.value = (route.query.category as string) || 'all';
-  selectedProvince.value = (route.query.province as string) || 'all';
-  selectedStatus.value = (route.query.status as string) || '';
-  selectedSort.value = (route.query.sort as string) || 'ending_soon';
-  currentPage.value = parseInt((route.query.page as string) || '1', 10);
-  fetchFiltered();
-});
+function statusLabel(st: string) {
+  const opt = statusOptions.find(o => o.value === st);
+  return opt ? opt.label : st;
+}
 </script>

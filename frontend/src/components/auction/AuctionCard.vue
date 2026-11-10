@@ -1,139 +1,118 @@
 <template>
-  <q-card
-    class="flex flex-col bg-surface-container rounded-xl overflow-hidden border border-white/[0.08] shadow-lg group hover-luxury-lift transition-all duration-300 h-full relative"
-    :class="{ 'border-error/50 shadow-error/10': isUrgent, 'opacity-80': isEnded }"
-    flat
+  <div
+    class="flex flex-col bg-white rounded-xl overflow-hidden border border-[#E7E3DC] shadow-sm hover:shadow-xl transition-all duration-300 h-full relative group"
+    :class="{ 'ring-1 ring-amber-500/30': isUrgent, 'opacity-75': isEnded }"
   >
-    <!-- Media aspect ratio container with Quasar Image -->
-    <div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container-lowest">
-      <q-img
+    <!-- Media Aspect Container -->
+    <div class="relative w-full aspect-[16/10] overflow-hidden bg-[#FAF8F5]">
+      <img
         :src="auction.primary_image || fallbackImage"
         :alt="auction.title"
         loading="lazy"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-        :ratio="16/10"
-      >
-        <template v-slot:error>
-          <img :src="fallbackImage" alt="" class="w-full h-full object-cover" />
-        </template>
-      </q-img>
-      
-      <!-- Top Left Category / Verified Badges -->
-      <div class="absolute top-2 left-2 flex items-center gap-1.5 flex-wrap z-10">
-        <q-badge
-          color="dark"
-          text-color="primary"
-          class="px-2 py-0.5 font-bold text-[10px] uppercase tracking-wider border border-white/[0.1] bg-black/75 backdrop-blur-md"
-          :label="auction.category_name || 'LEILÃO'"
-        />
-        <q-badge
-          v-if="auction.seller_verified_status === 'verified'"
-          color="dark"
-          text-color="white"
-          class="px-2 py-0.5 text-[10px] flex items-center gap-1 border border-white/[0.1] bg-black/75 backdrop-blur-md"
-        >
-          <q-icon name="verified" size="12px" class="text-primary" />
-          <span>Parceiro</span>
-        </q-badge>
+        @error="onImgError"
+      />
+
+      <!-- Top Left Category Badge -->
+      <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 z-10">
+        <span class="px-2 py-0.5 rounded bg-white/95 backdrop-blur-md text-[10px] font-semibold uppercase tracking-wider text-[#171717] border border-[#E7E3DC] shadow-xs">
+          {{ auction.category_name || 'LEILÃO' }}
+        </span>
       </div>
 
-      <!-- Top Right Favourite Button (Quasar Btn) -->
-      <q-btn
-        round
-        flat
-        dense
-        size="sm"
-        class="absolute top-2 right-2 bg-black/60 backdrop-blur-md text-on-surface-variant hover:text-error transition-all z-10 active-press"
+      <!-- Top Right Favourite Button -->
+      <button
+        type="button"
+        class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md text-[#666666] hover:text-[#B69A68] flex items-center justify-center transition-all z-10 border border-[#E7E3DC] shadow-xs cursor-pointer"
         @click.stop.prevent="handleToggleFav"
         title="Guardar Lote"
       >
-        <q-icon
-          :name="isFav ? 'bookmark_added' : 'bookmark'"
-          size="18px"
-          :class="{ 'text-primary scale-110': isFav }"
-        />
-      </q-btn>
+        <span class="material-symbols-outlined text-[18px]" :class="{ 'text-[#B69A68]': isFav }">
+          {{ isFav ? 'bookmark_added' : 'bookmark' }}
+        </span>
+      </button>
 
       <!-- Bottom Right Countdown Pill -->
-      <div 
-        class="absolute bottom-2 right-2 px-2 py-1 rounded bg-black/85 backdrop-blur-md font-label-numeric text-label-numeric flex items-center gap-1 border border-white/[0.1] shadow-sm z-10"
-        :class="{ 'animate-urgent border-error/50 text-error': isUrgent }"
+      <div
+        class="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-white text-[11px] font-medium flex items-center gap-1.5 shadow-sm z-10"
+        :class="{ 'bg-red-900/90 text-red-100': isUrgent }"
       >
-        <q-icon name="alarm" size="14px" :class="isUrgent ? 'text-error animate-pulse' : 'text-primary'" />
+        <span class="w-1.5 h-1.5 rounded-full" :class="isUrgent ? 'bg-red-400 animate-ping' : 'bg-[#B69A68]'"></span>
         <AuctionTimer :ends-at="auction.ends_at" />
       </div>
     </div>
 
     <!-- Details Body -->
-    <q-card-section class="p-3 sm:p-space-md flex flex-col flex-1 justify-between gap-2.5 sm:gap-space-md">
-      <div class="flex flex-col gap-1 sm:gap-space-xs">
-        <div class="flex items-center justify-between text-on-surface-variant">
-          <span class="font-label-caps text-on-surface-variant uppercase tracking-wider text-[9px] sm:text-[10px]">
-            LOTE #{{ auction.id }} • {{ (auction.location_city || 'MAPUTO').toUpperCase() }}
+    <div class="p-4 flex flex-col flex-1 justify-between gap-3">
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center justify-between text-[#777777] text-[11px]">
+          <span class="font-medium uppercase tracking-wider">
+            {{ (auction.location_city || 'MAPUTO').toUpperCase() }}
           </span>
-          <span class="font-label-numeric text-[10px] sm:text-[11px] text-on-surface-variant/70">
-            {{ auction.bid_count || 0 }} Licitações
+          <span class="font-mono text-[11px] text-[#888888]">
+            {{ auction.bid_count || 0 }} {{ auction.bid_count === 1 ? 'licitação' : 'licitações' }}
           </span>
         </div>
-        <h3 class="font-title-md text-sm sm:text-title-md text-on-surface group-hover:text-primary transition-colors line-clamp-1 font-bold">
-          <router-link :to="`/auctions/${auction.id}`" class="text-white hover:text-primary transition-colors no-underline">
+
+        <h3 class="font-display font-semibold text-sm sm:text-base text-[#171717] group-hover:text-[#B69A68] transition-colors line-clamp-1 pt-0.5">
+          <router-link :to="`/auctions/${auction.id}`" class="text-[#171717] hover:text-[#B69A68] transition-colors no-underline">
             {{ auction.title }}
           </router-link>
         </h3>
-        <p class="font-body-sm text-[11px] sm:text-body-sm text-on-surface-variant/80 line-clamp-1">
-          {{ auction.subtitle || auction.description || 'Garantia Fiduciária de Procedência Notarial' }}
+
+        <p class="text-xs text-[#777777] line-clamp-1 leading-relaxed">
+          {{ auction.subtitle || auction.description || 'Activo verificado e pronto para transferência.' }}
         </p>
       </div>
 
       <!-- Valuation Box -->
-      <div class="p-2 sm:p-space-sm rounded-lg bg-surface-container-low border border-white/[0.04] flex flex-col gap-0.5 sm:gap-1">
-        <div class="flex justify-between items-center text-body-sm">
-          <span class="text-on-surface-variant font-label-caps text-[9px] sm:text-[10px]">Licitação Atual</span>
-          <span class="text-on-surface-variant font-label-numeric text-[10px] sm:text-[11px]">
+      <div class="p-3 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] flex flex-col gap-1">
+        <div class="flex justify-between items-center text-[10px] uppercase tracking-wider text-[#777777] font-semibold">
+          <span>Licitação Atual</span>
+          <span class="normal-case font-medium text-[#888888]">
             +{{ formatMoneyCompact(auction.bid_increment) }} mín
           </span>
         </div>
-        <div class="font-currency-display text-[18px] sm:text-[22px] text-on-surface font-extrabold font-display">
-          {{ formatMoneyDigits(auction.current_price) }} <span class="text-xs font-label-caps text-primary">MZN</span>
+
+        <div class="font-editorial text-xl sm:text-2xl font-bold text-[#171717] leading-none pt-0.5">
+          {{ formatMoneyDigits(auction.current_price) }}
+          <span class="text-xs font-sans font-bold text-[#B69A68] ml-1">MZN</span>
         </div>
-        <div class="flex items-center justify-between text-[10px] sm:text-[11px] text-on-surface-variant/80">
-          <div>
-            <template v-if="auction.reserve_price && auction.current_price >= auction.reserve_price">
-              <span class="text-emerald-400 font-semibold flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 radar-ring"></span> Reserva Atingida
-              </span>
-            </template>
-            <template v-else-if="auction.reserve_price">
-              <span class="text-amber-300 flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 radar-ring"></span> Reserva Ativa
-              </span>
-            </template>
-            <template v-else>
-              <span class="text-primary font-semibold flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-primary radar-ring"></span> Sem Reserva
-              </span>
-            </template>
-          </div>
-          <span class="font-label-caps text-[9px] sm:text-[10px] text-on-surface-variant/70 uppercase">
-            {{ auction.bid_count > 0 ? 'Disputa Ativa' : 'Aguardando 1º' }}
+
+        <div class="flex items-center justify-between text-[11px] pt-1 text-[#666666]">
+          <template v-if="auction.reserve_price && auction.current_price >= auction.reserve_price">
+            <span class="text-emerald-700 font-medium flex items-center gap-1 text-[11px]">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Reserva Atingida
+            </span>
+          </template>
+          <template v-else-if="auction.reserve_price">
+            <span class="text-amber-700 flex items-center gap-1 text-[11px]">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Reserva Ativa
+            </span>
+          </template>
+          <template v-else>
+            <span class="text-[#B69A68] font-medium flex items-center gap-1 text-[11px]">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#B69A68]"></span> Sem Reserva
+            </span>
+          </template>
+
+          <span class="text-[10px] text-[#888888]">
+            Lote #{{ auction.id }}
           </span>
         </div>
       </div>
 
-      <!-- Action Button via Quasar -->
-      <q-btn
+      <!-- Action Button -->
+      <router-link
         :to="`/auctions/${auction.id}`"
-        unelevated
-        no-caps
-        :color="isEnded ? 'grey-9' : 'primary'"
-        :text-color="isEnded ? 'white' : 'dark'"
-        :icon="isEnded ? 'visibility' : 'gavel'"
-        :label="isEnded ? 'Consultar Resultado' : 'Licitar Agora'"
-        class="w-full font-bold text-xs py-1.5 sm:py-2 shadow-md active-press"
-        :class="{ 'shimmer-gold': !isEnded }"
-      />
-    </q-card-section>
-  </q-card>
+        class="w-full py-2.5 rounded text-xs font-semibold tracking-wide transition-all text-center no-underline shadow-xs flex items-center justify-center gap-1.5"
+        :class="isEnded ? 'bg-[#FAF8F5] text-[#777777] border border-[#E7E3DC] hover:bg-[#EFECE5]' : 'bg-[#171717] text-white hover:bg-[#B69A68]'"
+      >
+        <span>{{ isEnded ? 'Consultar Resultado' : 'Ver Leilão' }}</span>
+        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+      </router-link>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -149,16 +128,21 @@ const props = defineProps<{
 }>();
 
 const auctionStore = useAuctionStore();
-
 const fallbackImage = '/images/products/porsche-911-gt3rs.jpg';
 
 const isFav = computed(() => auctionStore.watchlistIds.has(props.auction.id));
-
 const timeInfo = computed(() => getTimeRemaining(props.auction.ends_at));
 const isEnded = computed(() => props.auction.status !== 'active' || timeInfo.value.isExpired);
 const isUrgent = computed(() => timeInfo.value.isUrgent && !isEnded.value);
 
 function handleToggleFav() {
   auctionStore.toggleWatchlist(props.auction.id);
+}
+
+function onImgError(event: Event) {
+  const target = event.target as HTMLImageElement;
+  if (target && target.src !== fallbackImage) {
+    target.src = fallbackImage;
+  }
 }
 </script>
