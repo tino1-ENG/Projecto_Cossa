@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1F1F1F" />
+      <stop offset="100%" stop-color="#0F0F0F" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D6C4A3" />
+      <stop offset="50%" stop-color="#B69A68" />
+      <stop offset="100%" stop-color="#967B48" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
+  <rect width="504" height="504" x="4" y="4" rx="124" fill="none" stroke="#B69A68" stroke-opacity="0.3" stroke-width="4" />
+
+  <!-- Inner Content Group -->
+  <g filter="url(#shadow)">
+    <!-- Gavel Head (Rotated) -->
+    <g transform="translate(256, 210) rotate(-45)">
+      <rect x="-85" y="-32" width="170" height="64" rx="12" fill="url(#goldGrad)" />
+      <!-- Gavel rings -->
+      <rect x="-65" y="-32" width="12" height="64" fill="#FFFFFF" fill-opacity="0.4" />
+      <rect x="53" y="-32" width="12" height="64" fill="#FFFFFF" fill-opacity="0.4" />
+
+      <!-- Gavel Handle -->
+      <path d="M -12 32 L -12 180 Q -12 195 0 195 Q 12 195 12 180 L 12 32 Z" fill="url(#goldGrad)" />
+      <circle cx="0" cy="180" r="14" fill="#D6C4A3" />
+    </g>
+
+    <!-- Sound Block / Base -->
+    <ellipse cx="256" cy="380" rx="110" ry="22" fill="url(#goldGrad)" />
+    <ellipse cx="256" cy="374" rx="90" ry="16" fill="#171717" stroke="url(#goldGrad)" stroke-width="4" />
+  </g>
+
+  <!-- Subtitle Text -->
+  <text x="256" y="450" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="34" letter-spacing="6" fill="#FFFFFF">
+    MOZ<tspan fill="#B69A68">BID</tspan>
+  </text>
+</svg>

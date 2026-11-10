@@ -10,6 +10,7 @@
     </q-page-container>
     <AppFooter />
     <ToastContainer />
+    <PwaInstallPrompt />
 
     <!-- Mobile Fixed Bottom Navigation Bar (Refined Editorial Style) -->
     <q-footer class="sm:hidden bg-white/95 backdrop-blur-md border-t border-[#E7E3DC] text-[#171717] z-50">
@@ -62,6 +63,7 @@ import { useAuthStore } from '../stores/auth';
 import AppNavbar from '../components/common/AppNavbar.vue';
 import AppFooter from '../components/common/AppFooter.vue';
 import ToastContainer from '../components/common/ToastContainer.vue';
+import PwaInstallPrompt from '../components/common/PwaInstallPrompt.vue';
 
 const authStore = useAuthStore();
 </script>

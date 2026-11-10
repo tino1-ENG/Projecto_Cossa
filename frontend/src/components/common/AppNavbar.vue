@@ -47,6 +47,17 @@
           <span>MZN</span>
         </div>
 
+        <!-- Install App Button (PWA) -->
+        <q-btn
+          flat
+          round
+          dense
+          icon="download"
+          class="text-[#444444] hover:text-[#B69A68] hover:bg-[#F4F1EB] transition-colors"
+          title="Instalar Aplicação no PC ou Telemóvel"
+          @click="promptInstall"
+        />
+
         <!-- Search Icon Link -->
         <q-btn
           flat
@@ -243,6 +254,11 @@
             <q-item-section class="text-sm font-medium">Sobre Nós</q-item-section>
           </q-item>
 
+          <q-item clickable v-close-popup @click="promptInstall" class="rounded-lg hover:bg-white text-[#171717] bg-[#FAF8F5] border border-[#E7E3DC]">
+            <q-item-section avatar><q-icon name="download" size="18px" class="text-[#B69A68]" /></q-item-section>
+            <q-item-section class="text-sm font-semibold">Instalar Aplicação</q-item-section>
+          </q-item>
+
           <q-separator class="my-3 border-[#E7E3DC]" />
 
           <template v-if="authStore.isAuthenticated">
@@ -295,11 +311,13 @@ import { useAuthStore } from '../../stores/auth';
 import { useAuctionStore } from '../../stores/auction';
 import { useNotificationStore } from '../../stores/notification';
 import { formatTimeAgo } from '../../utils/date';
+import { usePwaInstall } from '../../composables/usePwaInstall';
 
 const router = useRouter();
 const authStore = useAuthStore();
 const auctionStore = useAuctionStore();
 const notifStore = useNotificationStore();
+const { promptInstall } = usePwaInstall();
 
 const showMobileMenu = ref(false);
 

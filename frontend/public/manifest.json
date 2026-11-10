@@ -1,0 +1,73 @@
+{
+  "name": "MozBid — Bolsa de Leilões de Activos em Moçambique",
+  "short_name": "MozBid",
+  "description": "Plataforma soberana de leilões exclusivos em Moçambique. Veículos executivos, relógios raros, maquinaria pesada e activos extraordinários.",
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "background_color": "#F4F1EB",
+  "theme_color": "#171717",
+  "orientation": "portrait-primary",
+  "lang": "pt-MZ",
+  "dir": "ltr",
+  "categories": [
+    "business",
+    "shopping",
+    "finance"
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Explorar Catálogo",
+      "short_name": "Catálogo",
+      "description": "Ver todos os lotes e activos em leilão",
+      "url": "/catalog",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Como Funciona",
+      "short_name": "Regras",
+      "description": "Procedimentos e regulamento de leilões",
+      "url": "/how-it-works",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Registar Conta",
+      "short_name": "Registo",
+      "description": "Criar conta oficial no MozBid",
+      "url": "/auth/register",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
