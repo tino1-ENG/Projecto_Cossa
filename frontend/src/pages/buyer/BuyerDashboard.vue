@@ -2,20 +2,20 @@
   <q-page class="p-3 sm:p-6 lg:p-8 pb-20 sm:pb-8 text-white">
     <div class="buyer-dashboard flex flex-col gap-6">
       <!-- Escrow Balance & Fiduciary Status Banner -->
-      <q-card flat class="card-luxury p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-gold/30 bg-gradient-to-r from-surface-container via-surface-container-high to-surface-container">
+      <q-card flat class="card-luxury p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border border-[#B69A68]/40 bg-gradient-to-r from-[#171717] via-[#222222] to-[#171717] text-white shadow-lg">
         <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-gold shrink-0">
+          <div class="w-12 h-12 rounded-xl bg-[#B69A68]/15 border border-[#B69A68]/30 flex items-center justify-center text-[#B69A68] shrink-0">
             <ShieldCheck :size="28" />
           </div>
           <div>
-            <div class="text-xs font-label-caps uppercase text-on-surface-variant flex items-center gap-2">
+            <div class="text-xs font-label-caps uppercase text-zinc-300 flex items-center gap-2">
               <span>Conta de Custódia em Escrow (BCI / BIM)</span>
-              <q-badge color="positive" text-color="dark" class="font-bold text-[10px] px-2 py-0.5">ACTIVA</q-badge>
+              <q-badge color="positive" text-color="white" class="font-bold text-[10px] px-2 py-0.5">ACTIVA</q-badge>
             </div>
-            <div class="text-2xl sm:text-3xl font-bold font-currency-display text-on-surface mt-0.5">
+            <div class="text-2xl sm:text-3xl font-bold font-currency-display text-white mt-0.5">
               {{ formatMoney(currentEscrowBalance) }}
             </div>
-            <p class="text-xs text-on-surface-variant/70 mt-0.5">
+            <p class="text-xs text-zinc-400 mt-0.5">
               Fundos salvaguardados para cobertura de cauções licitatórias fiduciárias.
             </p>
           </div>
@@ -316,38 +316,38 @@
 
             <!-- Payment Channels Selector -->
             <div>
-              <label class="text-xs uppercase font-bold text-on-surface-variant mb-2 block">Seleccione o Canal de Pagamento:</label>
+              <label class="text-xs uppercase font-bold text-zinc-300 mb-2 block">Seleccione o Canal de Pagamento:</label>
               <div class="flex flex-col gap-2">
                 <div
-                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', paymentMethod === 'm-pesa' ? 'bg-primary/10 border-primary shadow-lg shadow-primary/10' : 'bg-surface-container-low border-white/[0.08] hover:border-white/20']"
+                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', paymentMethod === 'm-pesa' ? 'bg-primary/20 border-primary shadow-lg shadow-primary/10' : 'bg-white/[0.04] border-white/[0.1] hover:border-white/20']"
                   @click="paymentMethod = 'm-pesa'"
                 >
                   <q-radio v-model="paymentMethod" val="m-pesa" dark color="primary" dense />
                   <div>
                     <div class="text-xs font-bold text-white">M-PESA (Vodacom)</div>
-                    <div class="text-[11px] text-on-surface-variant">Prompt USSD de confirmação PIN em Moçambique</div>
+                    <div class="text-[11px] text-zinc-400">Prompt USSD de confirmação PIN em Moçambique</div>
                   </div>
                 </div>
 
                 <div
-                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', paymentMethod === 'e-mola' ? 'bg-primary/10 border-primary shadow-lg shadow-primary/10' : 'bg-surface-container-low border-white/[0.08] hover:border-white/20']"
+                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', paymentMethod === 'e-mola' ? 'bg-primary/20 border-primary shadow-lg shadow-primary/10' : 'bg-white/[0.04] border-white/[0.1] hover:border-white/20']"
                   @click="paymentMethod = 'e-mola'"
                 >
                   <q-radio v-model="paymentMethod" val="e-mola" dark color="primary" dense />
                   <div>
                     <div class="text-xs font-bold text-white">e-Mola (Movitel)</div>
-                    <div class="text-[11px] text-on-surface-variant">Liquidação imediata via carteira móvel</div>
+                    <div class="text-[11px] text-zinc-400">Liquidação imediata via carteira móvel</div>
                   </div>
                 </div>
 
                 <div
-                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', paymentMethod === 'bank_transfer' ? 'bg-primary/10 border-primary shadow-lg shadow-primary/10' : 'bg-surface-container-low border-white/[0.08] hover:border-white/20']"
+                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', paymentMethod === 'bank_transfer' ? 'bg-primary/20 border-primary shadow-lg shadow-primary/10' : 'bg-white/[0.04] border-white/[0.1] hover:border-white/20']"
                   @click="paymentMethod = 'bank_transfer'"
                 >
                   <q-radio v-model="paymentMethod" val="bank_transfer" dark color="primary" dense />
                   <div>
                     <div class="text-xs font-bold text-white">Transferência Bancária (BIM / Standard / BCI)</div>
-                    <div class="text-[11px] text-on-surface-variant">Comprovativo com validação automática fiduciária</div>
+                    <div class="text-[11px] text-zinc-400">Comprovativo com validação automática fiduciária</div>
                   </div>
                 </div>
               </div>
@@ -355,7 +355,7 @@
 
             <!-- Phone Number Input -->
             <div>
-              <label class="text-xs uppercase font-bold text-on-surface-variant mb-1 block">Número de Telemóvel para Confirmação</label>
+              <label class="text-xs uppercase font-bold text-zinc-300 mb-1 block">Número de Telemóvel para Confirmação</label>
               <q-input
                 v-model="paymentPhone"
                 dark
@@ -368,7 +368,7 @@
 
             <!-- Delivery Address Input -->
             <div>
-              <label class="text-xs uppercase font-bold text-on-surface-variant mb-1 block">Endereço de Entrega / Província</label>
+              <label class="text-xs uppercase font-bold text-zinc-300 mb-1 block">Endereço de Entrega / Província</label>
               <q-input
                 v-model="deliveryAddress"
                 dark
@@ -408,13 +408,13 @@
           </div>
 
           <div class="p-5 flex flex-col gap-4">
-            <p class="text-xs text-on-surface-variant/80 leading-relaxed bg-surface-container-low p-3 rounded-xl border border-white/[0.06]">
+            <p class="text-xs text-zinc-300 leading-relaxed bg-white/[0.04] p-3 rounded-xl border border-white/[0.08]">
               O valor depositado fica retido em conta fiduciária do MOZBID no Millennium BIM / BCI. Em caso de lance superado, o montante é desbloqueado de forma automática e imediata.
             </p>
 
             <!-- Amount Preset Selector -->
             <div>
-              <label class="text-xs uppercase font-bold text-on-surface-variant mb-2 block">Selecione o Valor de Caução (Meticais):</label>
+              <label class="text-xs uppercase font-bold text-zinc-300 mb-2 block">Selecione o Valor de Caução (Meticais):</label>
               <div class="grid grid-cols-3 gap-2 mb-2">
                 <q-btn
                   v-for="preset in [100000, 500000, 1000000]"
@@ -444,38 +444,38 @@
 
             <!-- Channel Options -->
             <div>
-              <label class="text-xs uppercase font-bold text-on-surface-variant mb-2 block">Canal Financeiro Autorizado:</label>
+              <label class="text-xs uppercase font-bold text-zinc-300 mb-2 block">Canal Financeiro Autorizado:</label>
               <div class="flex flex-col gap-2">
                 <div
-                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', depositMethod === 'm-pesa' ? 'bg-primary/10 border-primary shadow-lg shadow-primary/10' : 'bg-surface-container-low border-white/[0.08] hover:border-white/20']"
+                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', depositMethod === 'm-pesa' ? 'bg-primary/20 border-primary shadow-lg shadow-primary/10' : 'bg-white/[0.04] border-white/[0.08] hover:border-white/20']"
                   @click="depositMethod = 'm-pesa'"
                 >
                   <q-radio v-model="depositMethod" val="m-pesa" dark color="primary" dense />
                   <div>
                     <div class="text-xs font-bold text-white">M-Pesa (Vodacom Moçambique)</div>
-                    <div class="text-[11px] text-on-surface-variant">Prompt USSD instantâneo no seu telemóvel</div>
+                    <div class="text-[11px] text-zinc-400">Prompt USSD instantâneo no seu telemóvel</div>
                   </div>
                 </div>
 
                 <div
-                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', depositMethod === 'e-mola' ? 'bg-primary/10 border-primary shadow-lg shadow-primary/10' : 'bg-surface-container-low border-white/[0.08] hover:border-white/20']"
+                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', depositMethod === 'e-mola' ? 'bg-primary/20 border-primary shadow-lg shadow-primary/10' : 'bg-white/[0.04] border-white/[0.08] hover:border-white/20']"
                   @click="depositMethod = 'e-mola'"
                 >
                   <q-radio v-model="depositMethod" val="e-mola" dark color="primary" dense />
                   <div>
                     <div class="text-xs font-bold text-white">e-Mola (Movitel Moçambique)</div>
-                    <div class="text-[11px] text-on-surface-variant">Autorização rápida via *898#</div>
+                    <div class="text-[11px] text-zinc-400">Autorização rápida via *898#</div>
                   </div>
                 </div>
 
                 <div
-                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', depositMethod === 'bank_transfer' ? 'bg-primary/10 border-primary shadow-lg shadow-primary/10' : 'bg-surface-container-low border-white/[0.08] hover:border-white/20']"
+                  :class="['p-3 rounded-xl border cursor-pointer transition-all flex items-center gap-3', depositMethod === 'bank_transfer' ? 'bg-primary/20 border-primary shadow-lg shadow-primary/10' : 'bg-white/[0.04] border-white/[0.08] hover:border-white/20']"
                   @click="depositMethod = 'bank_transfer'"
                 >
                   <q-radio v-model="depositMethod" val="bank_transfer" dark color="primary" dense />
                   <div>
                     <div class="text-xs font-bold text-white">Transferência Imediata (BCI / Millennium BIM)</div>
-                    <div class="text-[11px] text-on-surface-variant">Crédito direto no IBAN fiduciário institucional</div>
+                    <div class="text-[11px] text-zinc-400">Crédito direto no IBAN fiduciário institucional</div>
                   </div>
                 </div>
               </div>
@@ -483,7 +483,7 @@
 
             <!-- Phone or Account input -->
             <div>
-              <label class="text-xs uppercase font-bold text-on-surface-variant mb-1 block">
+              <label class="text-xs uppercase font-bold text-zinc-300 mb-1 block">
                 {{ depositMethod === 'bank_transfer' ? 'IBAN / Conta Bancária de Origem' : 'Número de Telemóvel para Confirmação' }}
               </label>
               <q-input

@@ -94,9 +94,17 @@ export const useAuthStore = defineStore('auth', {
           socketService.joinUser(this.user.id);
         }
         return this.user;
-      } catch {
-        this.logout();
-        return null;
+      } catch (err: any) {
+        // Se o servidor responder explicitamente com 401 ou 403, o token é inválido
+        if (err.response && (err.response.status === 401 || err.response.status === 403)) {
+          this.logout();
+          return null;
+        }
+        // Em caso de falha de rede temporária ou modo offline do PWA, preserva a sessão do utilizador
+        if (this.user) {
+          socketService.joinUser(this.user.id);
+        }
+        return this.user;
       }
     }
   }

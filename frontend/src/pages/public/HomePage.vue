@@ -24,19 +24,29 @@
             A plataforma soberana em Moçambique para aquisição de frotas executivas, supercarros, relógios de colecção e maquinaria industrial com liquidação em Meticais (MZN) e custódia bancária fiduciária.
           </p>
 
-          <!-- Action CTAs -->
-          <div class="flex flex-wrap items-center gap-3.5 pt-6 sm:pt-8">
+          <!-- Action CTAs (Responsive Mobile & Desktop Aligned) -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-6 sm:pt-8 w-full sm:w-auto">
             <router-link
               to="/catalog"
-              class="px-6 py-3.5 rounded-lg bg-[#E5A855] hover:bg-[#D49845] text-[#171717] text-xs sm:text-sm font-bold tracking-wide transition-all shadow-sm flex items-center gap-2 no-underline"
+              class="w-full sm:w-auto justify-center px-6 py-3.5 rounded-lg bg-[#E5A855] hover:bg-[#D49845] text-[#171717] text-xs sm:text-sm font-bold tracking-wide transition-all shadow-sm flex items-center gap-2 no-underline text-center"
             >
               <span>Explorar Leilões</span>
               <ArrowRight :size="16" />
             </router-link>
 
             <router-link
+              v-if="!authStore.isAuthenticated"
+              to="/auth/register"
+              class="w-full sm:w-auto justify-center px-6 py-3.5 rounded-lg bg-[#171717] hover:bg-[#B69A68] text-white text-xs sm:text-sm font-bold tracking-wide transition-all shadow-sm flex items-center gap-2 no-underline text-center border border-[#171717] hover:border-[#B69A68]"
+            >
+              <UserPlus :size="16" />
+              <span>Criar Conta Oficial</span>
+            </router-link>
+
+            <router-link
+              v-else
               to="/seller/dashboard"
-              class="px-6 py-3.5 rounded-lg bg-white text-[#171717] border border-[#E5A855]/70 hover:border-[#E5A855] hover:bg-[#FAF8F5] text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-xs flex items-center gap-2 no-underline"
+              class="w-full sm:w-auto justify-center px-6 py-3.5 rounded-lg bg-white text-[#171717] border border-[#E5A855]/70 hover:border-[#E5A855] hover:bg-[#FAF8F5] text-xs sm:text-sm font-semibold tracking-wide transition-all shadow-xs flex items-center gap-2 no-underline text-center"
             >
               <Store :size="16" class="text-[#E5A855]" />
               <span>Começar a Vender</span>
@@ -451,8 +461,10 @@ import {
   CheckCircle2,
   ShieldCheck,
   FileCheck,
-  HelpCircle
+  HelpCircle,
+  UserPlus
 } from 'lucide-vue-next';
+import { useAuthStore } from '../../stores/auth';
 import { useAuctionStore } from '../../stores/auction';
 import { formatMoneyDigits } from '../../utils/money';
 import AuctionCard from '../../components/auction/AuctionCard.vue';
@@ -460,6 +472,7 @@ import AuctionTimer from '../../components/auction/AuctionTimer.vue';
 import type { Auction } from '../../types';
 
 const router = useRouter();
+const authStore = useAuthStore();
 const auctionStore = useAuctionStore();
 
 const searchQuery = ref('');

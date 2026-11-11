@@ -96,7 +96,7 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign(
       { id: newUser.id, email: newUser.email, role: newUser.role },
       JWT_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '30d' }
     );
 
     const { password_hash, ...safeUser } = newUser.toObject();
@@ -160,7 +160,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
       JWT_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '30d' }
     );
 
     const { password_hash, ...safeUser } = user;

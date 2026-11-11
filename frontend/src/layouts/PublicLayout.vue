@@ -33,7 +33,9 @@
           <span class="text-[10px] leading-tight">Explorar</span>
         </router-link>
 
+        <!-- Tab 3: Ao Vivo (Se autenticado) OU Registar (Se visitante) -->
         <router-link
+          v-if="authStore.isAuthenticated"
           to="/catalog?status=active"
           class="flex flex-col items-center justify-center gap-0.5 no-underline transition-colors relative"
           :class="$route.query.status === 'active' ? 'text-[#B69A68] font-semibold' : 'text-[#777777]'"
@@ -46,11 +48,22 @@
         </router-link>
 
         <router-link
+          v-else
+          to="/auth/register"
+          class="flex flex-col items-center justify-center gap-0.5 no-underline transition-colors"
+          :class="$route.path === '/auth/register' ? 'text-[#B69A68] font-semibold' : 'text-[#777777]'"
+        >
+          <q-icon name="person_add" size="20px" />
+          <span class="text-[10px] leading-tight">Registar</span>
+        </router-link>
+
+        <!-- Tab 4: Painel do Perfil (Se autenticado) OU Entrar (Se visitante) -->
+        <router-link
           :to="authStore.isAuthenticated ? userDashboardRoute : '/auth/login'"
           class="flex flex-col items-center justify-center gap-0.5 no-underline transition-colors"
-          :class="($route.path.startsWith('/buyer') || $route.path.startsWith('/seller') || $route.path.startsWith('/admin') || $route.path.startsWith('/auth')) ? 'text-[#B69A68] font-semibold' : 'text-[#777777]'"
+          :class="($route.path.startsWith('/buyer') || $route.path.startsWith('/seller') || $route.path.startsWith('/admin') || $route.path === '/auth/login') ? 'text-[#B69A68] font-semibold' : 'text-[#777777]'"
         >
-          <q-icon :name="authStore.isAuthenticated ? 'dashboard' : 'person'" size="20px" />
+          <q-icon :name="authStore.isAuthenticated ? 'dashboard' : 'login'" size="20px" />
           <span class="text-[10px] leading-tight">{{ authStore.isAuthenticated ? (authStore.user?.role === 'admin' ? 'Admin' : (authStore.user?.role === 'seller' ? 'Vendas' : 'Conta')) : 'Entrar' }}</span>
         </router-link>
       </div>

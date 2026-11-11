@@ -52,7 +52,7 @@
         active-color="primary"
         indicator-color="primary"
         align="left"
-        class="border-b border-white/[0.08] bg-surface-container-low rounded-lg p-1"
+        class="border-b border-white/[0.08] bg-white/[0.04] rounded-lg p-1"
       >
         <q-tab name="overview" icon="dashboard" label="Visão Geral & Auditoria" no-caps class="text-xs font-bold" />
         <q-tab name="users" icon="group" :label="`Gestão de Utilizadores (${usersList.length})`" no-caps class="text-xs font-bold" />
@@ -75,11 +75,11 @@
                 <div
                   v-for="bid in dashboardData?.recentBids || []"
                   :key="bid.id"
-                  class="p-3.5 rounded-xl bg-surface-container-low/70 border border-white/[0.06] flex items-center justify-between"
+                  class="p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-between"
                 >
                   <div class="flex flex-col">
                     <span class="font-bold text-sm text-white">{{ bid.bidder_name }}</span>
-                    <span class="text-xs text-on-surface-variant">{{ bid.product_title }}</span>
+                    <span class="text-xs text-zinc-300">{{ bid.product_title }}</span>
                   </div>
                   <div class="flex flex-col items-end">
                     <span class="font-currency-display font-bold text-gold text-sm">{{ formatMoney(bid.amount) }}</span>
@@ -99,13 +99,13 @@
                 <div
                   v-for="log in dashboardData?.recentAuditLogs || []"
                   :key="log.id"
-                  class="p-3.5 rounded-xl bg-surface-container-low/70 border border-white/[0.06] flex items-center justify-between"
+                  class="p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-between"
                 >
                   <div class="flex items-start gap-2.5">
                     <q-badge color="primary" text-color="dark" class="font-bold text-[10px] uppercase px-1.5 py-0.5 mt-0.5">
                       {{ log.action }}
                     </q-badge>
-                    <span class="text-xs text-on-surface-variant leading-relaxed">{{ log.details }}</span>
+                    <span class="text-xs text-zinc-300 leading-relaxed">{{ log.details }}</span>
                   </div>
                   <div class="flex flex-col items-end shrink-0 pl-3">
                     <span class="text-xs font-semibold text-white">{{ log.user_name || 'Sistema' }}</span>
@@ -137,8 +137,8 @@
                   <tr v-for="u in usersList" :key="u.id">
                     <td class="font-mono text-muted text-xs">#{{ u.id }}</td>
                     <td class="font-bold text-white">{{ u.name }}</td>
-                    <td class="text-on-surface-variant text-sm">{{ u.email }}</td>
-                    <td class="text-on-surface-variant text-sm">{{ u.phone }}</td>
+                    <td class="text-zinc-300 text-sm">{{ u.email }}</td>
+                    <td class="text-zinc-300 text-sm">{{ u.phone }}</td>
                     <td>
                       <q-badge
                         :color="u.role === 'admin' ? 'negative' : u.role === 'seller' ? 'primary' : 'grey-8'"
@@ -207,9 +207,9 @@
                       <div class="font-bold text-white">{{ seller.company_name || seller.name }}</div>
                       <div class="text-muted text-xs">{{ seller.email }}</div>
                     </td>
-                    <td class="text-sm text-on-surface-variant">{{ seller.business_type === 'company' ? 'Empresa' : 'Particular' }}</td>
+                    <td class="text-sm text-zinc-300">{{ seller.business_type === 'company' ? 'Empresa' : 'Particular' }}</td>
                     <td>
-                      <span class="px-2 py-0.5 rounded bg-surface-container-high text-xs font-mono border border-white/10 text-on-surface">
+                      <span class="px-2 py-0.5 rounded bg-white/[0.08] text-xs font-mono border border-white/10 text-white">
                         {{ seller.nuit || 'Não aplicável' }}
                       </span>
                     </td>
@@ -288,7 +288,7 @@
                   <tr v-for="auc in auctionsList" :key="auc.id">
                     <td class="font-mono text-muted text-xs">#{{ auc.id }}</td>
                     <td class="font-bold text-white">{{ auc.title }}</td>
-                    <td class="text-sm text-on-surface-variant">{{ auc.seller_name }}</td>
+                    <td class="text-sm text-zinc-300">{{ auc.seller_name }}</td>
                     <td class="font-currency-display font-bold text-gold">{{ formatMoney(auc.current_price) }}</td>
                     <td class="text-sm">{{ auc.bid_count }} ofertas</td>
                     <td>

@@ -48,7 +48,7 @@
       <q-card class="glass-panel publish-banner text-white" flat>
         <div class="publish-banner-text">
           <h3 class="font-bold text-lg text-white">Pretende Publicar um Novo Lote de Leilão?</h3>
-          <p class="text-sm text-on-surface-variant">Utilize o nosso assistente passo-a-passo para publicar automóveis, equipamento industrial ou tecnologia.</p>
+          <p class="text-sm text-zinc-300">Utilize o nosso assistente passo-a-passo para publicar automóveis, equipamento industrial ou tecnologia.</p>
         </div>
         <q-btn
           unelevated
@@ -70,7 +70,7 @@
         active-color="primary"
         indicator-color="primary"
         align="left"
-        class="border-b border-white/[0.08] mb-4 bg-surface-container-low rounded-lg p-1"
+        class="border-b border-white/[0.08] mb-4 bg-white/[0.04] rounded-lg p-1"
       >
         <q-tab name="auctions" icon="gavel" :label="`Meus Leilões (${myAuctions.length})`" no-caps class="text-xs font-bold" />
         <q-tab name="products" icon="inventory_2" :label="`Meus Produtos (${myProducts.length})`" no-caps class="text-xs font-bold" />
@@ -82,7 +82,7 @@
         <div v-if="myAuctions.length === 0" class="empty-tab glass-panel">
           <Gavel :size="40" class="text-muted" />
           <h4 class="font-bold text-lg">Ainda não tem leilões criados</h4>
-          <p class="text-sm text-on-surface-variant">Clique em "Publicar Novo Leilão" para começar a receber lances em tempo real.</p>
+          <p class="text-sm text-zinc-300">Clique em "Publicar Novo Leilão" para começar a receber lances em tempo real.</p>
         </div>
         <div v-else class="glass-panel table-wrapper">
           <table class="data-table">
@@ -256,7 +256,7 @@
             <!-- STEP 1: Product Information -->
             <div v-if="currentStep === 1" class="step-view flex flex-col gap-3">
               <div>
-                <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Título do Produto / Lote *</label>
+                <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Título do Produto / Lote *</label>
                 <q-input
                   v-model="wizard.title"
                   dark
@@ -270,7 +270,7 @@
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Categoria *</label>
+                  <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Categoria *</label>
                   <q-select
                     v-model="wizard.categoryId"
                     :options="categoryOptions"
@@ -283,7 +283,7 @@
                   />
                 </div>
                 <div>
-                  <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Condição *</label>
+                  <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Condição *</label>
                   <q-select
                     v-model="wizard.condition"
                     :options="conditionOptions"
@@ -299,22 +299,22 @@
 
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Marca</label>
+                  <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Marca</label>
                   <q-input v-model="wizard.brand" dark filled dense color="primary" placeholder="Ex: Toyota, BMW" />
                 </div>
                 <div>
-                  <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Modelo</label>
+                  <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Modelo</label>
                   <q-input v-model="wizard.model" dark filled dense color="primary" placeholder="Ex: Land Cruiser" />
                 </div>
                 <div>
-                  <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Ano</label>
+                  <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Ano</label>
                   <q-input v-model.number="wizard.year" dark filled dense color="primary" type="number" placeholder="2023" />
                 </div>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Província *</label>
+                  <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Província *</label>
                   <q-select
                     v-model="wizard.locationProvince"
                     :options="provinceOptions"
@@ -327,13 +327,13 @@
                   />
                 </div>
                 <div>
-                  <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Cidade / Bairro</label>
+                  <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Cidade / Bairro</label>
                   <q-input v-model="wizard.locationCity" dark filled dense color="primary" placeholder="Ex: Sommerschield, Maputo" />
                 </div>
               </div>
 
               <div>
-                <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Descrição Editorial Completa *</label>
+                <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Descrição Editorial Completa *</label>
                 <q-input
                   v-model="wizard.description"
                   dark
@@ -348,12 +348,12 @@
 
             <!-- STEP 2: Product Photographs -->
             <div v-if="currentStep === 2" class="step-view flex flex-col gap-3">
-              <p class="text-xs text-on-surface-variant">
+              <p class="text-xs text-zinc-300">
                 Insira o URL de imagens em alta resolução do produto ou seleccione das sugestões automotivas.
               </p>
 
               <div>
-                <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">URL da Fotografia Principal *</label>
+                <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">URL da Fotografia Principal *</label>
                 <q-input
                   v-model="wizard.imageUrl1"
                   dark
@@ -365,7 +365,7 @@
               </div>
 
               <div>
-                <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">URL da Fotografia Secundária (Opcional)</label>
+                <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">URL da Fotografia Secundária (Opcional)</label>
                 <q-input
                   v-model="wizard.imageUrl2"
                   dark
@@ -378,7 +378,7 @@
 
               <!-- Preset Image Pickers -->
               <div class="mt-2">
-                <span class="text-xs text-on-surface-variant block mb-2 font-bold">Sugestões de Alta Qualidade:</span>
+                <span class="text-xs text-zinc-300 block mb-2 font-bold">Sugestões de Alta Qualidade:</span>
                 <div class="flex gap-2 flex-wrap">
                   <img
                     v-for="(img, idx) in presetImages"
@@ -397,7 +397,7 @@
             <div v-if="currentStep === 3" class="step-view flex flex-col gap-3">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Preço Inicial (MZN) *</label>
+                  <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Preço Inicial (MZN) *</label>
                   <q-input
                     v-model.number="wizard.startingPriceMt"
                     dark
@@ -409,7 +409,7 @@
                   />
                 </div>
                 <div>
-                  <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Preço de Reserva (Opcional)</label>
+                  <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Preço de Reserva (Opcional)</label>
                   <q-input
                     v-model.number="wizard.reservePriceMt"
                     dark
@@ -425,7 +425,7 @@
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Incremento Mínimo (MZN) *</label>
+                  <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Incremento Mínimo (MZN) *</label>
                   <q-input
                     v-model.number="wizard.bidIncrementMt"
                     dark
@@ -437,7 +437,7 @@
                   />
                 </div>
                 <div>
-                  <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Duração do Leilão *</label>
+                  <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Duração do Leilão *</label>
                   <q-select
                     v-model="wizard.durationDays"
                     :options="durationOptions"
@@ -458,12 +458,12 @@
                 <ShieldCheck :size="24" class="text-gold shrink-0 mt-0.5" />
                 <div class="text-xs">
                   <strong class="text-primary block font-bold mb-0.5">Compromisso de Veracidade MozBid</strong>
-                  <p class="text-on-surface-variant m-0">Ao submeter este anúncio, declara que o bem é de proveniência lícita e que possui toda a documentação legal moçambicana correspondente.</p>
+                  <p class="text-zinc-300 m-0">Ao submeter este anúncio, declara que o bem é de proveniência lícita e que possui toda a documentação legal moçambicana correspondente.</p>
                 </div>
               </div>
 
               <div>
-                <label class="form-label text-xs uppercase font-bold text-on-surface-variant mb-1 block">Condições de Entrega ou Levantamento</label>
+                <label class="form-label text-xs uppercase font-bold text-zinc-300 mb-1 block">Condições de Entrega ou Levantamento</label>
                 <q-input
                   v-model="wizard.deliveryTerms"
                   dark
@@ -479,14 +479,14 @@
             <!-- STEP 5: Review & Confirm -->
             <div v-if="currentStep === 5" class="step-view flex flex-col gap-3">
               <q-card class="bg-[#0d0d0d] border border-white/[0.08] rounded-xl p-4 flex flex-col gap-2 text-sm" flat>
-                <div class="flex justify-between"><span class="text-on-surface-variant">Título:</span><strong class="text-right">{{ wizard.title }}</strong></div>
-                <div class="flex justify-between"><span class="text-on-surface-variant">Preço Inicial:</span><strong class="text-primary">{{ Number(wizard.startingPriceMt).toLocaleString('pt-MZ') }} MT</strong></div>
-                <div class="flex justify-between"><span class="text-on-surface-variant">Incremento Mínimo:</span><strong>{{ Number(wizard.bidIncrementMt).toLocaleString('pt-MZ') }} MT</strong></div>
-                <div class="flex justify-between"><span class="text-on-surface-variant">Duração:</span><strong>{{ wizard.durationDays }} Dias</strong></div>
-                <div class="flex justify-between"><span class="text-on-surface-variant">Localização:</span><strong>{{ wizard.locationCity }}, {{ wizard.locationProvince }}</strong></div>
+                <div class="flex justify-between"><span class="text-zinc-300">Título:</span><strong class="text-right">{{ wizard.title }}</strong></div>
+                <div class="flex justify-between"><span class="text-zinc-300">Preço Inicial:</span><strong class="text-primary">{{ Number(wizard.startingPriceMt).toLocaleString('pt-MZ') }} MT</strong></div>
+                <div class="flex justify-between"><span class="text-zinc-300">Incremento Mínimo:</span><strong>{{ Number(wizard.bidIncrementMt).toLocaleString('pt-MZ') }} MT</strong></div>
+                <div class="flex justify-between"><span class="text-zinc-300">Duração:</span><strong>{{ wizard.durationDays }} Dias</strong></div>
+                <div class="flex justify-between"><span class="text-zinc-300">Localização:</span><strong>{{ wizard.locationCity }}, {{ wizard.locationProvince }}</strong></div>
               </q-card>
 
-              <p class="text-xs text-center text-on-surface-variant/80 mt-1">
+              <p class="text-xs text-center text-zinc-300/80 mt-1">
                 O leilão será publicado imediatamente na plataforma e estará aberto a licitações em tempo real.
               </p>
             </div>
