@@ -76,6 +76,35 @@
         </div>
       </div>
 
+      <!-- Winner Celebration Alert Banner at Top of Page -->
+      <div
+        v-if="isWinner"
+        class="mb-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#171717] via-[#2A241A] to-[#171717] border-2 border-[#E5A855] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl"
+      >
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-xl bg-[#E5A855] text-[#171717] flex items-center justify-center shrink-0">
+            <Trophy :size="24" />
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[10px] text-[#E5A855] uppercase font-bold tracking-wider">Adjudicação Homologada</span>
+            <h3 class="font-editorial text-lg sm:text-xl font-bold text-white">
+              Parabéns! Você arrematou este lote por {{ formatMoneyDigits(auction.current_price) }} MZN
+            </h3>
+            <span class="text-xs text-zinc-300">
+              Consulte as instruções oficiais de levantamento no painel lateral direito ou descarregue a sua guia de adjudicação.
+            </span>
+          </div>
+        </div>
+
+        <router-link
+          to="/buyer/dashboard?tab=wins"
+          class="px-5 py-2.5 rounded-xl bg-[#E5A855] hover:bg-[#D49845] text-[#171717] font-bold text-xs tracking-wide transition-all shadow-md no-underline flex items-center gap-1.5 self-start sm:self-auto shrink-0"
+        >
+          <span>Ir Para Minhas Arrematações</span>
+          <ArrowRight :size="15" />
+        </router-link>
+      </div>
+
       <!-- ASYMMETRIC 7:5 GRID LAYOUT -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
         <!-- 7 COLUMNS: Gallery, Description, Specs & Provenance -->
@@ -287,16 +316,28 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { Trophy, ArrowRight } from 'lucide-vue-next';
+import { useAuthStore } from '../../stores/auth';
 import { useAuctionStore } from '../../stores/auction';
+import { formatMoneyDigits } from '../../utils/money';
 import ProductGallery from '../../components/auction/ProductGallery.vue';
 import BidPanel from '../../components/auction/BidPanel.vue';
 
 const route = useRoute();
+const authStore = useAuthStore();
 const auctionStore = useAuctionStore();
 
 const activeTab = ref<'specs' | 'inspection' | 'legal'>('specs');
 const auctionId = computed(() => Number(route.params.id));
 const auction = computed(() => auctionStore.currentAuction);
+
+const isWinner = computed(() => {
+  if (!auction.value || !authStore.isAuthenticated || !authStore.user) return false;
+  const isEndedOrExpired = auction.value.status !== 'active' || new Date(auction.value.ends_at) <= new Date();
+  if (auction.value.winner_id === authStore.user.id) return true;
+  if (auction.value.is_leading && isEndedOrExpired) return true;
+  return false;
+});
 
 function conditionLabel(cond?: string) {
   switch (cond) {

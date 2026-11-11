@@ -240,9 +240,15 @@ router.get('/wins', async (req, res) => {
 
     const wins = await Promise.all(auctions.map(async (a) => {
       const prod = await Product.findOne({ id: a.product_id }).lean();
+      const seller = await User.findOne({ id: a.seller_id }).lean();
       const order = await Order.findOne({ auction_id: a.id, buyer_id: userId }).lean();
       const payment = order ? await Payment.findOne({ order_id: order.id }).lean() : null;
       const delivery = order ? await Delivery.findOne({ order_id: order.id }).lean() : null;
+
+      const city = prod?.location_city || 'Maputo';
+      const province = prod?.location_province || 'Maputo Cidade';
+      const pickupAddress = delivery?.address || `Armazém Fiduciário MozBid / Entreposto Aduaneiro, ${city}, ${province}`;
+      const pickupCode = delivery?.tracking_number || `MZB-REC-${String(a.id).padStart(4, '0')}-${String(userId).padStart(4, '0')}`;
 
       return {
         auction_id: a.id,
@@ -250,14 +256,19 @@ router.get('/wins', async (req, res) => {
         ends_at: a.ends_at,
         auction_status: a.status,
         title: prod?.title || `Lote #${a.id}`,
-        location_city: prod?.location_city,
+        location_city: city,
+        location_province: province,
+        seller_name: seller?.company_name || seller?.name || 'Consignador Verificado',
+        seller_phone: seller?.phone || '+258 84 100 2000',
         order_id: order?.id,
         order_status: order?.status || 'pending_payment',
         total_amount: order?.total_amount || a.current_price,
-        payment_status: payment?.status || 'pending',
+        payment_status: payment?.status || (order?.status === 'paid' ? 'completed' : 'pending'),
         payment_method: payment?.method || 'm-pesa',
         delivery_status: delivery?.status || 'processing',
-        tracking_number: delivery?.tracking_number || 'MZB-EXP-918231',
+        tracking_number: pickupCode,
+        pickup_address: pickupAddress,
+        pickup_code: pickupCode,
         primary_image: prod?.images?.find(i => i.is_primary)?.image_url || '/images/products/porsche-911-gt3rs.jpg'
       };
     }));

@@ -19,6 +19,7 @@ import {
   broadcastAuctionExtended,
   sendUserNotification
 } from '../sockets/index.js';
+import { finalizeAuction } from '../services/auctionEngine.js';
 
 const router = express.Router();
 
@@ -224,9 +225,15 @@ router.get('/:id', optionalAuthenticate, async (req, res) => {
       return res.status(400).json({ message: 'ID de leilão inválido' });
     }
 
-    const auction = await Auction.findOne({ id: auctionId }).lean();
+    let auction = await Auction.findOne({ id: auctionId });
     if (!auction) {
       return res.status(404).json({ message: 'Leilão não encontrado' });
+    }
+
+    // Auto-finalize if auction time has elapsed
+    if (auction.status === 'active' && new Date() >= new Date(auction.ends_at)) {
+      await finalizeAuction(auction);
+      auction = await Auction.findOne({ id: auctionId });
     }
 
     const product = await Product.findOne({ id: auction.product_id }).lean();
@@ -363,6 +370,25 @@ router.get('/:id', optionalAuthenticate, async (req, res) => {
   } catch (err) {
     console.error('Error fetching auction details (MongoDB):', err);
     return res.status(500).json({ message: 'Erro ao carregar detalhes do leilão', error: err.message });
+  }
+});
+
+// POST /api/v1/auctions/:id/test-expire — Rota de teste/demonstração: encerra o leilão e processa adjudicação imediata
+router.post('/:id/test-expire', optionalAuthenticate, async (req, res) => {
+  try {
+    const auctionId = parseInt(req.params.id);
+    const auction = await Auction.findOne({ id: auctionId });
+    if (!auction) {
+      return res.status(404).json({ message: 'Leilão não encontrado' });
+    }
+
+    auction.ends_at = new Date(Date.now() - 1000); // 1 segundo no passado
+    await auction.save();
+
+    const result = await finalizeAuction(auction);
+    return res.json({ message: 'Leilão expirado e adjudicado com sucesso', result });
+  } catch (err) {
+    return res.status(500).json({ message: 'Erro ao expirar leilão de teste', error: err.message });
   }
 });
 

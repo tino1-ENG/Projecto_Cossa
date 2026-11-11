@@ -27,6 +27,10 @@ const props = defineProps<{
   endsAt: string;
 }>();
 
+const emit = defineEmits<{
+  (e: 'expired'): void;
+}>();
+
 const time = ref<TimeRemaining>(getTimeRemaining(props.endsAt));
 let intervalId: any = null;
 
@@ -35,7 +39,11 @@ function pad(n: number): string {
 }
 
 function updateTime() {
+  const prevExpired = time.value?.isExpired || false;
   time.value = getTimeRemaining(props.endsAt);
+  if (!prevExpired && time.value.isExpired) {
+    emit('expired');
+  }
 }
 
 watch(() => props.endsAt, () => {

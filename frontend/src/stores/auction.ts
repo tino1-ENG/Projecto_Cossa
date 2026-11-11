@@ -237,9 +237,23 @@ export const useAuctionStore = defineStore('auction', {
       // Handle auction ended
       socketService.on('auction.ended', (data: any) => {
         if (this.currentAuction && this.currentAuction.id === data.auctionId) {
-          this.currentAuction.status = data.status;
-          notifStore.addToast('Leilão Encerrado', 'Este leilão chegou ao fim.', 'info');
+          this.currentAuction.status = data.auctionStatus || data.status || 'ended';
+          if (data.winnerId) this.currentAuction.winner_id = data.winnerId;
+          if (data.finalPrice) this.currentAuction.current_price = data.finalPrice;
         }
+
+        const updateEnded = (list: Auction[]) => {
+          const item = list.find(a => a.id === data.auctionId);
+          if (item) {
+            item.status = data.auctionStatus || data.status || 'ended';
+            if (data.winnerId) item.winner_id = data.winnerId;
+            if (data.finalPrice) item.current_price = data.finalPrice;
+          }
+        };
+
+        updateEnded(this.auctions);
+        updateEnded(this.featuredAuctions);
+        updateEnded(this.endingSoonAuctions);
       });
     }
   }

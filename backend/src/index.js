@@ -20,6 +20,7 @@ import {
   broadcastAuctionEnded,
   sendUserNotification
 } from './sockets/index.js';
+import { finalizeAuction } from './services/auctionEngine.js';
 
 import authRoutes from './routes/auth.js';
 import auctionRoutes from './routes/auctions.js';
@@ -118,109 +119,10 @@ async function checkExpiredAuctions() {
     });
 
     for (const auction of expiredAuctions) {
-      const product = await Product.findOne({ id: auction.product_id }).lean();
-      const productTitle = product?.title || `Lote #${auction.id}`;
-
-      console.log(`[Auction Engine] Processing closure for Auction #${auction.id} ("${productTitle}")`);
-
-      const reserveMet = !auction.reserve_price || auction.current_price >= auction.reserve_price;
-      const hasWinner = Boolean(auction.winner_id && auction.bid_count > 0 && reserveMet);
-      const newStatus = hasWinner ? 'awaiting_payment' : 'unsold';
-
-      auction.status = newStatus;
-      await auction.save();
-
-      // Mirror status update to SQLite
-      try {
-        execute("UPDATE auctions SET status = ?, updated_at = datetime('now', 'utc') WHERE id = ?", [newStatus, auction.id]);
-      } catch (e) {
-        console.warn('SQLite auction expiration mirror warning:', e.message);
-      }
-
-      if (hasWinner) {
-        // Check if order already exists (idempotency)
-        let order = await Order.findOne({ auction_id: auction.id });
-        let orderId = order?.id;
-
-        if (!order) {
-          orderId = await getNextSequence('order_id');
-          order = new Order({
-            id: orderId,
-            auction_id: auction.id,
-            buyer_id: auction.winner_id,
-            seller_id: auction.seller_id,
-            total_amount: auction.current_price,
-            status: 'pending_payment'
-          });
-          await order.save();
-
-          // Mirror order to SQLite
-          try {
-            execute(`
-              INSERT INTO orders (id, auction_id, buyer_id, seller_id, total_amount, status)
-              VALUES (?, ?, ?, ?, ?, 'pending_payment')
-            `, [orderId, auction.id, auction.winner_id, auction.seller_id, auction.current_price]);
-          } catch (e) {
-            console.warn('SQLite order mirror warning:', e.message);
-          }
-        }
-
-        // Notify winner in MongoDB
-        const notifWinner = new Notification({
-          id: await getNextSequence('notification_id'),
-          user_id: auction.winner_id,
-          title: 'PARABÉNS! Ganhou o leilão!',
-          message: `Você foi o vencedor do leilão "${productTitle}" com a licitação vencedora de ${(auction.current_price / 100).toLocaleString('pt-MZ')} MT. Proceda ao pagamento.`,
-          type: 'auction_won',
-          is_read: false,
-          link: '/buyer/wins'
-        });
-        await notifWinner.save();
-
-        // Notify seller in MongoDB
-        const notifSeller = new Notification({
-          id: await getNextSequence('notification_id'),
-          user_id: auction.seller_id,
-          title: 'Leilão Concluído com Sucesso!',
-          message: `O leilão "${productTitle}" foi concluído por ${(auction.current_price / 100).toLocaleString('pt-MZ')} MT. Aguardando pagamento do comprador.`,
-          type: 'auction_ended',
-          is_read: false,
-          link: '/seller/orders'
-        });
-        await notifSeller.save();
-
-        broadcastAuctionEnded(auction.id, {
-          auctionId: auction.id,
-          status: 'ended',
-          winnerId: auction.winner_id,
-          finalPrice: auction.current_price,
-          reserveMet: true,
-          orderId
-        });
-      } else {
-        // Notify seller of unsold
-        const notifUnsold = new Notification({
-          id: await getNextSequence('notification_id'),
-          user_id: auction.seller_id,
-          title: 'Leilão Encerrado Sem Vencedor',
-          message: `O leilão "${productTitle}" encerrou sem atingir o preço de reserva ou sem licitações válidas.`,
-          type: 'auction_ended',
-          is_read: false,
-          link: '/seller/auctions'
-        });
-        await notifUnsold.save();
-
-        broadcastAuctionEnded(auction.id, {
-          auctionId: auction.id,
-          status: 'unsold',
-          winnerId: null,
-          finalPrice: auction.current_price,
-          reserveMet: false
-        });
-      }
+      await finalizeAuction(auction);
     }
   } catch (err) {
-    console.error('[Auction Engine Error]:', err);
+    console.error('[Auction Engine Periodic Check Error]:', err);
   }
 }
 

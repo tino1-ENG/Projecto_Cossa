@@ -356,10 +356,13 @@ def build_pdf(filename):
         ("Passo 6: Disputa de Licitação em Tempo Real ao Vivo",
          "Navegue até um lote activo (ex: Lote #1 — Porsche 911). Abra a página de detalhes. Mostre o relógio em contagem decrescente, o preço de reserva, o incremento mínimo e submeta um lance. Demonstre a actualização imediata sem necessidade de recarregar a página (F5)."),
         
-        ("Passo 7: Painel do Vendedor e Publicação Assistida de Lote",
+        ("Passo 7: Encerramento do Tempo, Vitória Homologada e Instruções de Levantamento",
+         "Quando o tempo estimado expira (ou quando o lote encerra), a plataforma adjudica formalmente o bem ao comprador líder. Surge imediatamente o banner de comemoração em dourado ('🏆 Parabéns! Você Ganhou Este Leilão!') com as instruções detalhadas de levantamento: morada do armazém/entreposto, documentos obrigatórios a apresentar (BI/DIRE e NUIT), vistoria pericial de 120 pontos, contactos do fiel depositário e botão para gerar e imprimir a Guia Oficial de Adjudicação."),
+
+        ("Passo 8: Painel do Vendedor e Publicação Assistida de Lote",
          "Inicie sessão com um Vendedor (comercial@autolux.co.mz). Mostre o assistente passo-a-passo para cadastrar um novo activo com província, categoria, fotografias, preço inicial e valor de reserva confidencial."),
         
-        ("Passo 8: Administração Central e Auditoria Notarial",
+        ("Passo 9: Administração Central e Auditoria Notarial",
          "Mostre o painel do administrador com monitorização de utilizadores, moderação de leilões activos e visualização de logs de auditoria imutáveis com carimbo de data e hora.")
     ]
 

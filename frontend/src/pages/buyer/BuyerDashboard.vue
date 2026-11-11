@@ -206,6 +206,16 @@
 
                 <div class="flex flex-col gap-2 pt-2">
                   <q-btn
+                    unelevated
+                    no-caps
+                    color="white"
+                    text-color="dark"
+                    icon="local_shipping"
+                    label="Instruções de Levantamento & Guia"
+                    class="font-bold text-xs py-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#B69A68] hover:text-white transition-colors"
+                    @click="openPickupModal(win)"
+                  />
+                  <q-btn
                     v-if="win.payment_status !== 'completed'"
                     unelevated
                     no-caps
@@ -513,6 +523,94 @@
           </div>
         </q-card>
       </q-dialog>
+
+      <!-- MODAL OFICIAL DE INSTRUÇÕES DE LEVANTAMENTO PRESENCIAL -->
+      <q-dialog v-model="showPickupModal" persistent :maximized="$q.screen.xs">
+        <q-card class="bg-[#141414] border border-[#E5A855]/40 rounded-2xl overflow-hidden shadow-2xl text-white w-full max-w-xl" flat>
+          <div class="flex items-center justify-between p-4 border-b border-white/[0.08] bg-[#0f0f0f]">
+            <div class="flex items-center gap-2">
+              <PackageCheck :size="20" class="text-gold" />
+              <h3 class="font-bold text-base text-white">Guia Oficial de Levantamento e Desalfandegamento</h3>
+            </div>
+            <q-btn flat round dense icon="close" @click="showPickupModal = false" />
+          </div>
+
+          <div class="p-5 flex flex-col gap-4 text-xs sm:text-sm">
+            <div class="p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col gap-1">
+              <span class="text-[10px] text-[#B69A68] uppercase font-bold tracking-wider">Lote Homologado</span>
+              <h4 class="font-bold text-white text-base">{{ selectedWinForPickup?.title }}</h4>
+              <div class="flex items-center justify-between pt-2 border-t border-white/[0.08] mt-1 text-xs">
+                <span class="text-zinc-400">Código de Levantamento:</span>
+                <strong class="font-mono text-[#E5A855] text-sm">{{ selectedWinForPickup?.pickup_code }}</strong>
+              </div>
+            </div>
+
+            <!-- Passos de Levantamento -->
+            <div class="flex flex-col gap-3">
+              <!-- Local -->
+              <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-start gap-3">
+                <MapPin :size="18" class="text-[#E5A855] shrink-0 mt-0.5" />
+                <div>
+                  <strong class="text-white block font-bold text-xs uppercase tracking-wider">1. Local Físico de Levantamento:</strong>
+                  <span class="text-zinc-300 text-xs leading-relaxed block mt-0.5">
+                    {{ selectedWinForPickup?.pickup_address || 'Entreposto Aduaneiro / Armazém Portuário MozBid, Maputo, Moçambique' }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Documentos -->
+              <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-start gap-3">
+                <FileText :size="18" class="text-[#E5A855] shrink-0 mt-0.5" />
+                <div>
+                  <strong class="text-white block font-bold text-xs uppercase tracking-wider">2. Documentos Obrigatórios a Apresentar:</strong>
+                  <span class="text-zinc-300 text-xs leading-relaxed block mt-0.5">
+                    • Bilhete de Identidade (BI) ou DIRE original do titular arrematante.<br />
+                    • Cartão de NUIT do comprador.<br />
+                    • Comprovativo ou Guia de Arrematação Oficial MozBid.
+                  </span>
+                </div>
+              </div>
+
+              <!-- Vistoria & Cartório -->
+              <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-start gap-3">
+                <ShieldCheck :size="18" class="text-[#E5A855] shrink-0 mt-0.5" />
+                <div>
+                  <strong class="text-white block font-bold text-xs uppercase tracking-wider">3. Vistoria Final e Transmissão de Propriedade:</strong>
+                  <span class="text-zinc-300 text-xs leading-relaxed block mt-0.5">
+                    O bem aguarda no armazém sob custódia fiduciária. Após conferência do laudo pericial, é outorgada a transmissão de propriedade no Cartório Notarial competente.
+                  </span>
+                </div>
+              </div>
+
+              <!-- Fiel Depositário -->
+              <div class="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-start gap-3">
+                <Phone :size="18" class="text-[#E5A855] shrink-0 mt-0.5" />
+                <div>
+                  <strong class="text-white block font-bold text-xs uppercase tracking-wider">4. Agendamento com o Fiel Depositário:</strong>
+                  <span class="text-zinc-300 text-xs leading-relaxed block mt-0.5">
+                    Linha Directa: <strong class="text-white font-mono">+258 84 100 2000</strong> / <strong class="text-white font-mono">+258 82 100 2000</strong><br />
+                    Horário: Segunda a Sexta-feira, das 08:00 às 17:00 | Sábados: 09:00 às 13:00.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between p-4 border-t border-white/[0.08] bg-[#0f0f0f]">
+            <q-btn flat no-caps color="grey-5" label="Fechar" @click="showPickupModal = false" />
+            <q-btn
+              unelevated
+              no-caps
+              color="primary"
+              text-color="dark"
+              icon="print"
+              label="Imprimir Guia Oficial"
+              class="font-bold px-4 py-2 rounded-lg"
+              @click="printWinPickupGuide(selectedWinForPickup)"
+            />
+          </div>
+        </q-card>
+      </q-dialog>
     </div>
   </q-page>
 </template>
@@ -529,7 +627,8 @@ import AuctionTimer from '../../components/auction/AuctionTimer.vue';
 import AuctionCard from '../../components/auction/AuctionCard.vue';
 import {
   Gavel, Trophy, AlertCircle, CheckCircle2, Heart,
-  Bell, Clock, CreditCard, ShieldCheck
+  Bell, Clock, CreditCard, ShieldCheck,
+  PackageCheck, MapPin, FileText, Phone, Printer
 } from 'lucide-vue-next';
 
 const $q = useQuasar();
@@ -541,6 +640,120 @@ const dashboardData = ref<any>(null);
 const myBids = ref<any[]>([]);
 const wonAuctions = ref<any[]>([]);
 const watchlistItems = ref<any[]>([]);
+
+// Pickup Modal State
+const showPickupModal = ref(false);
+const selectedWinForPickup = ref<any>(null);
+
+function openPickupModal(win: any) {
+  selectedWinForPickup.value = win;
+  showPickupModal.value = true;
+}
+
+function printWinPickupGuide(win: any) {
+  if (!win) return;
+  const printWindow = window.open('', '_blank');
+  const title = win.title || `Lote #${win.auction_id}`;
+  const price = formatMoney(win.current_price || win.total_amount);
+  const city = win.location_city || 'Maputo';
+  const province = win.location_province || 'Maputo Cidade';
+  const buyerName = authStore.user?.name || 'Comprador Oficial';
+  const buyerEmail = authStore.user?.email || '';
+  const dateStr = new Date().toLocaleDateString('pt-MZ', { day: '2-digit', month: 'long', year: 'numeric' });
+  const code = win.pickup_code || `MZB-REC-LOTE#${win.auction_id}`;
+
+  if (!printWindow) {
+    window.print();
+    return;
+  }
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="pt">
+    <head>
+      <meta charset="utf-8">
+      <title>Guia Oficial de Levantamento — Lote #${win.auction_id} — MozBid</title>
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; padding: 40px; color: #171717; max-width: 800px; margin: 0 auto; line-height: 1.5; }
+        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #B69A68; padding-bottom: 20px; margin-bottom: 25px; }
+        .logo { font-size: 26px; font-weight: 800; letter-spacing: 2px; }
+        .sublogo { font-size: 10px; color: #B69A68; letter-spacing: 3px; font-weight: bold; }
+        .title { font-size: 18px; font-weight: bold; margin-bottom: 15px; color: #171717; }
+        .box { background: #FAF9F6; border: 1px solid #E8E3DA; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .item strong { display: block; font-size: 11px; text-transform: uppercase; color: #777; margin-bottom: 4px; }
+        .item span { font-size: 14px; font-weight: 600; }
+        .instructions ol { padding-left: 20px; }
+        .instructions li { margin-bottom: 10px; font-size: 13px; color: #333; }
+        .stamp { margin-top: 50px; padding-top: 25px; border-top: 1px dashed #CCC; display: flex; justify-content: space-between; font-size: 12px; color: #555; }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <div>
+          <div class="logo">MOZBID</div>
+          <div class="sublogo">MOÇAMBIQUE • LEILÕES OFICIAIS</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: bold; color: #B69A68;">GUIA OFICIAL DE ADJUDICAÇÃO</div>
+          <div style="font-size: 11px; color: #666;">CÓDIGO: ${code}</div>
+          <div style="font-size: 11px; color: #666;">Data de Emissão: ${dateStr}</div>
+        </div>
+      </div>
+
+      <div class="title">Comprovativo de Arrematação e Ordem de Levantamento Presencial</div>
+
+      <div class="box">
+        <div class="grid">
+          <div class="item">
+            <strong>Lote Arrematado:</strong>
+            <span>Lote #${win.auction_id} — ${title}</span>
+          </div>
+          <div class="item">
+            <strong>Valor Final da Arrematação:</strong>
+            <span style="color: #B69A68;">${price}</span>
+          </div>
+          <div class="item">
+            <strong>Titular Vencedor:</strong>
+            <span>${buyerName} (${buyerEmail})</span>
+          </div>
+          <div class="item">
+            <strong>Local de Levantamento:</strong>
+            <span>Entreposto Aduaneiro / Armazém MozBid (${city}, ${province})</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="instructions">
+        <h4 style="margin-bottom: 10px; text-transform: uppercase; font-size: 12px; color: #171717; letter-spacing: 1px;">Procedimentos Obrigatórios para Entrega do Bem:</h4>
+        <ol>
+          <li><strong>Apresentação Documental Obrigatória:</strong> O titular deve apresentar o Bilhete de Identidade (BI) ou DIRE original e o cartão de NUIT no entreposto de levantamento.</li>
+          <li><strong>Conferência Pericial Presencial:</strong> O arrematante tem direito a realizar a vistoria final física de conformidade no armazém conforme o Relatório Pericial de 120 pontos emitido pela MozBid.</li>
+          <li><strong>Liquidação e Custódia Fiduciária:</strong> O valor residual (deduzida a caução) deve ser liquidado em Meticais (MZN) através dos canais autorizados da plataforma (M-Pesa, e-Mola ou Transferência Bancária).</li>
+          <li><strong>Outorga e Declaração de Venda:</strong> Assinatura presencial do termo de entrega e emissão da declaração para registo de propriedade definitiva no Cartório Notarial.</li>
+          <li><strong>Contacto e Agendamento do Fiel Depositário:</strong> Agendamento prévio através da linha institucional (+258 84 100 2000 / suporte@mozbid.co.mz). Horário: Segunda a Sexta, das 08:00 às 17:00.</li>
+        </ol>
+      </div>
+
+      <div class="stamp">
+        <div>
+          <div>________________________________________________</div>
+          <div style="margin-top: 4px;">Assinatura do Arrematante</div>
+        </div>
+        <div style="text-align: right;">
+          <div>________________________________________________</div>
+          <div style="margin-top: 4px;">Fiel Depositário Oficial MozBid</div>
+        </div>
+      </div>
+    </body>
+    </html>
+  `);
+  printWindow.document.close();
+  printWindow.focus();
+  setTimeout(() => {
+    printWindow.print();
+  }, 250);
+}
 
 // Escrow Deposit State
 const showDepositModal = ref(false);
