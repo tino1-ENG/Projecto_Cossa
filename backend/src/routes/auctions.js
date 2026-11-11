@@ -11,7 +11,6 @@ import {
   AuditLog,
   getNextSequence
 } from '../models/index.js';
-import { queryOne, queryAll, execute, runTransaction } from '../database/db.js';
 import { authenticate, optionalAuthenticate } from '../middleware/auth.js';
 import {
   broadcastAuctionUpdate,
@@ -201,19 +200,7 @@ router.get('/', optionalAuthenticate, async (req, res) => {
     });
   } catch (err) {
     console.error('Error fetching auctions (MongoDB):', err);
-    // Fallback to SQLite if Mongo had an issue
-    try {
-      const fallbackAuctions = queryAll('SELECT a.*, p.title FROM auctions a JOIN products p ON a.product_id = p.id LIMIT 12');
-      return res.json({
-        items: fallbackAuctions,
-        total: fallbackAuctions.length,
-        page: 1,
-        limit: 12,
-        totalPages: 1
-      });
-    } catch {
-      return res.status(500).json({ message: 'Erro ao carregar leilões', error: err.message });
-    }
+    return res.status(500).json({ message: 'Erro ao carregar leilões', error: err.message });
   }
 });
 
@@ -410,7 +397,7 @@ async function acquireAuctionLock(auctionId) {
   };
 }
 
-// POST /api/v1/auctions/:id/bids — Core Transactional Bidding Engine (MongoDB + SQLite Mirror)
+// POST /api/v1/auctions/:id/bids — Core Transactional Bidding Engine (MongoDB)
 router.post('/:id/bids', authenticate, async (req, res) => {
   const auctionId = parseInt(req.params.id);
   const amount = parseInt(req.body.amount); // centavos MZN
@@ -440,7 +427,6 @@ router.post('/:id/bids', authenticate, async (req, res) => {
     if (now >= endsAt) {
       auction.status = 'ended';
       await auction.save();
-      execute("UPDATE auctions SET status = 'ended' WHERE id = ?", [auctionId]);
       return res.status(409).json({ message: 'O leilão já encerrou. As licitações estão fechadas.' });
     }
 
@@ -490,16 +476,6 @@ router.post('/:id/bids', authenticate, async (req, res) => {
     });
     await newBid.save();
 
-    // Mirror to SQLite
-    try {
-      execute(`
-        INSERT INTO bids (id, auction_id, bidder_id, amount, is_auto)
-        VALUES (?, ?, ?, ?, 0)
-      `, [bidSeq, auctionId, userId, amount]);
-    } catch (e) {
-      console.warn('SQLite bid mirror warning:', e.message);
-    }
-
     // 8. Update auction record
     let finalWinnerId = userId;
     let finalCurrentPrice = amount;
@@ -529,16 +505,6 @@ router.post('/:id/bids', authenticate, async (req, res) => {
       });
       await autoBidDoc.save();
 
-      // Mirror to SQLite
-      try {
-        execute(`
-          INSERT INTO bids (id, auction_id, bidder_id, amount, is_auto)
-          VALUES (?, ?, ?, ?, 1)
-        `, [autoBidSeq, auctionId, competingAutoBid.user_id, counterAmount]);
-      } catch (e) {
-        console.warn('SQLite auto-bid mirror warning:', e.message);
-      }
-
       finalWinnerId = competingAutoBid.user_id;
       finalCurrentPrice = counterAmount;
       finalBidCount += 1;
@@ -558,22 +524,6 @@ router.post('/:id/bids', authenticate, async (req, res) => {
       auction.auto_extend_count += 1;
     }
     await auction.save();
-
-    // Mirror auction update to SQLite
-    try {
-      execute(`
-        UPDATE auctions 
-        SET current_price = ?,
-            bid_count = ?,
-            winner_id = ?,
-            ends_at = ?,
-            auto_extend_count = auto_extend_count + ?,
-            updated_at = datetime('now', 'utc')
-        WHERE id = ?
-      `, [finalCurrentPrice, finalBidCount, finalWinnerId, updatedEndsAt.toISOString(), wasExtended ? 1 : 0, auctionId]);
-    } catch (e) {
-      console.warn('SQLite auction update mirror warning:', e.message);
-    }
 
     // 10. Audit log
     const audit = new AuditLog({
@@ -655,7 +605,7 @@ router.post('/:id/bids', authenticate, async (req, res) => {
   }
 });
 
-// POST /api/v1/auctions/:id/automatic-bids — Set proxy max bid (MongoDB + SQLite)
+// POST /api/v1/auctions/:id/automatic-bids — Set proxy max bid (MongoDB)
 router.post('/:id/automatic-bids', authenticate, async (req, res) => {
   const auctionId = parseInt(req.params.id);
   const maxAmount = parseInt(req.body.max_amount); // centavos MZN
@@ -682,17 +632,6 @@ router.post('/:id/automatic-bids', authenticate, async (req, res) => {
       { max_amount: maxAmount, is_active: true },
       { upsert: true, new: true }
     );
-
-    // Mirror to SQLite
-    try {
-      execute(`
-        INSERT INTO auto_bids (auction_id, user_id, max_amount)
-        VALUES (?, ?, ?)
-        ON CONFLICT(auction_id, user_id) DO UPDATE SET max_amount = excluded.max_amount, updated_at = datetime('now', 'utc')
-      `, [auctionId, userId, maxAmount]);
-    } catch (e) {
-      console.warn('SQLite auto_bids mirror warning:', e.message);
-    }
 
     return res.json({
       message: 'Licitação automática configurada com sucesso',

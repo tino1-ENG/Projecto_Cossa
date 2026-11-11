@@ -7,7 +7,6 @@ import {
   User,
   getNextSequence
 } from '../models/index.js';
-import { execute } from '../database/db.js';
 import { broadcastAuctionEnded } from '../sockets/index.js';
 
 /**
@@ -41,13 +40,6 @@ export async function finalizeAuction(auction) {
     auction.status = newStatus;
     await auction.save();
 
-    // 2. Atualizar no SQLite
-    try {
-      execute("UPDATE auctions SET status = ?, updated_at = datetime('now', 'utc') WHERE id = ?", [newStatus, auction.id]);
-    } catch (e) {
-      console.warn('SQLite auction expiration mirror warning:', e.message);
-    }
-
     if (hasWinner) {
       // 3. Criar Encomenda (Order)
       let order = await Order.findOne({ auction_id: auction.id });
@@ -64,15 +56,6 @@ export async function finalizeAuction(auction) {
           status: 'pending_payment'
         });
         await order.save();
-
-        try {
-          execute(`
-            INSERT INTO orders (id, auction_id, buyer_id, seller_id, total_amount, status)
-            VALUES (?, ?, ?, ?, ?, 'pending_payment')
-          `, [orderId, auction.id, auction.winner_id, auction.seller_id, auction.current_price]);
-        } catch (e) {
-          console.warn('SQLite order mirror warning:', e.message);
-        }
 
         // Criar registo de Entrega / Levantamento presencial
         const deliverySeq = await getNextSequence('delivery_id');

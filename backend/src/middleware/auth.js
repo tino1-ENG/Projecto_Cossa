@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import { User } from '../models/index.js';
-import { queryOne } from '../database/db.js';
 
 export const JWT_SECRET = process.env.JWT_SECRET || 'mozbid_super_secret_jwt_key_2026';
 
@@ -13,14 +12,7 @@ export async function authenticate(req, res, next) {
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    let user = null;
-    try {
-      user = await User.findOne({ id: decoded.id }).lean();
-    } catch {}
-
-    if (!user) {
-      user = queryOne('SELECT id, name, email, phone, role, is_verified, balance, city, province FROM users WHERE id = ?', [decoded.id]);
-    }
+    const user = await User.findOne({ id: decoded.id }).lean();
     
     if (!user) {
       return res.status(401).json({ message: 'Utilizador não encontrado ou sessão inválida' });
@@ -39,14 +31,7 @@ export async function optionalAuthenticate(req, res, next) {
     const token = authHeader.split(' ')[1];
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
-      let user = null;
-      try {
-        user = await User.findOne({ id: decoded.id }).lean();
-      } catch {}
-
-      if (!user) {
-        user = queryOne('SELECT id, name, email, phone, role, is_verified, balance, city, province FROM users WHERE id = ?', [decoded.id]);
-      }
+      const user = await User.findOne({ id: decoded.id }).lean();
 
       if (user) {
         req.user = user;

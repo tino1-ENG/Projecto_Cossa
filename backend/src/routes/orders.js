@@ -9,7 +9,6 @@ import {
   Notification,
   getNextSequence
 } from '../models/index.js';
-import { queryOne, queryAll, execute, runTransaction } from '../database/db.js';
 import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -139,33 +138,6 @@ router.post('/:id/pay', async (req, res) => {
       link: '/buyer/wins'
     });
     await notifBuyer.save();
-
-    // 5. Mirror to SQLite
-    try {
-      execute(`
-        INSERT INTO payments (id, order_id, user_id, amount, method, status, reference, phone_number)
-        VALUES (?, ?, ?, ?, ?, 'completed', ?, ?)
-      `, [paymentSeq, orderId, userId, order.total_amount, method, reference, phoneNumber || req.user.phone]);
-
-      execute("UPDATE orders SET status = 'paid', updated_at = datetime('now', 'utc') WHERE id = ?", [orderId]);
-
-      execute(`
-        INSERT INTO deliveries (id, order_id, tracking_number, status, carrier, delivery_address, estimated_date)
-        VALUES (?, ?, ?, 'pending', 'MozBid Express Logistics', ?, ?)
-      `, [deliverySeq, orderId, trackingNumber, deliveryAddress || 'Av. Julius Nyerere, Maputo', in3Days.toISOString()]);
-
-      execute(`
-        INSERT INTO notifications (id, user_id, title, message, type, is_read, link)
-        VALUES (?, ?, 'Pagamento Confirmado!', ?, 'payment_received', 0, '/seller/orders')
-      `, [notifSellerSeq, order.seller_id, `O comprador liquidou a encomenda #${orderId} no valor de ${(order.total_amount / 100).toLocaleString('pt-MZ')} MT via ${method.toUpperCase()}.`]);
-
-      execute(`
-        INSERT INTO notifications (id, user_id, title, message, type, is_read, link)
-        VALUES (?, ?, 'Pagamento Efectuado com Sucesso', ?, 'system', 0, '/buyer/wins')
-      `, [notifBuyerSeq, userId, `O seu pagamento com referência ${reference} foi confirmado. Acompanhe a entrega com o código ${trackingNumber}.`]);
-    } catch (sqliteErr) {
-      console.warn('SQLite order payment mirror warning:', sqliteErr.message);
-    }
 
     return res.json({
       message: 'Pagamento processado e confirmado com sucesso!',

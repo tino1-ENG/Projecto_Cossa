@@ -291,9 +291,9 @@ def build_pdf(filename):
             Paragraph("Broadcast instantâneo de novos lances, sincronização de cronómetros e notificações em direto.", body_style)
         ],
         [
-            Paragraph("<b>Bases de Dados</b>", body_style),
-            Paragraph("MongoDB (Mongoose ODM) + SQLite (Atomic Engine)", body_style),
-            Paragraph("Persistência robusta de perfis, auditoria, auditoria notarial e transacções atómicas de lances.", body_style)
+            Paragraph("<b>Base de Dados</b>", body_style),
+            Paragraph("MongoDB 7+ (Mongoose ODM Soberano)", body_style),
+            Paragraph("Persistência robusta NoSQL, alta disponibilidade, auditoria notarial, integridade referencial e transacções atómicas de licitações.", body_style)
         ],
         [
             Paragraph("<b>Segurança</b>", body_style),

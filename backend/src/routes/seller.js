@@ -10,7 +10,6 @@ import {
   AuditLog,
   getNextSequence
 } from '../models/index.js';
-import { queryOne, queryAll, execute, runTransaction } from '../database/db.js';
 import { authenticate, requireRole } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -245,19 +244,6 @@ router.post('/auctions', async (req, res) => {
       details: `Lote #${auctionId} ("${title}") criado com sucesso no MongoDB`
     });
 
-    // Mirror to SQLite if active
-    try {
-      execute(`
-        INSERT INTO products (id, seller_id, category_id, title, description, brand, model, year, condition, location_province, location_city)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `, [productId, sellerId, categoryId, title, description, brand, model, year, condition, locationProvince, locationCity]);
-
-      execute(`
-        INSERT INTO auctions (id, product_id, seller_id, status, starting_price, reserve_price, current_price, bid_increment, bid_count, starts_at, ends_at)
-        VALUES (?, ?, ?, 'active', ?, ?, ?, ?, 0, ?, ?)
-      `, [auctionId, productId, sellerId, startingPriceNum, reservePriceNum, startingPriceNum, bidIncrementNum, now.toISOString(), endsAt.toISOString()]);
-    } catch {}
-
     return res.status(201).json({
       message: 'Leilão publicado com sucesso no MongoDB!',
       auctionId,
@@ -295,12 +281,6 @@ router.post('/orders/:id/ship', async (req, res) => {
     );
 
     await Order.updateOne({ id: orderId }, { status: 'processing' });
-
-    // SQLite mirror
-    try {
-      execute("UPDATE orders SET status = 'processing' WHERE id = ?", [orderId]);
-      execute("UPDATE deliveries SET status = 'shipped', tracking_number = ? WHERE order_id = ?", [trackCode, orderId]);
-    } catch {}
 
     return res.json({
       message: 'Expedição do lote registada com sucesso',

@@ -9,7 +9,6 @@ import {
   AuditLog,
   getNextSequence
 } from '../models/index.js';
-import { queryOne, queryAll, execute } from '../database/db.js';
 import { authenticate, requireRole } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -118,18 +117,6 @@ router.patch('/users/:id', async (req, res) => {
 
     await User.findOneAndUpdate({ id: userId }, { $set: updateFields });
 
-    // Mirror to SQLite
-    try {
-      if (role !== undefined) {
-        execute('UPDATE users SET role = ? WHERE id = ?', [role, userId]);
-      }
-      if (is_verified !== undefined) {
-        execute('UPDATE users SET is_verified = ? WHERE id = ?', [is_verified ? 1 : 0, userId]);
-      }
-    } catch (e) {
-      console.warn('SQLite user update mirror warning:', e.message);
-    }
-
     const audit = new AuditLog({
       id: await getNextSequence('audit_log_id'),
       user_id: req.user.id,
@@ -194,14 +181,6 @@ router.patch('/sellers/:id/verify', async (req, res) => {
       seller.is_verified = true;
     }
     await seller.save();
-
-    // Mirror to SQLite
-    try {
-      execute('UPDATE seller_profiles SET verified_status = ? WHERE user_id = ?', [status, sellerId]);
-      execute('UPDATE users SET is_verified = ? WHERE id = ?', [status === 'verified' ? 1 : 0, sellerId]);
-    } catch (e) {
-      console.warn('SQLite seller verify mirror warning:', e.message);
-    }
 
     // Send notification to seller
     const notif = new Notification({
@@ -272,11 +251,6 @@ router.patch('/auctions/:id/status', async (req, res) => {
 
   try {
     await Auction.findOneAndUpdate({ id: auctionId }, { $set: { status } });
-    try {
-      execute('UPDATE auctions SET status = ? WHERE id = ?', [status, auctionId]);
-    } catch (e) {
-      console.warn('SQLite auction status mirror warning:', e.message);
-    }
     return res.json({ message: `Estado do leilão alterado para ${status}` });
   } catch (err) {
     console.error('Error updating auction status (MongoDB):', err);

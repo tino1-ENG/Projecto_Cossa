@@ -2,7 +2,6 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User, Notification, AuditLog, Watchlist, getNextSequence } from '../models/index.js';
-import { queryOne, execute } from '../database/db.js';
 import { authenticate, JWT_SECRET } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -56,23 +55,6 @@ router.post('/register', async (req, res) => {
       verified_status: role === 'buyer' ? 'verified' : 'pending'
     });
 
-    // Mirror to SQLite if SQLite is active
-    try {
-      execute(`
-        INSERT INTO users (id, name, email, phone, password_hash, role, is_verified, balance, city, province)
-        VALUES (?, ?, ?, ?, ?, ?, 1, 0, 'Maputo Cidade', 'Maputo Cidade')
-      `, [userId, name, cleanEmail, phone, passwordHash, newUser.role]);
-
-      if (newUser.role === 'seller') {
-        execute(`
-          INSERT INTO seller_profiles (user_id, company_name, nuit, business_type, verified_status, rating)
-          VALUES (?, ?, ?, ?, 'pending', 5.0)
-        `, [userId, companyName || name, nuit || null, businessType]);
-      }
-    } catch (e) {
-      // Ignore sqlite mirror error if duplicate or offline
-    }
-
     // Welcome Notification in MongoDB
     await Notification.create({
       id: await getNextSequence('notifications'),
@@ -123,18 +105,10 @@ router.post('/login', async (req, res) => {
   try {
     const cleanEmail = email.toLowerCase().trim();
 
-    // Check MongoDB first
-    let user = await User.findOne({
+    // Find user in MongoDB
+    const user = await User.findOne({
       $or: [{ email: cleanEmail }, { phone: email }]
     }).lean();
-
-    // SQLite fallback
-    if (!user) {
-      user = queryOne(`
-        SELECT id, name, email, phone, password_hash, role, is_verified, balance, city, province, avatar_url, created_at
-        FROM users WHERE email = ? OR phone = ?
-      `, [cleanEmail, cleanEmail]);
-    }
 
     if (!user) {
       return res.status(401).json({ message: 'Credenciais inválidas' });

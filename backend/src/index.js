@@ -5,8 +5,6 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-import { db, queryOne, queryAll, execute, runTransaction } from './database/db.js';
-import { runMigrations } from './database/migrate.js';
 import {
   connectMongoDB,
   Auction,
@@ -33,21 +31,6 @@ import orderRoutes from './routes/orders.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Ensure migrations are run on startup
-runMigrations();
-
-// Auto-seed initial data if database is empty on fresh deployment
-try {
-  const auctionCount = queryOne("SELECT count(*) as count FROM auctions");
-  if (!auctionCount || auctionCount.count === 0) {
-    console.log('[SQLite] Fresh deployment detected. Running initial database seed...');
-    const { seed } = await import('./database/seed.js');
-    seed();
-  }
-} catch (e) {
-  console.warn('[SQLite Auto-Seed Warning]:', e.message);
-}
-
 const app = express();
 const server = http.createServer(app);
 
@@ -67,7 +50,7 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     service: 'MozBid API',
-    database: 'MongoDB (Mongoose) + SQLite (Replica)',
+    database: 'MongoDB (Mongoose)',
     serverTime: new Date().toISOString()
   });
 });
@@ -108,7 +91,7 @@ app.use((err, req, res, next) => {
 
 /**
  * Autonomous Auction Engine: Background Lifecycle Checker
- * Runs every 10 seconds to auto-settle expired auctions in MongoDB + SQLite
+ * Runs every 10 seconds to auto-settle expired auctions in MongoDB
  */
 async function checkExpiredAuctions() {
   try {
@@ -133,18 +116,26 @@ const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB and then start server
 connectMongoDB()
-  .then(() => {
+  .then(async () => {
+    // Auto-seed MongoDB on initial startup if empty
+    try {
+      const auctionCount = await Auction.countDocuments();
+      if (auctionCount === 0) {
+        console.log('[MongoDB] Fresh deployment detected. Seeding MongoDB database...');
+        const { seedMongoDatabase } = await import('./database/seed-mongo.js');
+        await seedMongoDatabase();
+      }
+    } catch (seedErr) {
+      console.warn('[MongoDB Auto-Seed Warning]:', seedErr.message);
+    }
+
     server.listen(PORT, () => {
       console.log(`[MozBid Server] Running at http://localhost:${PORT}`);
-      console.log(`[MozBid Server] Primary Database: MongoDB at mongodb://127.0.0.1:27017/mozbid`);
-      console.log(`[MozBid Server] Replica Database: SQLite active at server/data/mozbid.db`);
+      console.log(`[MozBid Server] Sovereign Database: MongoDB 100% Active at mongodb://127.0.0.1:27017/mozbid`);
       console.log(`[MozBid Server] Real-time WebSockets initialized.`);
     });
   })
   .catch((err) => {
-    console.error('[MozBid Server] Failed to connect to MongoDB:', err);
-    // Start server anyway with SQLite fallback
-    server.listen(PORT, () => {
-      console.log(`[MozBid Server] Running with fallback SQLite at http://localhost:${PORT}`);
-    });
+    console.error('[MozBid Server] Critical: Failed to connect to MongoDB:', err);
+    process.exit(1);
   });

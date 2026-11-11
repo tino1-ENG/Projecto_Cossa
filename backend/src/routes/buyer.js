@@ -11,7 +11,6 @@ import {
   Notification,
   getNextSequence
 } from '../models/index.js';
-import { queryOne, queryAll, execute } from '../database/db.js';
 import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -198,11 +197,6 @@ router.post('/watchlist/:auctionId', async (req, res) => {
       { upsert: true, new: true }
     );
 
-    // SQLite mirror
-    try {
-      execute('INSERT OR IGNORE INTO watchlist (user_id, auction_id) VALUES (?, ?)', [userId, auctionId]);
-    } catch {}
-
     return res.json({ message: 'Adicionado aos favoritos com sucesso', is_watchlisted: true });
   } catch (err) {
     return res.status(500).json({ message: 'Erro ao guardar favorito', error: err.message });
@@ -216,11 +210,6 @@ router.delete('/watchlist/:auctionId', async (req, res) => {
 
   try {
     await Watchlist.deleteOne({ user_id: userId, auction_id: auctionId });
-
-    // SQLite mirror
-    try {
-      execute('DELETE FROM watchlist WHERE user_id = ? AND auction_id = ?', [userId, auctionId]);
-    } catch {}
 
     return res.json({ message: 'Removido dos favoritos', is_watchlisted: false });
   } catch (err) {
@@ -336,11 +325,6 @@ router.post('/deposit', async (req, res) => {
       { $inc: { balance: amount } },
       { new: true }
     ).lean();
-
-    // Mirror to SQLite if active
-    try {
-      execute('UPDATE users SET balance = balance + ? WHERE id = ?', [amount, userId]);
-    } catch {}
 
     const refCode = reference || `DEP-${Date.now().toString().slice(-6)}`;
 
