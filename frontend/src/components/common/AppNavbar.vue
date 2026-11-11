@@ -72,8 +72,8 @@
           <Search :size="18" />
         </router-link>
 
-        <!-- Notifications Dropdown (Quasar Menu) -->
-        <div class="relative">
+        <!-- Notifications Dropdown (Quasar Menu) - Only for Authenticated Users -->
+        <div v-if="authStore.isAuthenticated" class="relative">
           <button
             type="button"
             class="w-9 h-9 rounded-lg flex items-center justify-center text-[#444444] hover:text-[#171717] hover:bg-[#FAF8F5] transition-colors border border-transparent hover:border-[#E7E3DC] cursor-pointer relative"
@@ -162,21 +162,21 @@
           </q-btn>
         </template>
 
-        <!-- Unauthenticated Guest State: ENTRAR + REGISTAR / CRIAR CONTA -->
+        <!-- Unauthenticated Guest State: ENTRAR + REGISTAR / CRIAR CONTA (Sempre visível em mobile e desktop) -->
         <template v-else>
-          <!-- Entrar (Login) Button - Visible on Tablet and Desktop -->
+          <!-- Entrar (Login) Button - Visível em todas as resoluções -->
           <router-link
             to="/auth/login"
-            class="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold text-[#171717] hover:text-[#B69A68] hover:bg-[#FAF8F5] border border-[#E7E3DC] hover:border-[#B69A68] transition-all no-underline shrink-0"
+            class="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold text-[#171717] hover:text-[#B69A68] hover:bg-[#FAF8F5] border border-[#E7E3DC] hover:border-[#B69A68] transition-all no-underline shrink-0"
           >
-            <LogIn :size="15" />
+            <LogIn :size="14" />
             <span>Entrar</span>
           </router-link>
 
-          <!-- Registar / Criar Conta Button - Perfectly sized on Mobile & Desktop -->
+          <!-- Registar / Criar Conta Button - Visível em todas as resoluções -->
           <router-link
             to="/auth/register"
-            class="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-[#171717] hover:bg-[#B69A68] text-white text-xs sm:text-sm font-semibold tracking-wide transition-all no-underline shadow-xs shrink-0"
+            class="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-[#171717] hover:bg-[#B69A68] text-white text-xs sm:text-sm font-semibold tracking-wide transition-all no-underline shadow-xs shrink-0"
           >
             <UserPlus :size="14" />
             <span class="sm:hidden">Registar</span>

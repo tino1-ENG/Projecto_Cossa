@@ -183,10 +183,11 @@
           </div>
 
           <!-- Category Filter (Col 6-7) -->
-          <div class="lg:col-span-3">
+          <div class="lg:col-span-3 relative">
             <select
               v-model="selectedCategory"
-              class="w-full px-3.5 py-2.5 sm:py-3 rounded-xl bg-[#FAF8F5] border border-[#E7E3DC] hover:border-[#B69A68] text-xs sm:text-sm text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors cursor-pointer"
+              @change="executeSearch"
+              class="w-full pl-3.5 pr-8 py-2.5 sm:py-3 rounded-xl bg-[#FAF8F5] border border-[#E7E3DC] hover:border-[#B69A68] text-xs sm:text-sm text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors cursor-pointer appearance-none"
             >
               <option value="all">Todas as Categorias</option>
               <option value="automoveis-motos">Automóveis & Colecionáveis</option>
@@ -196,18 +197,21 @@
               <option value="imobiliario-terrenos">Imobiliário & Concessões</option>
               <option value="arte-colecionaveis">Arte & Património Cultural</option>
             </select>
+            <ChevronDown :size="16" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#777777] pointer-events-none" />
           </div>
 
           <!-- Province Filter (Col 8-9) -->
-          <div class="lg:col-span-2">
+          <div class="lg:col-span-2 relative">
             <select
               v-model="selectedProvince"
-              class="w-full px-3.5 py-2.5 sm:py-3 rounded-xl bg-[#FAF8F5] border border-[#E7E3DC] hover:border-[#B69A68] text-xs sm:text-sm text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors cursor-pointer"
+              @change="executeSearch"
+              class="w-full pl-3.5 pr-8 py-2.5 sm:py-3 rounded-xl bg-[#FAF8F5] border border-[#E7E3DC] hover:border-[#B69A68] text-xs sm:text-sm text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors cursor-pointer appearance-none"
             >
               <option v-for="prov in provinceOptions" :key="prov.value" :value="prov.value">
                 {{ prov.label }}
               </option>
             </select>
+            <ChevronDown :size="16" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#777777] pointer-events-none" />
           </div>
 
           <!-- Action Button (Col 10-12) -->
@@ -462,7 +466,8 @@ import {
   ShieldCheck,
   FileCheck,
   HelpCircle,
-  UserPlus
+  UserPlus,
+  ChevronDown
 } from 'lucide-vue-next';
 import { useAuthStore } from '../../stores/auth';
 import { useAuctionStore } from '../../stores/auction';

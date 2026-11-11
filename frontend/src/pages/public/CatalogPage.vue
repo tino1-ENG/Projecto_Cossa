@@ -70,57 +70,69 @@
           <!-- Category -->
           <div class="flex flex-col gap-1">
             <label class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Categoria</label>
-            <select
-              v-model="selectedCategory"
-              class="w-full px-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors"
-              @change="applyFilters"
-            >
-              <option v-for="cat in categoryOptions" :key="cat.value" :value="cat.value">
-                {{ cat.label }}
-              </option>
-            </select>
+            <div class="relative">
+              <select
+                v-model="selectedCategory"
+                class="w-full pl-3 pr-8 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] hover:border-[#B69A68] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors appearance-none cursor-pointer"
+                @change="applyFilters"
+              >
+                <option v-for="cat in categoryOptions" :key="cat.value" :value="cat.value">
+                  {{ cat.label }}
+                </option>
+              </select>
+              <ChevronDown :size="14" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#777777] pointer-events-none" />
+            </div>
           </div>
 
           <!-- Province -->
           <div class="flex flex-col gap-1">
             <label class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Província</label>
-            <select
-              v-model="selectedProvince"
-              class="w-full px-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors"
-              @change="applyFilters"
-            >
-              <option v-for="prov in provinceOptions" :key="prov.value" :value="prov.value">
-                {{ prov.label }}
-              </option>
-            </select>
+            <div class="relative">
+              <select
+                v-model="selectedProvince"
+                class="w-full pl-3 pr-8 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] hover:border-[#B69A68] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors appearance-none cursor-pointer"
+                @change="applyFilters"
+              >
+                <option v-for="prov in provinceOptions" :key="prov.value" :value="prov.value">
+                  {{ prov.label }}
+                </option>
+              </select>
+              <ChevronDown :size="14" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#777777] pointer-events-none" />
+            </div>
           </div>
 
           <!-- Status -->
           <div class="flex flex-col gap-1">
             <label class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Estado do Leilão</label>
-            <select
-              v-model="selectedStatus"
-              class="w-full px-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors"
-              @change="applyFilters"
-            >
-              <option v-for="st in statusOptions" :key="st.value" :value="st.value">
-                {{ st.label }}
-              </option>
-            </select>
+            <div class="relative">
+              <select
+                v-model="selectedStatus"
+                class="w-full pl-3 pr-8 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] hover:border-[#B69A68] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors appearance-none cursor-pointer"
+                @change="applyFilters"
+              >
+                <option v-for="st in statusOptions" :key="st.value" :value="st.value">
+                  {{ st.label }}
+                </option>
+              </select>
+              <ChevronDown :size="14" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#777777] pointer-events-none" />
+            </div>
           </div>
 
           <!-- Sorting -->
           <div class="flex flex-col gap-1">
             <label class="text-[10px] text-[#777777] uppercase font-bold tracking-wider">Ordenação</label>
-            <select
-              v-model="selectedSort"
-              class="w-full px-3 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors"
-              @change="applyFilters"
-            >
-              <option v-for="so in sortOptions" :key="so.value" :value="so.value">
-                {{ so.label }}
-              </option>
-            </select>
+            <div class="relative">
+              <select
+                v-model="selectedSort"
+                class="w-full pl-3 pr-8 py-2 rounded-lg bg-[#FAF8F5] border border-[#E7E3DC] hover:border-[#B69A68] text-xs text-[#171717] focus:outline-none focus:border-[#B69A68] transition-colors appearance-none cursor-pointer"
+                @change="applyFilters"
+              >
+                <option v-for="so in sortOptions" :key="so.value" :value="so.value">
+                  {{ so.label }}
+                </option>
+              </select>
+              <ChevronDown :size="14" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#777777] pointer-events-none" />
+            </div>
           </div>
         </div>
       </div>
@@ -220,7 +232,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { Search, X, Filter, SearchX } from 'lucide-vue-next';
+import { Search, X, Filter, SearchX, ChevronDown } from 'lucide-vue-next';
 import { useAuctionStore } from '../../stores/auction';
 import AuctionCard from '../../components/auction/AuctionCard.vue';
 
